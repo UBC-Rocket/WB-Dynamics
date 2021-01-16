@@ -1,7 +1,7 @@
 function [StateDerivVec,Rocket] = RocketDynModel(StateVec,Time,Global,Rocket)
 %% Extract states and inputs
 % States
-Rocket.PosVec = StateVec(1:3);
+Rocket.PosVec = StateVec(1:3); %(x, y, z) respectively
 Rocket.RollAngle = StateVec(4);
 Rocket.ElevAngle = StateVec(5);
 Rocket.HeadAngle = StateVec(6);
@@ -18,7 +18,7 @@ Rocket.MOIMat = [ % Load time-varying MOI data
  0 0 (1/12)*Rocket.Mass*(3*(Rocket.FuseDia/2)^2 + Rocket.FuseLength^2)];
 
 %% Updated global properties
-[Global.AirDensity,Global.SoundSpeed,~,Global.AtmPressure,~,~,~] = atmos(Rocket.PosVec(3));
+[Global.AirDensity,Global.SoundSpeed,~,Global.AtmPressure] = atmosImproved(Rocket.PosVec(3));
 Global.GravAccel = Global.GravAccelSL*((Global.EarthRad/(Global.EarthRad + Rocket.PosVec(3)))^2);
 
 %% Kinematics
@@ -107,9 +107,23 @@ else
  Rocket = ComputeDragForceVec(Global,Rocket);
  Rocket.AeroForceVec = Rocket.DragForceVec;
  
- % Ballute force (currently using massless parachute model)
+ % Ballute force (currently using massless parachute model) 
  Rocket.ChuteRelWindVelVec = Global.WindVelVec - Rocket.ChuteVelVec;
  if (Rocket.VelVec(3) < 0) && (Rocket.PosVec(3) < Rocket.BalluteAlt) && (Rocket.PosVec(3) > Rocket.MainChuteAlt)
+  
+  % factor in the possibility of a ballute breaking.
+%   rows = size(Rocket.BalluteInfo);
+%   for i = 1:rows
+%       if (Rocket.PosVec(3) < Rocket.BalluteInfo(i,2)) && (Rocket.BalluteInfo(i,3) == 1)
+%           Rocket.BalluteInfo(i,3) = 0;
+%           Rocket.NumBallutes = Rocket.NumBallutes - 1;
+%           
+%           % recompute ballute area.
+%           Rocket.BalluteArea = Rocket.NumBallutes*pi/4*(Rocket.BalluteDia^2);
+%       end
+%   end
+ 
+  % calculate ballute force.
   Rocket.BalluteForceVec =...
    0.5*Rocket.BalluteDragCoeff*Global.AirDensity*Rocket.BalluteArea...
    *norm(Rocket.ChuteRelWindVelVec)*Rocket.ChuteRelWindVelVec;
@@ -119,6 +133,20 @@ else
  
  % Main chute force (currently using massless parachute model)
  if (Rocket.VelVec(3) < 0) && (Rocket.PosVec(3) < Rocket.MainChuteAlt)
+  
+  % factor in the possibility of a chute breaking breaking.
+%   rows = size(Rocket.MainChuteInfo);
+%   for i = 1:rows
+%       if (Rocket.PosVec(3) < Rocket.MainChuteInfo(i,2)) && (Rocket.MainChuteInfo(i,3) == 1)
+%           Rocket.MainChuteInfo(i,3) = 0;
+%           Rocket.NumMainChutes = Rocket.NumMainChutes - 1;
+%           
+%           % recompute main chute area
+%           Rocket.MainChuteArea = Rocket.NumMainChutes*pi/4*(Rocket.MainChuteDia^2);
+%       end
+%   end
+  
+  % compute main chute force
   Rocket.MainChuteForceVec =...
    0.5*Rocket.MainChuteDragCoeff*Global.AirDensity*Rocket.MainChuteArea...
    *norm(Rocket.ChuteRelWindVelVec)*Rocket.ChuteRelWindVelVec;
@@ -163,6 +191,7 @@ else
 end
 
 %% Compile state derivative vector
+
 StateDerivVec = [
  Rocket.VelVec;
  Rocket.EulerRotMat\Rocket.AngVelVec_B;

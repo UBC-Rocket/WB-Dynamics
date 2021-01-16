@@ -7,7 +7,6 @@ increment = 1;
 
 
 for i = -N:N
-
     for j = -N:N
         windx = increment*i;
         windy = increment*j;
@@ -18,8 +17,7 @@ for i = -N:N
         ySimData = simOut.yData;
         groundIDX = calcGroundIndex(zSimData);
         landingSpots(i+N+1,j+N+1) = xSimData(1,1,groundIDX);
-        landingSpots(i+N+1,j+N+1,2) = ySimData(1,1,groundIDX);
-        
+        landingSpots(i+N+1,j+N+1,2) = ySimData(1,1,groundIDX); 
     end
 end
 
