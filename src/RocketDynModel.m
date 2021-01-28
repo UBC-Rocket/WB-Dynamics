@@ -1,7 +1,7 @@
 function [StateDerivVec,Rocket] = RocketDynModel(StateVec,Time,Global,Rocket)
 %% Extract states and inputs
 % States
-Rocket.PosVec = StateVec(1:3);
+Rocket.PosVec = StateVec(1:3); %(x, y, z) respectively
 Rocket.RollAngle = StateVec(4);
 Rocket.ElevAngle = StateVec(5);
 Rocket.HeadAngle = StateVec(6);
@@ -18,8 +18,7 @@ Rocket.MOIMat = [ % Load time-varying MOI data
  0 0 (1/12)*Rocket.Mass*(3*(Rocket.FuseDia/2)^2 + Rocket.FuseLength^2)];
 
 %% Updated global properties
-[Global.AirDensity,Global.SoundSpeed,~,Global.AtmPressure,Global.AirKinVisc,~,~] = atmos(Rocket.PosVec(3));
-Global.AirViscosity = Global.AirDensity*Global.AirKinVisc;
+[Global.AirDensity,Global.SoundSpeed,~,Global.AtmPressure] = atmos(Rocket.PosVec(3));
 Global.GravAccel = Global.GravAccelSL*((Global.EarthRad/(Global.EarthRad + Rocket.PosVec(3)))^2);
 
 %% Kinematics
@@ -59,6 +58,13 @@ Rocket.TotalTransMat_B = Rocket.HeadTransMat_B*Rocket.ElevTransMat_B*Rocket.Roll
 % Rocket direction vector
 Rocket.DirVec = Rocket.TotalRotMat*Rocket.DirVec_B;
 
+% Aerodynamic center velocity vector
+Rocket.ACVelVec =...
+ Rocket.VelVec...
+ + Rocket.TotalTransMat_B*(...
+ -Rocket.CGRelBaseVelVec_B...
+ + cross(Rocket.AngVelVec_B,Rocket.ACRelBasePosVec_B - Rocket.CGRelBasePosVec_B));
+
 % Chute attachment point velocity
 Rocket.ChuteVelVec =...
  Rocket.VelVec...
@@ -79,8 +85,8 @@ if Rocket.PosVec(3) < Rocket.RailLength*sind(Rocket.LaunchAngle) + Rocket.Launch
  Rocket.FricForce = -Rocket.RailFricCoeff*Rocket.Mass*Global.GravAccel*cosd(Rocket.LaunchAngle);
  
  % Aerodynamic force
- Rocket = ComputeAero(Global,Rocket);
- Rocket.AeroForce = dot(Rocket.AeroForceVec,Rocket.LaunchVec);
+ Rocket = ComputeDragForceVec(Global,Rocket);
+ Rocket.AeroForce = dot(Rocket.DragForceVec,Rocket.LaunchVec);
  
  % Net external force
  Rocket.TotalForce = Rocket.ThrustForce + Rocket.GravForce + Rocket.FricForce + Rocket.AeroForce;
@@ -98,11 +104,60 @@ else
  Rocket.ThrustForceVec = Rocket.ThrustForce*Rocket.DirVec;
  
  % Aerodynamic force
- Rocket = ComputeAero(Global,Rocket);
+ Rocket = ComputeDragForceVec(Global,Rocket);
+ Rocket.AeroForceVec = Rocket.DragForceVec;
+ 
+ % Ballute force (currently using massless parachute model) 
+ Rocket.ChuteRelWindVelVec = Global.WindVelVec - Rocket.ChuteVelVec;
+ if (Rocket.VelVec(3) < 0) && (Rocket.PosVec(3) < Rocket.BalluteAlt) && (Rocket.PosVec(3) > Rocket.MainChuteAlt)
+  
+  % factor in the possibility of a ballute breaking.
+%   rows = size(Rocket.BalluteInfo);
+%   for i = 1:rows
+%       if (Rocket.PosVec(3) < Rocket.BalluteInfo(i,2)) && (Rocket.BalluteInfo(i,3) == 1)
+%           Rocket.BalluteInfo(i,3) = 0;
+%           Rocket.NumBallutes = Rocket.NumBallutes - 1;
+%           
+%           % recompute ballute area.
+%           Rocket.BalluteArea = Rocket.NumBallutes*pi/4*(Rocket.BalluteDia^2);
+%       end
+%   end
+ 
+  % calculate ballute force.
+  Rocket.BalluteForceVec =...
+   0.5*Rocket.BalluteDragCoeff*Global.AirDensity*Rocket.BalluteArea...
+   *norm(Rocket.ChuteRelWindVelVec)*Rocket.ChuteRelWindVelVec;
+ else
+  Rocket.BalluteForceVec = zeros(3,1);
+ end
+ 
+ % Main chute force (currently using massless parachute model)
+ if (Rocket.VelVec(3) < 0) && (Rocket.PosVec(3) < Rocket.MainChuteAlt)
+  
+  % factor in the possibility of a chute breaking breaking.
+%   rows = size(Rocket.MainChuteInfo);
+%   for i = 1:rows
+%       if (Rocket.PosVec(3) < Rocket.MainChuteInfo(i,2)) && (Rocket.MainChuteInfo(i,3) == 1)
+%           Rocket.MainChuteInfo(i,3) = 0;
+%           Rocket.NumMainChutes = Rocket.NumMainChutes - 1;
+%           
+%           % recompute main chute area
+%           Rocket.MainChuteArea = Rocket.NumMainChutes*pi/4*(Rocket.MainChuteDia^2);
+%       end
+%   end
+  
+  % compute main chute force
+  Rocket.MainChuteForceVec =...
+   0.5*Rocket.MainChuteDragCoeff*Global.AirDensity*Rocket.MainChuteArea...
+   *norm(Rocket.ChuteRelWindVelVec)*Rocket.ChuteRelWindVelVec;
+ else
+  Rocket.MainChuteForceVec = zeros(3,1);
+ end
  
  % Total force vector
  Rocket.ForceVec =...
-  Rocket.GravForceVec + Rocket.ThrustForceVec + Rocket.AeroForceVec;
+  Rocket.GravForceVec + Rocket.ThrustForceVec + Rocket.AeroForceVec...
+  + Rocket.BalluteForceVec + Rocket.MainChuteForceVec;
  
  %% Kinetics - Moments
  % Thrust damping moment
@@ -117,9 +172,17 @@ else
  Rocket.AeroMomVec =...
   cross(Rocket.ACRelBasePosVec_B - Rocket.CGRelBasePosVec_B,Rocket.TotalTransMat_F*Rocket.AeroForceVec);
  
+ % Ballute moment
+ Rocket.BalluteMomVec =...
+  cross(Rocket.ChuteRelBasePosVec_B - Rocket.CGRelBasePosVec_B,Rocket.TotalTransMat_F*Rocket.BalluteForceVec);
+ 
+ % Main chute moment
+ Rocket.MainChuteMomVec =...
+  cross(Rocket.ChuteRelBasePosVec_B - Rocket.CGRelBasePosVec_B,Rocket.TotalTransMat_F*Rocket.MainChuteForceVec);
+ 
  % Total aerodynamic moment
  Rocket.MomVec =...
-  Rocket.AeroMomVec + Rocket.ThrustDampMom;
+  Rocket.AeroMomVec + Rocket.BalluteMomVec + Rocket.MainChuteMomVec + Rocket.ThrustDampMom;
  
  %% Compute state derivatives
  Rocket.AccVec = Rocket.ForceVec/Rocket.Mass;
@@ -128,10 +191,9 @@ else
 end
 
 %% Compile state derivative vector
+
 StateDerivVec = [
  Rocket.VelVec;
  Rocket.EulerRotMat\Rocket.AngVelVec_B;
  Rocket.AccVec;
  Rocket.AngAccVec_B];
-
-disp(Time);

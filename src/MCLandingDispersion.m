@@ -4,6 +4,27 @@
 NUM_OF_SAMP             = 10000;
 NUM_OF_VAR              = 18;
 
+%% Data Output Directories
+DATA_PATH = "../output"; % path to folder to hold output data
+
+% file that contains data from one sample
+SINGLE_ITER_DIR = fullfile(DATA_PATH, "run_number%d.csv"); 
+
+% file that lists intial conditions for each sample
+OUTPUT_GUIDE_DIR = fullfile(DATA_PATH, "number_guide.csv"); 
+
+% file that lists all landing points from all samples
+LANDING_PTS_DIR = fullfile(DATA_PATH, "landing_points.csv");
+
+% file that logs all computational errors that occur during simulation. Be
+% sure to check, reproduce and investigate the origins of those errors. 
+% Samples that have an error will have their number flagged with a 1. The 
+% flag 0 means no error.
+ERRORS_DIR = fullfile(DATA_PATH, "errors.csv");
+
+% make directory to hold outputs if it does not alredy exist
+mkdir(DATA_PATH);
+
 %% Variables
 
 % Vehicle properties mean
@@ -163,7 +184,8 @@ for sam_num = 1:NUM_OF_SAMP
     end
     
     output = [Time Trajectory];
-    writematrix(output, "Output/run_number" + num2str(sam_num) + ".csv")
+    output_path = sprintf(SINGLE_ITER_DIR, sam_num);
+    writematrix(output, output_path);
      
     launch_height = total_sample_mat(sam_num, 13);
     burn = round(total_sample_mat(sam_num, 8));     
@@ -190,11 +212,13 @@ end
 
 sim_number = 1:NUM_OF_SAMP;
 
+% create a table that lists all the inital parameters of each sample
 parameter_guide = table(sim_number', fuse_dia_sam, fuse_len_sam, prop_flow_rate_sam, ...
     nozzle_eff_sam, c_star_sam, exit_press_sam, chamber_press_sam, burn_time_sam, ...
     mass_sam, drag_coeff_factor_sam, head_wind_sam, cross_wind_sam, launch_alt_sam, ...
     launch_ang_sam, ballute_alt_sam, chute_alt_sam, ballute_drag_coeff_sam, chute_drag_coeff_sam);
 
-writetable(parameter_guide, "Output/number_guide.csv");
-writematrix(points, "Output/landing_points.csv");
-writematrix(errors, "Output/errors.csv");
+%% Log Output
+writetable(parameter_guide, OUTPUT_GUIDE_DIR);
+writematrix(points, LANDING_PTS_DIR);
+writematrix(errors, ERRORS_DIR);

@@ -36,7 +36,7 @@ Rocket.ExpAreaRatio = 2.3;
 % Only load data if and only if data has not been loaded before. No need to
 % do extra IO operations if the data has already been loaded.
 if (exist('RocketDragData', 'var') == 0)
-    load('RocketDragData.mat', 'RocketDragData');
+    RocketDragData = ReadDragData();
 end
 
 Rocket.MachNumData = RocketDragData(:,1);

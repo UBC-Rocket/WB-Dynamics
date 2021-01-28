@@ -1,4 +1,4 @@
-function varargout = atmosImproved(h)
+function varargout = atmos(h)
 %ATMOSIMPROVED Find gas properties in the 1976 Standard Atmosphere
 %   Gives atmospheric properties on a standard day from heights 0km to
 %   1000km
