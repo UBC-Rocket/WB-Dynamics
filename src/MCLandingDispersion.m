@@ -51,10 +51,12 @@ mass_err                = mass_mean*0.01/3;
 
 
 % Aerodynamic properties mean
-drag_coeff_factor       = 1;            % Uniform (factor relative to model)
+rocket_drag_data = ReadDragData();      % Load drag data
+mach_data = rocket_drag_data(:,1);      % Variable is not varied
+drag_coeff_data = rocket_drag_data(:,2);% Normal
 
 % Aerodynamic properties error
-drag_coeff_factor_err   = 0.2;
+drag_coeff_err   = 0.05;
 
 % Environment properties mean
 head_wind_mean          = 0;            % Uniform
@@ -86,75 +88,57 @@ chute_drag_coeff_err    = chute_drag_coeff_mean*0.2;
 
 % fuse diameter sample - from a normal distribution
 fuse_dia_sam = lhsnorm(fuse_dia_mean, fuse_dia_err, NUM_OF_SAMP);
-total_sample_mat = fuse_dia_sam;
 
 % fuse length sample - from a normal distribution
 fuse_len_sam = lhsnorm(fuse_len_mean, fuse_length_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat fuse_len_sam];
 
 % propellant flow rate sample - from an uniform distribution
 prop_flow_rate_sam = lhsdesign(NUM_OF_SAMP,1)*2*prop_flow_rate_err + prop_flow_rate_mean - prop_flow_rate_err;
-total_sample_mat = [total_sample_mat prop_flow_rate_sam];
 
 % nozzle efficiency sample - from an uniform distribution
 nozzle_eff_sam = lhsdesign(NUM_OF_SAMP,1)*2*nozzle_eff_err + nozzle_eff_mean - nozzle_eff_err;
-total_sample_mat = [total_sample_mat nozzle_eff_sam];
 
 % c star sample - from an uniform distribution
 c_star_sam = lhsdesign(NUM_OF_SAMP,1)*2*c_star_err + c_star_mean - c_star_err;
-total_sample_mat = [total_sample_mat c_star_sam];
 
 % exit pressure sample - from a normal distribution
 exit_press_sam = lhsnorm(exit_press_mean, exit_press_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat exit_press_sam];
 
 % chamber pressure sample - from a normal distribution
 chamber_press_sam = lhsnorm(chamber_press_mean, chamber_press_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat chamber_press_sam];
 
 % burn time sample - from a normal distribution
 burn_time_sam = lhsnorm(burn_time_mean, burn_time_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat burn_time_sam];
 
 % mass sample - from a normal distribution
 mass_sam = lhsnorm(mass_mean, mass_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat mass_sam];
 
 % drag coefficient factor sample - from an uniform distribution
-drag_coeff_factor_sam = lhsdesign(NUM_OF_SAMP,1)*2*drag_coeff_factor_err + drag_coeff_factor - drag_coeff_factor_err;
-total_sample_mat = [total_sample_mat drag_coeff_factor_sam];
+drag_coeff_sam = lhsnorm(0, 1, NUM_OF_SAMP);
 
 % head wind sample - from an uniform distribution
 head_wind_sam = lhsdesign(NUM_OF_SAMP,1)*2*head_wind_err + head_wind_mean - head_wind_err;
-total_sample_mat = [total_sample_mat head_wind_sam];
 
 % cross wind sample - from an uniform distribution
 cross_wind_sam = lhsdesign(NUM_OF_SAMP,1)*2*cross_wind_err + cross_wind_mean - cross_wind_err;
-total_sample_mat = [total_sample_mat cross_wind_sam];
 
 % launch altitude sample - from a normal distribution
 launch_alt_sam = lhsnorm(launch_alt_mean, launch_alt_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat launch_alt_sam];
 
 % launch angle sample - from a normal distribution
 launch_ang_sam = lhsnorm(launch_angle_mean, launch_angle_err, NUM_OF_SAMP);
-total_sample_mat = [total_sample_mat launch_ang_sam];
 
 % ballute opening altitude sample - from an uniform distribution
 ballute_alt_sam = lhsdesign(NUM_OF_SAMP,1)*2*ballute_alt_err + ballute_alt_mean - ballute_alt_err;
-total_sample_mat = [total_sample_mat ballute_alt_sam];
 
 % main chute opening altitude sample - from an uniform distribution
 chute_alt_sam = lhsdesign(NUM_OF_SAMP,1)*2*chute_alt_err + chute_alt_mean - chute_alt_err;
-total_sample_mat = [total_sample_mat chute_alt_sam];
 
 % ballute drag coefficient sample - from an uniform distribution
 ballute_drag_coeff_sam = lhsdesign(NUM_OF_SAMP, 1)*2*ballute_drag_coeff_err + ballute_drag_coeff_mean - ballute_drag_coeff_err;
-total_sample_mat = [total_sample_mat ballute_drag_coeff_sam];
 
 % main chute drag coefficient sample - from an uniform distribution
 chute_drag_coeff_sam = lhsdesign(NUM_OF_SAMP, 1)*2*chute_drag_coeff_err + chute_drag_coeff_mean - chute_drag_coeff_err;
-total_sample_mat = [total_sample_mat chute_drag_coeff_sam];
 
 
 %% Perform Simulation on samples
@@ -165,16 +149,15 @@ errors = zeros(NUM_OF_SAMP, 1);
 
 for sam_num = 1:NUM_OF_SAMP
     lastwarn('');
-    [Time, Trajectory] = ComputeFlightTrajectory(total_sample_mat(sam_num, 1), ...
-        total_sample_mat(sam_num, 2), total_sample_mat(sam_num, 3), ...
-        total_sample_mat(sam_num, 4), total_sample_mat(sam_num, 5), ...
-        total_sample_mat(sam_num, 6), total_sample_mat(sam_num, 7), ...
-        total_sample_mat(sam_num, 8), total_sample_mat(sam_num, 9), ...
-        total_sample_mat(sam_num, 10), total_sample_mat(sam_num, 11), ...
-        total_sample_mat(sam_num, 12), total_sample_mat(sam_num, 13), ...
-        total_sample_mat(sam_num, 14), total_sample_mat(sam_num, 15), ...
-        total_sample_mat(sam_num, 16), total_sample_mat(sam_num, 17), ...
-        total_sample_mat(sam_num, 18));
+    drag_coeff_error_fun = @(x) x + x*drag_coeff_err*drag_coeff_sam(sam_num);
+    drag_data_sam = arrayfun(drag_coeff_error_fun, drag_coeff_data);
+    [Time, Trajectory] = ComputeFlightTrajectory(...
+        fuse_dia_sam(sam_num), fuse_len_sam(sam_num), prop_flow_rate_sam(sam_num),...
+        nozzle_eff_sam(sam_num), c_star_sam(sam_num), exit_press_sam(sam_num),...
+        chamber_press_sam(sam_num), burn_time_sam(sam_num), mass_sam(sam_num),...
+        mach_data, drag_data_sam, head_wind_sam(sam_num), cross_wind_sam(sam_num),...
+        launch_alt_sam(sam_num), launch_ang_sam(sam_num), ballute_alt_sam(sam_num),...
+        chute_alt_sam(sam_num), ballute_drag_coeff_sam(sam_num), chute_drag_coeff_sam(sam_num));
     
     [warnMsg, warnId] = lastwarn;
     % do error logging
@@ -184,8 +167,8 @@ for sam_num = 1:NUM_OF_SAMP
     
     output = [Time Trajectory];
      
-    launch_height = total_sample_mat(sam_num, 13);
-    burn = round(total_sample_mat(sam_num, 8));     
+    launch_height = launch_alt_sam(sam_num);
+    burn = round(burn_time_sam(sam_num));     
     
     %% Find zeros
     % current method does a linear search to find the closest point
@@ -212,7 +195,7 @@ sim_number = 1:NUM_OF_SAMP;
 % create a table that lists all the inital parameters of each sample
 parameter_guide = table(sim_number', fuse_dia_sam, fuse_len_sam, prop_flow_rate_sam, ...
     nozzle_eff_sam, c_star_sam, exit_press_sam, chamber_press_sam, burn_time_sam, ...
-    mass_sam, drag_coeff_factor_sam, head_wind_sam, cross_wind_sam, launch_alt_sam, ...
+    mass_sam, drag_coeff_sam, head_wind_sam, cross_wind_sam, launch_alt_sam, ...
     launch_ang_sam, ballute_alt_sam, chute_alt_sam, ballute_drag_coeff_sam, chute_drag_coeff_sam);
 
 %% Log Output

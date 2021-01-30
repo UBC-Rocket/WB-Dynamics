@@ -5,7 +5,10 @@
 %                   each time step in the integrator.
 %                   `StateVecTraj` being a `SimTime + 1` by 12 matrix where
 %                   each row represents the rocket state at each time step.
-function [Time, StateVecTraj] = ComputeFlightTrajectory(fuse_dia, fuse_len, flow_rate, nozz_eff, c_star, exit_press, cham_press, burn_time, mass, drag_coeff, head_wind, cross_wind, launch_alt, launch_ang, ballute_alt, chute_alt, ballute_coeff, chute_coeff)
+function [Time, StateVecTraj] = ComputeFlightTrajectory(fuse_dia, fuse_len,...
+    flow_rate, nozz_eff, c_star, exit_press, cham_press, burn_time, mass,...
+    mach_numbers, drag_coeff, head_wind, cross_wind, launch_alt, launch_ang,...
+    ballute_alt, chute_alt, ballute_coeff, chute_coeff)
 %% Define simulation properties
 % Free-flight simulation settings
 Sim.TimeStepSize = 1;
@@ -32,15 +35,8 @@ Rocket.ChamberPressure = cham_press; %1000000;
 Rocket.ExpAreaRatio = 2.3;
 
 %% Rocket drag properties
-
-% Only load data if and only if data has not been loaded before. No need to
-% do extra IO operations if the data has already been loaded.
-if (exist('RocketDragData', 'var') == 0)
-    RocketDragData = ReadDragData();
-end
-
-Rocket.MachNumData = RocketDragData(:,1);
-Rocket.DragCoeffData = RocketDragData(:,2)*drag_coeff;
+Rocket.MachNumData = mach_numbers;
+Rocket.DragCoeffData = drag_coeff;
 Rocket.DragArea = pi/4*Rocket.FuseDia^2;
 Rocket.ACRelBasePosVec_B = [0.625 0 0]';
 Rocket.DirVec_B = [1 0 0]';
