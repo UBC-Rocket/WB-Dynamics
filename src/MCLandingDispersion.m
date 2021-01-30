@@ -1,14 +1,11 @@
 % Monte Carlo Trajectory Simulation Using Latin Hypercube Method
 % Considers the distribution of 18 variables
 
-NUM_OF_SAMP             = 10000;
+NUM_OF_SAMP             = 50;
 NUM_OF_VAR              = 18;
 
 %% Data Output Directories
 DATA_PATH = "../output"; % path to folder to hold output data
-
-% file that contains data from one sample
-SINGLE_ITER_DIR = fullfile(DATA_PATH, "run_number%d.csv"); 
 
 % file that lists intial conditions for each sample
 OUTPUT_GUIDE_DIR = fullfile(DATA_PATH, "number_guide.csv"); 
@@ -22,8 +19,10 @@ LANDING_PTS_DIR = fullfile(DATA_PATH, "landing_points.csv");
 % flag 0 means no error.
 ERRORS_DIR = fullfile(DATA_PATH, "errors.csv");
 
-% make directory to hold outputs if it does not alredy exist
-mkdir(DATA_PATH);
+% make directory to hold outputs if it does not alredy 
+if ~exist(DATA_PATH, 'dir')
+       mkdir(DATA_PATH);
+end
 
 %% Variables
 
@@ -184,8 +183,6 @@ for sam_num = 1:NUM_OF_SAMP
     end
     
     output = [Time Trajectory];
-    output_path = sprintf(SINGLE_ITER_DIR, sam_num);
-    writematrix(output, output_path);
      
     launch_height = total_sample_mat(sam_num, 13);
     burn = round(total_sample_mat(sam_num, 8));     
