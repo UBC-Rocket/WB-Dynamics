@@ -135,7 +135,7 @@ else
  % Thrust damping moment
  if Time < Rocket.BurnTime
   Rocket.ThrustDampMom =...
-   -Rocket.PropFlowRate*cross(-Rocket.CGRelBasePosVec_B,cross(Rocket.AngVelVec_B,-Rocket.CGRelBasePosVec_B));
+   -Rocket.PropFlowRate*cross(-Rocket.CGRelBasePosVec_B,cross(Rocket.AngVelVec_B,-Rocket.CGRelBasePosVec_B))+thrustMisAlignmentMoment(Rocket);
  else
   Rocket.ThrustDampMom = zeros(3,1);
  end

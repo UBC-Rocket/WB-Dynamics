@@ -15,7 +15,7 @@ Sim.PlotAnimation = 'ON';
 % Global properties
 Global.EarthRad = 6371.009e3;
 Global.GravAccelSL = 9.81;
-Global.WindVelVec = [0 -10 0]';
+Global.WindVelVec = [0 0 0]';
 Global.SpHeatRatio = 1.4;
 
 % Rocket physical properties
@@ -29,6 +29,7 @@ Rocket.C_Star = 1580.684648;
 Rocket.ExitPressure = 93914.05538;
 Rocket.ChamberPressure = 1000000;
 Rocket.ExpAreaRatio = 2.3;
+Rocket.ThrustOffset = [0.01;0;0]; %Offset of center of thrust from the long axis, [x, y, z] in meters.
 
 % Rocket drag properties
 load('Rocket drag data.mat');
@@ -106,6 +107,7 @@ if strcmp(Sim.PlotAnimation,'ON')
   daspect([1 1 1]);
   grid on;
   hold off;
-  pause;
+%   pause;
+  pause(0.02)
  end
 end

@@ -1,0 +1,3 @@
+function tru = thrustMisAlignmentMoment(Rocket)
+thrustMisalignmentMomVec = cross(Rocket.ThrustOffset, Rocket.ThrustForceVec);
+
