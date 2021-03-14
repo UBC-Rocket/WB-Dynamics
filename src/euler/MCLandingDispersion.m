@@ -27,15 +27,15 @@ end
 %% Variables
 
 % Vehicle properties mean
-fuse_dia_mean           = 0.48;         % Normal
-fuse_len_mean           = 8.013640494;  % Normal
-prop_flow_rate_mean     = 12;           % Uniform 
+fuse_dia_mean           = 0.3048;       % Normal
+fuse_len_mean           = 5.943587967;  % Normal
+prop_flow_rate_mean     = 5.625;        % Uniform 
 nozzle_eff_mean         = 0.98;         % Uniform
-c_star_mean             = 1580.684648;  % Uniform
-exit_press_mean         = 93914.05538;  % Normal
+c_star_mean             = 1584.619354;  % Uniform
+exit_press_mean         = 77295.59995;  % Normal
 chamber_press_mean      = 1000000;      % Normal
-burn_time_mean          = 34;           % Normal
-mass_mean               = 687.6761773;  % Normal
+burn_time_mean          = 32;           % Normal
+mass_mean               = 319.5162962;  % Normal
 
 % Vehicle properties sigma (normal) or half of width (uniform)
 
@@ -66,7 +66,7 @@ cross_wind_mean         = 0;            % Uniform
 head_wind_err           = 5;
 cross_wind_err          = 5;
 
-% Guidence properties mean
+% Guidence properties mean; will need to make a better ballute/chute calc
 launch_angle_mean       = 80;           % Normal
 launch_alt_mean         = 1401;         % Normal
 ballute_alt_mean        = 75000;        % Uniform
@@ -174,6 +174,8 @@ for sam_num = 1:NUM_OF_SAMP
     % current method does a linear search to find the closest point
     % and it does not seem to be the best way to do it. Assumes that the
     % landing time is greater than the burn time
+    
+    % gonna figure out what this is and then make a newton-raphson 
     
     index = 0;
     difference = realmax;
