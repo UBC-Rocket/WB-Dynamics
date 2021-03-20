@@ -19,7 +19,7 @@ Rocket.MOIMat = [ % Load time-varying MOI data
  0 0 (1/12)*Rocket.Mass*(3*(Rocket.FuseDia/2)^2 + Rocket.FuseLength^2)];
 
 %% Updated global properties
-[Global.AirDensity,Global.SoundSpeed,~,Global.AtmPressure] = atmos(Rocket.PosVec(3));
+[Global.AirDensity,Global.SoundSpeed,~,Global.AtmPressure] = Atmos(Rocket.PosVec(3));
 Global.GravAccel = Global.GravAccelSL*((Global.EarthRad/(Global.EarthRad + Rocket.PosVec(3)))^2);
 
 %% Kinematics

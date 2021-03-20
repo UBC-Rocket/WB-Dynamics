@@ -1,4 +1,4 @@
-function varargout = atmos(h)
+function varargout = Atmos(h)
 %ATMOSIMPROVED Find gas properties in the 1976 Standard Atmosphere
 %   Gives atmospheric properties on a standard day from heights 0km to
 %   1000km
@@ -40,7 +40,7 @@ LOWERATMOSVALS = [
 ];
 
 
-% Calculate geopotential height
+% Calculate geopotential height (normalized for gravity height)
 geopH = (RE * h)/(RE + h);
 
 %% Calculate values
@@ -81,4 +81,3 @@ a = sqrt(gamma*R*temp);
 
 varargout = {rho,a,temp,press};
 end
-
