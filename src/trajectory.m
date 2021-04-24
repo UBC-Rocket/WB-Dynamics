@@ -1,6 +1,6 @@
 TIME_STEP = 0.1;
 START_TIME = 0;
-END_TIME = 300;
+END_TIME = 210;
 
 %% Physical properties
 load_mass = 319.5162962; % kg
