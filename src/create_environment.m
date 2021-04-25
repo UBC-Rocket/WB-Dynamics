@@ -1,13 +1,12 @@
 function env = create_environment()
-% Creates a structure with fields that represent
-% atmosphere conditions. The initial values of
-% atmosphere conditions are "garbage" values 
-% and are meant to be updated.
-    env.density = 0;
-    env.sound_speed = 0;
-    env.temperature = 0;
-    env.pressure = 0;
+% Creates a structure with fields that represent atmosphere conditions. The
+% fields are initialized with sea level values.
+    [env.density,env.sound_speed,env.temperature,env.pressure] = atmos(0);
+    % Specific heat ratio of air. We are assuming this is independent from
+    % altitude from surface.
     env.sp_heat_ratio = 1.4;
-    env.grav_accel_SL = 9.81;
+    % force on a 1 kg mass is equal in magnitude to the acceleration.
+    a_g = f_g(1,0);
+    env.grav_accel_SL = abs(a_g(2));
 end
 

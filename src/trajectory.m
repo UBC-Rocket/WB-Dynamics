@@ -1,3 +1,7 @@
+clc;
+clear;
+
+%% Simulation params
 TIME_STEP = 0.1;
 START_TIME = 0;
 END_TIME = 210;
@@ -27,7 +31,7 @@ ballute_dia = 1; % m
 main_chute_dia = 4.13; % m
 
 %% Launch properties
-launch_angle = 89; % degrees
+launch_angle = 90; % degrees
 launch_alt = 1401; % meters above sea level
 
 vehicle = create_rocket(...

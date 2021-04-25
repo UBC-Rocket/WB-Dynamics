@@ -1,6 +1,7 @@
 function f_thrust = f_t(dir, time, vehicle, env)
 %F_T Summary of this function goes here
-%   Detailed explanation goes here    
+%   `dir` must be a unit vector that points in the direction of the thrust
+%   force.
     if time <= vehicle.burn_time
         sp_impulse =...
             vehicle.nozzle_eff*(vehicle.c_star*env.sp_heat_ratio/env.grav_accel_SL...
