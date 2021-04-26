@@ -60,8 +60,8 @@ env = create_environment();
 
 stateInit = [
     0;
-    launch_alt;
     0;
+    launch_alt;
     0;
     0;
     0]; 

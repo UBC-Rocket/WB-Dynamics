@@ -6,3 +6,4 @@ SRC_DIR = "../src";
 addpath(SRC_DIR);
 %% Run tests
 runtests(pwd);
+runtests("coordinate_tests");

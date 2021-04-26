@@ -11,8 +11,8 @@ end
 function verify(testCase, expected, actual)
     tolerance = 1e-5;
     verifyEqual(testCase, actual(1), 0);
-    verifyEqual(testCase, actual(2), expected, 'RelTol', tolerance);
-    verifyEqual(testCase, actual(3), 0);
+    verifyEqual(testCase, actual(2), 0);
+    verifyEqual(testCase, actual(3), expected, 'RelTol', tolerance);
 end
 
 function test_0km_small_mass(testCase)

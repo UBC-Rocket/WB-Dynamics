@@ -65,7 +65,7 @@ function check_values(testCase, t, vehicle, env, expected_thrust)
     verifyEqual(testCase, f_thrust(3), 0);
 end
 
-%% Engine on
+%% Engine on test cases
 function test_ignition_power_on_sea_level(testCase)
     testCase.TestData.env.pressure = 101325;
     vehicle = testCase.TestData.vehicle;
@@ -186,9 +186,10 @@ function test_end_burn_power_on_upper_atm(testCase)
     check_values(testCase, t, vehicle, env, expected_thrust);
 end
 
-%% Engine off
-% These are just tested at sea level conditions
-function test_power_off_one_sec_(testCase)
+%% Engine off test cases
+% We are also going to test different altitudes just to make sure that in
+% this time interval, the thrust is independent from pressure
+function test_power_off_one_sec_sea_level(testCase)
     testCase.TestData.env.pressure = 101325;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
@@ -198,8 +199,68 @@ function test_power_off_one_sec_(testCase)
     check_values(testCase, t, vehicle, env, expected_thrust);
 end
 
-function test_power_off_one_min_(testCase)
+function test_power_off_one_min_sea_level(testCase)
     testCase.TestData.env.pressure = 101325;
+    vehicle = testCase.TestData.vehicle;
+    env = testCase.TestData.env;
+    t = vehicle.burn_time + 60;
+    expected_thrust = 0;
+    
+    check_values(testCase, t, vehicle, env, expected_thrust);
+end
+
+function test_power_off_one_sec_lower_atm(testCase)
+    testCase.TestData.env.pressure = 2511.02;
+    vehicle = testCase.TestData.vehicle;
+    env = testCase.TestData.env;
+    t = vehicle.burn_time + 1;
+    expected_thrust = 0;
+    
+    check_values(testCase, t, vehicle, env, expected_thrust);
+end
+
+function test_power_off_one_min_lower_atm(testCase)
+    testCase.TestData.env.pressure = 2511.02;
+    vehicle = testCase.TestData.vehicle;
+    env = testCase.TestData.env;
+    t = vehicle.burn_time + 60;
+    expected_thrust = 0;
+    
+    check_values(testCase, t, vehicle, env, expected_thrust);
+end
+
+function test_power_off_one_sec_middle_atm(testCase)
+    testCase.TestData.env.pressure = 75.9448;
+    vehicle = testCase.TestData.vehicle;
+    env = testCase.TestData.env;
+    t = vehicle.burn_time + 1;
+    expected_thrust = 0;
+    
+    check_values(testCase, t, vehicle, env, expected_thrust);
+end
+
+function test_power_off_one_min_middle_atm(testCase)
+    testCase.TestData.env.pressure = 75.9448;
+    vehicle = testCase.TestData.vehicle;
+    env = testCase.TestData.env;
+    t = vehicle.burn_time + 60;
+    expected_thrust = 0;
+    
+    check_values(testCase, t, vehicle, env, expected_thrust);
+end
+
+function test_power_off_one_sec_upper_atm(testCase)
+    testCase.TestData.env.pressure = 2.06792;
+    vehicle = testCase.TestData.vehicle;
+    env = testCase.TestData.env;
+    t = vehicle.burn_time + 1;
+    expected_thrust = 0;
+    
+    check_values(testCase, t, vehicle, env, expected_thrust);
+end
+
+function test_power_off_one_min_upper_atm(testCase)
+    testCase.TestData.env.pressure = 2.06792;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
     t = vehicle.burn_time + 60;

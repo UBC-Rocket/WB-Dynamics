@@ -12,6 +12,6 @@ function f_gravity = f_g(m, p)
     % perfect sphere.
     r = 6371000;
     R = r + p;
-    f_gravity = [0; -G*M_e*m/(R^2); 0];
+    f_gravity = [0; 0; -G*M_e*m/(R^2)];
 end
 

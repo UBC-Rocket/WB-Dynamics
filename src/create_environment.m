@@ -6,7 +6,6 @@ function env = create_environment()
     % altitude from surface.
     env.sp_heat_ratio = 1.4;
     % force on a 1 kg mass is equal in magnitude to the acceleration.
-    a_g = f_g(1,0);
-    env.grav_accel_SL = abs(a_g(2));
+    env.grav_accel_SL = norm(f_g(1,0));
 end
 
