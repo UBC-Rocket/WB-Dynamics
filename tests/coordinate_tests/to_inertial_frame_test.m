@@ -1,3 +1,11 @@
+% The expected values were generated using MATLAB's own robotics toolkit.
+% You are probably wondering why I did not just use the toolkit instead of
+% writing my own function. One, MATLAB does not seem to have solid support
+% for a way to list and get dependencies which makes it a bit harder for
+% other people to use as they have to figure out the dependencies and
+% install it. Two, I have finer control over what the algorithm actually
+% does which makes it easier to profile (not that some matrix generation
+% and multiplication will ever need to be profiled).
 function tests = to_inertial_frame_test
     tests = functiontests(localfunctions);
 end
