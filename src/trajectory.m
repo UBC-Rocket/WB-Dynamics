@@ -4,23 +4,30 @@ clear;
 %% Simulation params
 TIME_STEP = 0.1;
 START_TIME = 0;
-END_TIME = 210;
+END_TIME = 300;
 
 %% Physical properties
-load_mass = 319.5162962; % kg
-fuselage_dia = 0.3048; % meters
-fuselage_length = 5.943587967; % meters
-nose_length = 0.6; % meters
+load_mass = 657.6964825; % kg
+fuselage_dia = 0.4064; % meters
+fuselage_length = 7.006609822; % meters
+nose_length = 0.7112; % meters
+
+%% Fin properties
+num_of_fins = 4;
+fin_span = 0.4064;
+fin_thickness = 0.01;
+fin_leading_edge_sweep_angle = 30;
+fin_leading_edge_thickness_angle = 15;
 
 %% Engine properties
-burn_time = 32; % s
-prop_flow_rate = 5.625; % kg/s
+burn_time = 36; % s
+prop_flow_rate = 12; % kg/s
 nozzle_eff = 0.98;
 c_star = 1584.619354; % m/s
-exit_pressure = 77295.59995; % Pa
-chamber_pressure = 1000000; % Pa
-exp_area_ratio = 2.6;
-nozzle_exit_area = 0.029670491; %m^2
+exit_pressure = 62227.7237; % Pa
+chamber_pressure = 900000; % Pa
+exp_area_ratio = 2.8;
+nozzle_exit_area = 0.06244574; %m^2
 
 %% Recovery properties
 ballute_alt = 75000; % meters above sea level
@@ -31,7 +38,7 @@ ballute_dia = 1; % m
 main_chute_dia = 4.13; % m
 
 %% Launch properties
-launch_angle = 90; % degrees
+launch_angle = 89; % degrees
 launch_alt = 1401; % meters above sea level
 
 vehicle = create_rocket(...
@@ -39,6 +46,11 @@ vehicle = create_rocket(...
     fuselage_dia, ...
     fuselage_length, ...
     nose_length, ...
+    num_of_fins, ...
+    fin_span, ...
+    fin_thickness, ...
+    fin_leading_edge_sweep_angle, ...
+    fin_leading_edge_thickness_angle, ...
     burn_time, ...
     prop_flow_rate, ...
     nozzle_eff, ...
@@ -56,7 +68,7 @@ vehicle = create_rocket(...
     launch_angle, ...
     launch_alt);
 
-env = create_environment([10;10;0]);
+env = create_environment([0;0;0]);
 
 init_pos = [0;0;launch_alt];
 init_quat = coordinate.euler_to_quat([0;-launch_angle;0]);
@@ -70,3 +82,4 @@ state_init = [
     init_ang_vel]; 
 func = @(time, state) rocket_ode(time, state, vehicle, env);
 [time, state] = ode45(func, (START_TIME:TIME_STEP:END_TIME), state_init);
+plot(time, state(:,3));

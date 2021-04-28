@@ -1,5 +1,6 @@
 function f_thrust = f_t(dir, time, vehicle, env)
-%F_T Summary of this function goes here
+%F_T Computes thrust force produced by engine at a given time and
+%atmosphere condition.
 %   `dir` must be a unit vector that points in the direction of the thrust
 %   force.
     if time <= vehicle.burn_time

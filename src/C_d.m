@@ -1,11 +1,12 @@
 function Cd = C_d(mach_num, time, vehicle, env)
-%C_D Summary of this function goes here
-%   Detailed explanation goes here
+%C_D Computes CD of vehicle
+%   Sums the CD of each component together to get total CD.
     Cd = C_d_nose(mach_num, vehicle)...
         + C_d_body(mach_num, vehicle, env)...
-        + C_d_base(time, mach_num, vehicle);
+        + C_d_base(time, mach_num, vehicle)...
+        + C_d_fin(mach_num, vehicle, env);
 end
-
+% Okay
 function Cd_nose = C_d_nose(mach_num, vehicle)
     AR_N = vehicle.nose_length/vehicle.fuselage_diameter;
     if mach_num < 1
@@ -14,7 +15,7 @@ function Cd_nose = C_d_nose(mach_num, vehicle)
         Cd_nose = 3.6/(AR_N*(mach_num-1)+3);
     end
 end
-
+% Not sure yet
 function Cd_body = C_d_body(mach_num, vehicle, env)
     body_length = vehicle.fuselage_length - vehicle.nose_length;
     AR_B = body_length/vehicle.fuselage_diameter;
@@ -22,7 +23,7 @@ function Cd_body = C_d_body(mach_num, vehicle, env)
         *(mach_num/(dynamic_pressure(mach_num, env)...
         *vehicle.fuselage_length))^(0.2);
 end
-
+% Okay
 function Cd_base = C_d_base(time, mach_num, vehicle)
     A_e = vehicle.nozzle_exit_area;
     S_r = pi*(vehicle.fuselage_diameter/2)^2;
@@ -40,6 +41,27 @@ function Cd_base = C_d_base(time, mach_num, vehicle)
         else
             Cd_base = 0.25/mach_num;
         end
+    end
+end
+% Okay I think
+function CD_fin = C_d_fin(mach_num, vehicle, env)
+    A_le = deg2rad(vehicle.fin_leading_edge_sweep_angle);
+    S_le = deg2rad(vehicle.fin_leading_edge_thickness_angle);
+    t_mac = vehicle.fin_thickness;
+    span = vehicle.fin_span;
+    S_r = pi*(vehicle.fuselage_diameter/2)^2;
+    M_A = mach_num*cos(A_le);
+    if M_A > 1
+        eq_1 = vehicle.num_of_fins*2/(env.sp_heat_ratio*mach_num^2);
+        eq_2 = (((env.sp_heat_ratio+1)*mach_num^2)/2)...
+            ^(env.sp_heat_ratio/(env.sp_heat_ratio-1));
+        eq_3 = ((env.sp_heat_ratio+1)...
+            /(2*env.sp_heat_ratio*mach_num^2 - (env.sp_heat_ratio-1)))...
+            ^(1/(env.sp_heat_ratio-1));
+        eq_4 = sin(S_le)^2*cos(A_le)*t_mac*span/S_r;
+        CD_fin = eq_1 * ((eq_2*eq_3) - 1) * eq_4;
+    else
+        CD_fin = 0;
     end
 end
 
