@@ -8,7 +8,7 @@ end
 
 function test_initialize_values(testCase)
     wind_vel = [10;30;1];
-    env = create_environment(wind_vel);
+    env = environment.create_environment(wind_vel);
     verifyEqual(testCase, round(env.density, 5, 'significant'), 1.2250);
     verifyEqual(testCase, round(env.sound_speed, 6, 'significant'), 340.294);
     verifyEqual(testCase, round(env.temperature, 6, 'significant'), 288.150);

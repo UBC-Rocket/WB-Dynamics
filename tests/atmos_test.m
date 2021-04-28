@@ -19,7 +19,7 @@ function tests = atmos_test
 end
 
 function test_first_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(100);
+    [density, soundSpeed, temp, press] = environment.atmos(100);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.2133);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 339.91);
     verifyEqual(testCase, round(temp, 6, 'significant'), 287.500);
@@ -27,7 +27,7 @@ function test_first_alt_bucket_start(testCase)
 end
 
 function test_first_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(8000);
+    [density, soundSpeed, temp, press] = environment.atmos(8000);
     verifyEqual(testCase, round(density, 5, 'significant'), 0.52579);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 308.11);
     verifyEqual(testCase, round(temp, 6, 'significant'), 236.215);
@@ -36,7 +36,7 @@ end
 
 
 function test_first_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(10000);
+    [density, soundSpeed, temp, press] = environment.atmos(10000);
     verifyEqual(testCase, round(density, 5, 'significant'), 0.41351);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 299.53);
     verifyEqual(testCase, round(temp, 6, 'significant'), 223.252);
@@ -44,7 +44,7 @@ function test_first_alt_bucket_end(testCase)
 end
 
 function test_second_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(12000);
+    [density, soundSpeed, temp, press] = environment.atmos(12000);
     verifyEqual(testCase, round(density, 5, 'significant'), 0.31194);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 295.07);
     verifyEqual(testCase, round(temp, 6, 'significant'), 216.650);
@@ -52,7 +52,7 @@ function test_second_alt_bucket_start(testCase)
 end
 
 function test_second_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(15000);
+    [density, soundSpeed, temp, press] = environment.atmos(15000);
     verifyEqual(testCase, round(density, 5, 'significant'), 0.19475);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 295.07);
     verifyEqual(testCase, round(temp, 6, 'significant'), 216.650);
@@ -60,7 +60,7 @@ function test_second_alt_bucket_mid(testCase)
 end
 
 function test_second_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(19000);
+    [density, soundSpeed, temp, press] = environment.atmos(19000);
     verifyEqual(testCase, round(density, 5, 'significant'), 0.10400);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 295.07);
     verifyEqual(testCase, round(temp, 6, 'significant'), 216.650);
@@ -68,7 +68,7 @@ function test_second_alt_bucket_end(testCase)
 end
 
 function test_third_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(21000);
+    [density, soundSpeed, temp, press] = environment.atmos(21000);
     verifyEqual(testCase, round(density, 5, 'significant'), 7.5715e-2);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 295.70);
     verifyEqual(testCase, round(temp, 6, 'significant'), 217.581);
@@ -76,7 +76,7 @@ function test_third_alt_bucket_start(testCase)
 end
 
 function test_third_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(29000);
+    [density, soundSpeed, temp, press] = environment.atmos(29000);
     verifyEqual(testCase, round(density, 5, 'significant'), 2.1478e-2);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 301.05);
     verifyEqual(testCase, round(temp, 6, 'significant'), 225.518);
@@ -84,7 +84,7 @@ function test_third_alt_bucket_mid(testCase)
 end
 
 function test_third_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(31000);
+    [density, soundSpeed, temp, press] = environment.atmos(31000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.5792e-2);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 302.37);
     verifyEqual(testCase, round(temp, 6, 'significant'), 227.500);
@@ -92,7 +92,7 @@ function test_third_alt_bucket_end(testCase)
 end
 
 function test_fourth_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(34000);
+    [density, soundSpeed, temp, press] = environment.atmos(34000);
     verifyEqual(testCase, round(density, 5, 'significant'), 9.8874e-3);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 306.49);
     verifyEqual(testCase, round(temp, 6, 'significant'), 233.744);
@@ -100,7 +100,7 @@ function test_fourth_alt_bucket_start(testCase)
 end
 
 function test_fourth_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(41000);
+    [density, soundSpeed, temp, press] = environment.atmos(41000);
     verifyEqual(testCase, round(density, 5, 'significant'), 3.4564e-3);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 318.94);
     verifyEqual(testCase, round(temp, 6, 'significant'), 253.114);
@@ -108,7 +108,7 @@ function test_fourth_alt_bucket_mid(testCase)
 end
 
 function test_fourth_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(46000);
+    [density, soundSpeed, temp, press] = environment.atmos(46000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.7141e-3);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 327.52);
     verifyEqual(testCase, round(temp, 6, 'significant'), 266.925);
@@ -116,7 +116,7 @@ function test_fourth_alt_bucket_end(testCase)
 end
 
 function test_fifth_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(48000);
+    [density, soundSpeed, temp, press] = environment.atmos(48000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.3167e-3);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 329.80);
     verifyEqual(testCase, round(temp, 6, 'significant'), 270.650);
@@ -124,7 +124,7 @@ function test_fifth_alt_bucket_start(testCase)
 end
 
 function test_fifth_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(49000);
+    [density, soundSpeed, temp, press] = environment.atmos(49000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.1628e-3);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 329.80);
     verifyEqual(testCase, round(temp, 6, 'significant'), 270.650);
@@ -132,7 +132,7 @@ function test_fifth_alt_bucket_mid(testCase)
 end
 
 function test_fifth_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(50000);
+    [density, soundSpeed, temp, press] = environment.atmos(50000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.0269e-3);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 329.80);
     verifyEqual(testCase, round(temp, 6, 'significant'), 270.650);
@@ -143,7 +143,7 @@ end
 % relative error of around -1.24128000793682e-05 which is quite small
 % hence the expected value was slightly altered to get the test to pass.
 function test_sixth_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(52000);
+    [density, soundSpeed, temp, press] = environment.atmos(52000);
     verifyEqual(testCase, round(density, 5, 'significant'), 8.0561e-4);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 328.81);
     verifyEqual(testCase, round(temp, 6, 'significant'), 269.031);
@@ -151,7 +151,7 @@ function test_sixth_alt_bucket_start(testCase)
 end
 
 function test_sixth_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(60000);
+    [density, soundSpeed, temp, press] = environment.atmos(60000);
     verifyEqual(testCase, round(density, 5, 'significant'), 3.0968e-4);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 315.07);
     verifyEqual(testCase, round(temp, 6, 'significant'), 247.021);
@@ -159,7 +159,7 @@ function test_sixth_alt_bucket_mid(testCase)
 end
 
 function test_sixth_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(69000);
+    [density, soundSpeed, temp, press] = environment.atmos(69000);
     verifyEqual(testCase, round(density, 5, 'significant'), 9.5170e-5);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 298.91);
     verifyEqual(testCase, round(temp, 6, 'significant'), 222.325);
@@ -167,7 +167,7 @@ function test_sixth_alt_bucket_end(testCase)
 end
 
 function test_seventh_alt_bucket_start(testCase)
-    [density, soundSpeed, temp, press] = atmos(73000);
+    [density, soundSpeed, temp, press] = environment.atmos(73000);
     verifyEqual(testCase, round(density, 5, 'significant'), 5.3824e-5);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 292.10);
     verifyEqual(testCase, round(temp, 6, 'significant'), 212.308);
@@ -175,7 +175,7 @@ function test_seventh_alt_bucket_start(testCase)
 end
 
 function test_seventh_alt_bucket_mid(testCase)
-    [density, soundSpeed, temp, press] = atmos(80000);
+    [density, soundSpeed, temp, press] = environment.atmos(80000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.8458e-5);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 282.54);
     verifyEqual(testCase, round(temp, 6, 'significant'), 198.639);
@@ -183,7 +183,7 @@ function test_seventh_alt_bucket_mid(testCase)
 end
 
 function test_seventh_alt_bucket_end(testCase)
-    [density, soundSpeed, temp, press] = atmos(83000);
+    [density, soundSpeed, temp, press] = environment.atmos(83000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.1414e-5);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 278.35);
     verifyEqual(testCase, round(temp, 6, 'significant'), 192.790);
@@ -196,7 +196,7 @@ end
 % outlined in the paper.
 
 function test_extrapolation_one(testCase)
-    [density, soundSpeed, temp, press] = atmos(90000);
+    [density, soundSpeed, temp, press] = environment.atmos(90000);
     verifyEqual(testCase, round(density, 5, 'significant'), 3.4168e-6);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 274.10);
     verifyEqual(testCase, round(temp, 6, 'significant'), 186.946);
@@ -204,7 +204,7 @@ function test_extrapolation_one(testCase)
 end
 
 function test_extrapolation_two(testCase)
-    [density, soundSpeed, temp, press] = atmos(100000);
+    [density, soundSpeed, temp, press] = environment.atmos(100000);
     verifyEqual(testCase, round(density, 5, 'significant'), 5.7966e-7);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 274.10);
     verifyEqual(testCase, round(temp, 6, 'significant'), 186.946);
@@ -212,7 +212,7 @@ function test_extrapolation_two(testCase)
 end
 
 function test_extrapolation_three(testCase)
-    [density, soundSpeed, temp, press] = atmos(110000);
+    [density, soundSpeed, temp, press] = environment.atmos(110000);
     verifyEqual(testCase, round(density, 5, 'significant'), 9.8881e-08);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 274.10);
     verifyEqual(testCase, round(temp, 6, 'significant'), 186.946);
@@ -220,7 +220,7 @@ function test_extrapolation_three(testCase)
 end
 
 function test_extrapolation_four(testCase)
-    [density, soundSpeed, temp, press] = atmos(120000);
+    [density, soundSpeed, temp, press] = environment.atmos(120000);
     verifyEqual(testCase, round(density, 5, 'significant'), 1.6960e-08);
     verifyEqual(testCase, round(soundSpeed, 5, 'significant'), 274.10);
     verifyEqual(testCase, round(temp, 6, 'significant'), 186.946);
