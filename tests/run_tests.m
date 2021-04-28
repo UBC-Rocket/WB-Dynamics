@@ -7,3 +7,4 @@ addpath(SRC_DIR);
 %% Run tests
 runtests(pwd);
 runtests("coordinate_tests");
+runtests("lin_alg_tests");

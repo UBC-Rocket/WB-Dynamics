@@ -18,7 +18,7 @@ function verify(testCase, expected, actual)
 end
 
 function test_rotate_x(testCase)
-    C = coordinate.euler_to_mat(90, 0, 0);
+    C = lin_alg.euler_to_mat(90, 0, 0);
     
     expected = [1;0;0];
     actual = C*[1;0;0];
@@ -34,7 +34,7 @@ function test_rotate_x(testCase)
 end
 
 function test_rotate_y(testCase)
-    C = coordinate.euler_to_mat(0, 90, 0);
+    C = lin_alg.euler_to_mat(0, 90, 0);
     
     expected = [0;0;-1];
     actual = C*[1;0;0];
@@ -50,7 +50,7 @@ function test_rotate_y(testCase)
 end
 
 function test_rotate_z(testCase)
-    C = coordinate.euler_to_mat(0, 0, 90);
+    C = lin_alg.euler_to_mat(0, 0, 90);
     
     expected = [0;1;0];
     actual = C*[1;0;0];
@@ -66,7 +66,7 @@ function test_rotate_z(testCase)
 end
 
 function test_rotate_x_y(testCase)
-    C = coordinate.euler_to_mat(90, -90, 0);
+    C = lin_alg.euler_to_mat(90, -90, 0);
     
     expected = [0;0;1];
     actual = C*[1;0;0];
@@ -82,7 +82,7 @@ function test_rotate_x_y(testCase)
 end
 
 function test_rotate_x_z(testCase)
-    C = coordinate.euler_to_mat(-30, 0, 90);
+    C = lin_alg.euler_to_mat(-30, 0, 90);
     
     expected = [0;1;0];
     actual = C*[1;0;0];
@@ -98,7 +98,7 @@ function test_rotate_x_z(testCase)
 end
 
 function test_rotate_y_z(testCase)
-    C = coordinate.euler_to_mat(0, -45, -90);
+    C = lin_alg.euler_to_mat(0, -45, -90);
     
     expected = [0;-0.7071067812;0.7071067812];
     actual = C*[1;0;0];
@@ -115,7 +115,7 @@ end
 
 function test_rotate_x_y_z(testCase)
     % First rotation
-    C = coordinate.euler_to_mat(30, 60, 90);
+    C = lin_alg.euler_to_mat(30, 60, 90);
     
     expected = [0;0.5;-0.8660254038];
     actual = C*[1;0;0];
@@ -130,7 +130,7 @@ function test_rotate_x_y_z(testCase)
     verify(testCase, expected, actual);
     
     % Second rotation
-    C = coordinate.euler_to_mat(45, -30, 60);
+    C = lin_alg.euler_to_mat(45, -30, 60);
     
     expected = [0.4330127019;0.75;0.5];
     actual = C*[1;0;0];

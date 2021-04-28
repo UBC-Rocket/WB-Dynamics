@@ -13,7 +13,7 @@ function verify(testCase, expected, actual)
 end
 
 function test_rotate_x_y_z(testCase)
-    q = coordinate.euler_to_quat([90, 60, 30]);
+    q = lin_alg.euler_to_quat([90, 60, 30]);
     expected = [
         0.683012701892219;
         0.183012701892219;
@@ -23,7 +23,7 @@ function test_rotate_x_y_z(testCase)
 end
 
 function test_rotate_x_y_neg_z(testCase)
-    q = coordinate.euler_to_quat([30, 30, -45]);
+    q = lin_alg.euler_to_quat([30, 30, -45]);
     expected = [
         0.135299025036549;
         0.326640741219094;
@@ -33,7 +33,7 @@ function test_rotate_x_y_neg_z(testCase)
 end
 
 function test_rotate_x_neg_y_z(testCase)
-    q = coordinate.euler_to_quat([20, -60, 70]);
+    q = lin_alg.euler_to_quat([20, -60, 70]);
     expected = [
         -0.159244118269248;
         -0.489610207818600;
@@ -43,7 +43,7 @@ function test_rotate_x_neg_y_z(testCase)
 end
 
 function test_rotate_x_neg_y_neg_z(testCase)
-    q = coordinate.euler_to_quat([50, -60, -30]);
+    q = lin_alg.euler_to_quat([50, -60, -30]);
     expected = [
         0.470811924208330;
         -0.342985757141044;
@@ -53,7 +53,7 @@ function test_rotate_x_neg_y_neg_z(testCase)
 end
 
 function test_rotate_neg_x_y_z(testCase)
-    q = coordinate.euler_to_quat([-40, 80, 10]);
+    q = lin_alg.euler_to_quat([-40, 80, 10]);
     expected = [
         -0.208361577654914;
         0.624559318381697;
@@ -63,7 +63,7 @@ function test_rotate_neg_x_y_z(testCase)
 end
 
 function test_rotate_neg_x_y_neg_z(testCase)
-    q = coordinate.euler_to_quat([-70, 25, -90]);
+    q = lin_alg.euler_to_quat([-70, 25, -90]);
     expected = [
         -0.521333804473597;
         -0.270598050073098;
@@ -73,7 +73,7 @@ function test_rotate_neg_x_y_neg_z(testCase)
 end
 
 function test_rotate_neg_x_neg_y_z(testCase)
-    q = coordinate.euler_to_quat([-17, -89, 36]);
+    q = lin_alg.euler_to_quat([-17, -89, 36]);
     expected = [
         -0.314479044258746;
         -0.626704093717776;
@@ -83,7 +83,7 @@ function test_rotate_neg_x_neg_y_z(testCase)
 end
 
 function test_rotate_neg_x_neg_y_neg_z(testCase)
-    q = coordinate.euler_to_quat([-5, -64, -21]);
+    q = lin_alg.euler_to_quat([-5, -64, -21]);
     expected = [
         0.060106287204435;
         -0.527290933095440;

@@ -68,10 +68,10 @@ vehicle = create_rocket(...
     launch_angle, ...
     launch_alt);
 
-env = create_environment([0;0;0]);
+env = environment.create_environment([0;0;0]);
 
 init_pos = [0;0;launch_alt];
-init_quat = coordinate.euler_to_quat([0;-launch_angle;0]);
+init_quat = lin_alg.euler_to_quat([0;-launch_angle;0]);
 init_lin_vel = [0;0;0];
 init_ang_vel = [0;0;0];
 
