@@ -3,6 +3,8 @@ function q = mat_to_quat(C)
 %   The quaternion is defined as q1,q2,q3 as the imaginary component and q4
 %   as the real component. This essentially uses the component with the
 %   biggest value as it will minimize the error.
+%
+%   Source:
 %   Atmospheric and Space Flight Dynamics Modeling and Simulation with MATLAB 
 %   by Ashish Tewari
     T = trace(C);

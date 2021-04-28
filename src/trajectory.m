@@ -56,14 +56,17 @@ vehicle = create_rocket(...
     launch_angle, ...
     launch_alt);
 
-env = create_environment();
+env = create_environment([10;10;0]);
 
-stateInit = [
-    0;
-    0;
-    launch_alt;
-    0;
-    0;
-    0]; 
+init_pos = [0;0;launch_alt];
+init_quat = coordinate.euler_to_quat([0;-launch_angle;0]);
+init_lin_vel = [0;0;0];
+init_ang_vel = [0;0;0];
+
+state_init = [
+    init_pos;
+    init_quat;
+    init_lin_vel;
+    init_ang_vel]; 
 func = @(time, state) rocket_ode(time, state, vehicle, env);
-[time, state] = ode45(func, (START_TIME:TIME_STEP:END_TIME), stateInit);
+[time, state] = ode45(func, (START_TIME:TIME_STEP:END_TIME), state_init);
