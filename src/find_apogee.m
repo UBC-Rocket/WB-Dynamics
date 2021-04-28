@@ -15,9 +15,10 @@ function [apogee_altitude, apogee_time] = find_apogee(time, altitude)
     pp_dot = mkpp(pp.breaks, coefs); % Derivative of pp
     
     %% Perform gradient decent (or in this case ascent) to find maximum
-    % Pro machine learners probably have better algorithms in choosing step
-    % size or `LEARN_RATE` to prevent over shooting but for this purpose,
-    % the current setup of a static step size is decently adequate.
+    % "Pro machine learners" probably have better algorithms in choosing 
+    % step size or `LEARN_RATE` to prevent over shooting but for this
+    % purpose, the current setup of a static step size is decently 
+    % adequate.
     MAX_ITER = 1500;
     curr_iter = 0;
     LEARN_RATE = 0.01; % How much to scale by each time step.
