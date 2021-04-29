@@ -22,6 +22,7 @@ function vehicle = create_rocket(...
     main_chute_drag_coeff, ...
     ballute_dia, ...
     main_chute_dia, ...
+    chute_attachment_pos, ...
     launch_angle, ...
     launch_alt)
 % Generates a MATLAB struct that contains all the static
@@ -69,7 +70,10 @@ function vehicle = create_rocket(...
 %           ballute_dia: Diameter of single ballute in meters.
 %           main_chute_dia: Diameter of single main chute in meters.
 %           num_of_ballutes: Number of ballutes.
-%           num_of_chutes: Number of main chutes.   
+%           num_of_chutes: Number of main chutes.  
+%           chute_attachment_pos: Position relative to the bottom
+%               of the rocket in meter where the recovery device(s) is
+%               attached.
 %       Launch properties
 %           launch_angle: Angle vehicle is launched at relative to ground
 %               in degrees.
@@ -110,6 +114,7 @@ function vehicle = create_rocket(...
     vehicle.main_chute_dia = main_chute_dia;
     vehicle.num_of_ballutes = 3;
     vehicle.num_of_chutes = 3;
+    vehicle.chute_attachment_rel_base = [chute_attachment_pos;0;0];
 
     %% Launch properties
     vehicle.launch_angle = launch_angle;

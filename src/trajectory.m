@@ -1,7 +1,7 @@
 function [time, state] = trajectory(vehicle)
 %   Computes the trajectory of the vehicle
     START_TIME = 0;
-    END_TIME = 330;
+    END_TIME = 650;
     TIME_STEP = 0.1;
     
     env = environment.create_environment([0;0;0]);

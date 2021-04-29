@@ -8,3 +8,4 @@ addpath(SRC_DIR);
 runtests(pwd);
 runtests("coordinate_tests");
 runtests("lin_alg_tests");
+runtests("recovery_tests");
