@@ -154,4 +154,12 @@ function vehicle = create_rocket(...
     vehicle.CG_uncertainty = CG_uncertainty; 
     vehicle.CP_uncertainty = CP_uncertainty;
     vehicle.CD_uncertainty = CD_uncertainty; 
+    
+    %% Memonize repetitive calculations for CD
+    vehicle.S_r = pi*(vehicle.fuselage_diameter/2)^2; % Reference diameter
+    vehicle.body_length = vehicle.fuselage_length - vehicle.nose_length;
+    vehicle.AR_B = vehicle.body_length/vehicle.fuselage_diameter; % Aspect raito body
+    vehicle.AR_N = vehicle.nose_length/vehicle.fuselage_diameter; % Aspect ratio nose
+    vehicle.A_le = deg2rad(vehicle.fin_leading_edge_sweep_angle); % Fin leading edge sweep angle
+    vehicle.S_le = deg2rad(vehicle.fin_leading_edge_thickness_angle); % Fin leading edge thickness angle
 end

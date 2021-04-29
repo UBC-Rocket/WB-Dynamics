@@ -9,35 +9,35 @@ function tests = trajectory_test
     tests = functiontests(localfunctions);
 end
 
-function test_40km_target(testCase)
-    TARGET_ALT = 40000;
-    ACCEPTABLE_ERR = 3000;
+function test_8km_target(testCase)
+    TARGET_ALT = 8000;
+    ACCEPTABLE_ERR = 200;
     
-    load_mass = 319.5162962;
-    fuselage_dia = 0.3048;
-    fuselage_length = 5.943587967;
-    nose_length = 0.6;
+    load_mass = 300;
+    fuselage_dia = 0.2;
+    fuselage_length = 5;
+    nose_length = 0.4;
     num_of_fins = 4;
-    fin_span = 0.4064;
+    fin_span = 0.3;
     fin_thickness = 0.01;
-    fin_leading_edge_sweep_angle = 30;
+    fin_leading_edge_sweep_angle = 20;
     fin_leading_edge_thickness_angle = 15;
-    burn_time = 32;
-    prop_flow_rate = 5.625;
-    nozzle_eff = 0.98;
-    c_star = 1584.619354;
-    exit_pressure = 77295.59995;
-    chamber_pressure = 900000;
-    exp_area_ratio = 2.6;
-    nozzle_exit_area = 0.024462561;
-    ballute_alt = 75000;
-    main_chute_alt = 3000;
+    burn_time = 30;
+    prop_flow_rate = 5;
+    nozzle_eff = 0.7;
+    c_star = 1000;
+    exit_pressure = 40000;
+    chamber_pressure = 600000;
+    exp_area_ratio = 2;
+    nozzle_exit_area = 0.01;
+    ballute_alt = 8000;
+    main_chute_alt = 2000;
     ballute_drag_coeff = 0.75;
     main_chute_drag_coeff = 0.53;
     ballute_dia = 1;
     main_chute_dia = 4.13;
-    chute_attachment_pos = 5.66;
-    launch_angle = 89;
+    chute_attachment_pos = 4.5;
+    launch_angle = 88;
     launch_alt = 1401;
     thrust_uncertainty = sampling.create_uncertainty(0,0);
     CG_uncertainty = sampling.create_uncertainty(0,0);
@@ -81,35 +81,35 @@ function test_40km_target(testCase)
     verifyEqual(testCase, apogee, TARGET_ALT, 'AbsTol', ACCEPTABLE_ERR);
 end
 
-function test_100km_target(testCase)
-    TARGET_ALT = 100000;
-    ACCEPTABLE_ERR = 3000; % 3km is a bit high and maybe can be tone down a bit.
+function test_22km_target(testCase)
+    TARGET_ALT = 22000;
+    ACCEPTABLE_ERR = 200; % a bit high and maybe can be tone down a bit.
 
-    load_mass = 657.6964825;
-    fuselage_dia = 0.4064;
-    fuselage_length = 7.006609822;
-    nose_length = 0.7112;
+    load_mass = 320;
+    fuselage_dia = 0.3;
+    fuselage_length = 6;
+    nose_length = 0.6;
     num_of_fins = 4;
-    fin_span = 0.4064;
+    fin_span = 0.4;
     fin_thickness = 0.01;
-    fin_leading_edge_sweep_angle = 30;
+    fin_leading_edge_sweep_angle = 3;
     fin_leading_edge_thickness_angle = 15;
-    burn_time = 36;
-    prop_flow_rate = 12;
-    nozzle_eff = 0.98;
-    c_star = 1584.619354;
-    exit_pressure = 62227.7237;
-    chamber_pressure = 900000;
-    exp_area_ratio = 2.8;
-    nozzle_exit_area = 0.06244574;
+    burn_time = 30;
+    prop_flow_rate = 5.6;
+    nozzle_eff = 0.9;
+    c_star = 1500;
+    exit_pressure = 20000;
+    chamber_pressure = 1000000;
+    exp_area_ratio = 2.5;
+    nozzle_exit_area = 0.02;
     ballute_alt = 75000;
     main_chute_alt = 3000;
     ballute_drag_coeff = 0.75;
     main_chute_drag_coeff = 0.53;
     ballute_dia = 1;
     main_chute_dia = 4.13;
-    chute_attachment_pos = 5.66;
-    launch_angle = 89;
+    chute_attachment_pos = 3.6;
+    launch_angle = 87;
     launch_alt = 1401;
     thrust_uncertainty = sampling.create_uncertainty(0,0);
     CG_uncertainty = sampling.create_uncertainty(0,0);
