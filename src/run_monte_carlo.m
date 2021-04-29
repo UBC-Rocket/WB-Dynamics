@@ -6,6 +6,8 @@ clc;
 clear;
 rng default; % For reproducibility
 
+OUTPUT_PATH = "../output";
+OUTPUT_FILE = fullfile(OUTPUT_PATH, "output.csv");
 NUM_OF_SAMPLES = 100;
 
 %% Physical properties
@@ -99,7 +101,7 @@ uncertainties = sampling.latin_hs_norm(means, sds, NUM_OF_SAMPLES, nvar);
 
 
 %% Perform simulation
-points = zeros(NUM_OF_SAMPLES, 5);
+points = zeros(NUM_OF_SAMPLES, 6);
 
 for sam_num = 1:NUM_OF_SAMPLES
     % Parse sample results
@@ -150,11 +152,18 @@ for sam_num = 1:NUM_OF_SAMPLES
     [apogee, apogee_time] = find_apogee(time, state(:,3));
     [x, y, landing_time] = find_landing_pos(time, state, launch_alt);
     
+    % touch down velocity
+    v_x = spline(time, state(:,8), landing_time);
+    v_y = spline(time, state(:,9), landing_time);
+    v_z = spline(time, state(:,10), landing_time);
+    v_mag = norm([v_x, v_y, v_z]);
+    
     points(sam_num,1) = apogee_time;
     points(sam_num,2) = apogee;
     points(sam_num,3) = landing_time;
     points(sam_num,4) = x;
     points(sam_num,5) = y;
+    points(sam_num,6) = v_mag;
 end
-writematrix(points, 'output.csv');
+writematrix(points, OUTPUT_FILE);
 scatter(points(:,4), points(:,5));
