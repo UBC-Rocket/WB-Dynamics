@@ -24,7 +24,11 @@ function vehicle = create_rocket(...
     main_chute_dia, ...
     chute_attachment_pos, ...
     launch_angle, ...
-    launch_alt)
+    launch_alt, ...
+    thrust_uncertainty, ...
+    CG_uncertainty, ...
+    CP_uncertainty, ...
+    CD_uncertainty)
 % Generates a MATLAB struct that contains all the static
 % properties of a rocket. 
 %   There isn't any fine control on
@@ -81,6 +85,29 @@ function vehicle = create_rocket(...
 %               sea level.
 %           rail_length: Length of launch rail in meters.
 %           rail_fric_coeff: Coefficient of friction of launch rail.
+%       Uncertainties:
+%           Since variables such as thrust, center of gravity, center of
+%           pressure and vehicle coefficent of drag is complex in nature so
+%           instead of varying each dependent variable (which makes it
+%           computationally expensive) we scale the final result by a
+%           factor that is determined by sampling.
+%
+%           thrust_uncertainty: struct with the fields `var` and `rand`
+%               where `var` is the percentage error of the total thrust
+%               and `rand` is a random number sampled from a distribution
+%               with a lower bound of -1 and an upper bound of 1.
+%           CG_uncertainty: struct with the fields `var` and `rand`
+%               where `var` is the percentage error of the CG
+%               and `rand` is a random number sampled from a distribution
+%               with a lower bound of -1 and an upper bound of 1.
+%           CP_uncertainty: struct with the fields `var` and `rand`
+%               where `var` is the percentage error of the CP
+%               and `rand` is a random number sampled from a distribution
+%               with a lower bound of -1 and an upper bound of 1.
+%           CD_uncertainty: struct with the fields `var` and `rand`
+%               where `var` is the percentage error of the total vehicle CD
+%               and `rand` is a random number sampled from a distribution
+%               with a lower bound of -1 and an upper bound of 1.
 
     %% Physical properties
     vehicle.load_mass = load_mass;
@@ -121,4 +148,10 @@ function vehicle = create_rocket(...
     vehicle.launch_alt = launch_alt;
     vehicle.rail_length = 15;
     vehicle.rail_fric_coeff = 0;
+    
+    %% Complex variable uncertainties
+    vehicle.thrust_uncertainty = thrust_uncertainty;
+    vehicle.CG_uncertainty = CG_uncertainty; 
+    vehicle.CP_uncertainty = CP_uncertainty;
+    vehicle.CD_uncertainty = CD_uncertainty; 
 end

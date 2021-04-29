@@ -39,6 +39,10 @@ function test_40km_target(testCase)
     chute_attachment_pos = 5.66;
     launch_angle = 89;
     launch_alt = 1401;
+    thrust_uncertainty = sampling.create_uncertainty(0,0);
+    CG_uncertainty = sampling.create_uncertainty(0,0);
+    CP_uncertainty = sampling.create_uncertainty(0,0);
+    CD_uncertainty = sampling.create_uncertainty(0,0);
 
     vehicle = create_rocket(...
         load_mass, ...
@@ -66,26 +70,13 @@ function test_40km_target(testCase)
         main_chute_dia, ...
         chute_attachment_pos, ...
         launch_angle, ...
-        launch_alt);
+        launch_alt, ...
+        thrust_uncertainty, ...
+        CG_uncertainty, ...
+        CP_uncertainty, ...
+        CD_uncertainty);
 
-    stochastic_vars = [
-        "load_mass";
-        "thrust";
-        "CG";
-        "CP";
-        "CD_vehicle";
-        "CD_ballute";
-        "CD_chute";
-        "ballute_alt";
-        "chute_alt";
-        "launch_angle"];
-    [nvars, ~] = size(stochastic_vars);
-    % set error to zero for no uncertainties
-    errors = zeros(1,nvars);
-    scaling = zeros(1,nvars);
-    uncertainties = sampling.create_sample_struct(stochastic_vars, errors, scaling);
-
-    [time, state] = trajectory(vehicle, uncertainties);
+    [time, state] = trajectory(vehicle);
     [apogee, ~] = find_apogee(time, state(:,3));
     verifyEqual(testCase, apogee, TARGET_ALT, 'AbsTol', ACCEPTABLE_ERR);
 end
@@ -120,6 +111,10 @@ function test_100km_target(testCase)
     chute_attachment_pos = 5.66;
     launch_angle = 89;
     launch_alt = 1401;
+    thrust_uncertainty = sampling.create_uncertainty(0,0);
+    CG_uncertainty = sampling.create_uncertainty(0,0);
+    CP_uncertainty = sampling.create_uncertainty(0,0);
+    CD_uncertainty = sampling.create_uncertainty(0,0);
 
     vehicle = create_rocket(...
         load_mass, ...
@@ -147,26 +142,13 @@ function test_100km_target(testCase)
         main_chute_dia, ...
         chute_attachment_pos, ...
         launch_angle, ...
-        launch_alt);
+        launch_alt, ...
+        thrust_uncertainty, ...
+        CG_uncertainty, ...
+        CP_uncertainty, ...
+        CD_uncertainty);
 
-    stochastic_vars = [
-        "load_mass";
-        "thrust";
-        "CG";
-        "CP";
-        "CD_vehicle";
-        "CD_ballute";
-        "CD_chute";
-        "ballute_alt";
-        "chute_alt";
-        "launch_angle"];
-    [nvars, ~] = size(stochastic_vars);
-    % set error to zero for no uncertainties
-    errors = zeros(1,nvars);
-    scaling = zeros(1,nvars);
-    uncertainties = sampling.create_sample_struct(stochastic_vars, errors, scaling);
-
-    [time, state] = trajectory(vehicle, uncertainties);
+    [time, state] = trajectory(vehicle);
     [apogee, ~] = find_apogee(time, state(:,3));
     verifyEqual(testCase, apogee, TARGET_ALT, 'AbsTol', ACCEPTABLE_ERR);
 end

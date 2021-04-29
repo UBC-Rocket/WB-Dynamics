@@ -36,8 +36,15 @@ main_chute_dia = 4.13; % m
 chute_attachment_pos = 5.66; % m
 
 %% Launch properties
-launch_angle = 87; % degrees
+launch_angle = 89; % degrees
 launch_alt = 1401; % meters above sea level
+
+%% Complex variable uncertainties
+% Since this is meant to be non stochastic the `var` is set to zero
+thrust_uncertainty = sampling.create_uncertainty(0,0);
+CG_uncertainty = sampling.create_uncertainty(0,0);
+CP_uncertainty = sampling.create_uncertainty(0,0);
+CD_uncertainty = sampling.create_uncertainty(0,0);
 
 vehicle = create_rocket(...
     load_mass, ...
@@ -65,25 +72,11 @@ vehicle = create_rocket(...
     main_chute_dia, ...
     chute_attachment_pos, ...
     launch_angle, ...
-    launch_alt);
+    launch_alt, ...
+    thrust_uncertainty, ...
+    CG_uncertainty, ...
+    CP_uncertainty, ...
+    CD_uncertainty);
 
-stochastic_vars = [
-    "load_mass";
-    "thrust";
-    "CG";
-    "CP";
-    "CD_vehicle";
-    "CD_ballute";
-    "CD_chute";
-    "ballute_alt";
-    "chute_alt";
-    "launch_angle"];
-[nvars, ~] = size(stochastic_vars);
-% set error to zero for no uncertainties
-errors = zeros(1,nvars);
-scaling = zeros(1,nvars);
-uncertainties = sampling.create_sample_struct(stochastic_vars, errors, scaling);
-
-[time, state] = trajectory(vehicle, uncertainties);
+[time, state] = trajectory(vehicle);
 plot(time, state(:,3));
-%plot(state(:,1), state(:,2));

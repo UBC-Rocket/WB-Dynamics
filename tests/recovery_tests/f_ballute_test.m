@@ -14,14 +14,6 @@ function setup(testCase)
     
     env.density = 10; % If air had a density of 10kg/m^3 irl.....
     testCase.TestData.env = env;
-    
-    vars = [
-        "CD_ballute"
-        "ballute_alt"];
-    errors = zeros(1,2);
-    scaling = zeros(1,2);
-    uncertainties = sampling.create_sample_struct(vars, errors, scaling);
-    testCase.TestData.uncertainties = uncertainties;
 end
 
 function test_vel_positive_below_opening_alt(testCase)
@@ -29,7 +21,6 @@ function test_vel_positive_below_opening_alt(testCase)
     tolerance_type = testCase.TestData.tolerance_type;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
-    uncertainties = testCase.TestData.uncertainties;
     
     altitude = 20000;
     v_ground = [100;500;10];
@@ -40,8 +31,7 @@ function test_vel_positive_below_opening_alt(testCase)
         v_ground,...
         v_apparent,... 
         vehicle,... 
-        env,...
-        uncertainties);
+        env);
     verifyEqual(testCase, actual, expected, tolerance_type, tolerance);
 end
 
@@ -50,7 +40,6 @@ function test_vel_positive_at_opening_alt(testCase)
     tolerance_type = testCase.TestData.tolerance_type;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
-    uncertainties = testCase.TestData.uncertainties;
     
     altitude = 50000;
     v_ground = [100;500;30];
@@ -61,8 +50,7 @@ function test_vel_positive_at_opening_alt(testCase)
         v_ground,...
         v_apparent,... 
         vehicle,... 
-        env,...
-        uncertainties);
+        env);
     verifyEqual(testCase, actual, expected, tolerance_type, tolerance);
 end
 
@@ -71,7 +59,6 @@ function test_vel_positive_above_opening_alt(testCase)
     tolerance_type = testCase.TestData.tolerance_type;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
-    uncertainties = testCase.TestData.uncertainties;
     
     altitude = 1000000;
     v_ground = [0;10;1];
@@ -82,8 +69,7 @@ function test_vel_positive_above_opening_alt(testCase)
         v_ground,...
         v_apparent,... 
         vehicle,... 
-        env,...
-        uncertainties);
+        env);
     verifyEqual(testCase, actual, expected, tolerance_type, tolerance);
 end
 
@@ -92,7 +78,6 @@ function test_vel_negative_above_opening_alt(testCase)
     tolerance_type = testCase.TestData.tolerance_type;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
-    uncertainties = testCase.TestData.uncertainties;
     
     altitude = 1000000;
     v_ground = [0;10;-10];
@@ -103,8 +88,7 @@ function test_vel_negative_above_opening_alt(testCase)
         v_ground,...
         v_apparent,... 
         vehicle,... 
-        env,...
-        uncertainties);
+        env);
     verifyEqual(testCase, actual, expected, tolerance_type, tolerance);
 end
 
@@ -113,7 +97,6 @@ function test_vel_negative_at_opening_alt(testCase)
     tolerance_type = testCase.TestData.tolerance_type;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
-    uncertainties = testCase.TestData.uncertainties;
     
     altitude = 50000;
     v_ground = [0;10;-10];
@@ -124,8 +107,7 @@ function test_vel_negative_at_opening_alt(testCase)
         v_ground,...
         v_apparent,... 
         vehicle,... 
-        env,...
-        uncertainties);
+        env);
     verifyEqual(testCase, actual, expected, tolerance_type, tolerance);
 end
 
@@ -134,7 +116,6 @@ function test_vel_negative_below_opening_alt(testCase)
     tolerance_type = testCase.TestData.tolerance_type;
     vehicle = testCase.TestData.vehicle;
     env = testCase.TestData.env;
-    uncertainties = testCase.TestData.uncertainties;
     
     altitude = 20000;
     v_ground = [0;10;-20];
@@ -145,7 +126,6 @@ function test_vel_negative_below_opening_alt(testCase)
         v_ground,...
         v_apparent,... 
         vehicle,... 
-        env,...
-        uncertainties);
+        env);
     verifyEqual(testCase, actual, expected, tolerance_type, tolerance);
 end

@@ -1,4 +1,4 @@
-function [RocketCGRelBasePosVec,RocketCGRelBaseVelVec,RocketCGRelBaseAccVec] = CG_rel_base(Rocket, Time, uncertainties) 
+function RocketCGRelBasePosVec = CG_rel_base(Rocket, Time) 
 %% General Summary:
 
 % This centre of mass calculation is the most braindead way I can calculate
@@ -69,23 +69,6 @@ CGRocket = ((CGKeroLOX)*((massWetLOX - massLOXBurned)+(massWetKero - massKeroBur
     (massWetKero - massKeroBurned) + (massTopThird + massEngine)); 
 
 %% Making the vectors
-CG_final = sampling.apply_uncertainty(CGRocket, 'CG', uncertainties);
+CG_final = sampling.apply_uncertainty(CGRocket, Rocket.CG_uncertainty);
 RocketCGRelBasePosVec = [CG_final, 0, 0]';
-
-if Time <= Rocket.burn_time
-
-    RocketCGRelBaseVelVec = [0,0,0]';
-    RocketCGRelBaseAccVec = [0,0,0]';
-    % for some reason, this AccVec is not used. I haven't seen a single
-    % reference to it anywhere. 
-    
-    % The VelVec was also _tiny_ and was never really used, so I set it as
-    % equal to the zero vector. Hopefully this doesn't fuck anything up
-
-else
-    
-    RocketCGRelBaseVelVec = [0,0,0]';
-    RocketCGRelBaseAccVec = [0,0,0]';
-    
-end
 end
