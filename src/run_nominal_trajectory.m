@@ -1,4 +1,5 @@
-% Runs the trajectory simulation once in a non stochastic manner
+% Runs the trajectory simulation once in a non stochastic manner using the
+% average values of each parameter.
 clc;
 clear;
 
@@ -35,7 +36,7 @@ main_chute_dia = 4.13; % m
 chute_attachment_pos = 5.66; % m
 
 %% Launch properties
-launch_angle = 89; % degrees
+launch_angle = 87; % degrees
 launch_alt = 1401; % meters above sea level
 
 vehicle = create_rocket(...
@@ -66,5 +67,23 @@ vehicle = create_rocket(...
     launch_angle, ...
     launch_alt);
 
-[time, state] = trajectory(vehicle);
+stochastic_vars = [
+    "load_mass";
+    "thrust";
+    "CG";
+    "CP";
+    "CD_vehicle";
+    "CD_ballute";
+    "CD_chute";
+    "ballute_alt";
+    "chute_alt";
+    "launch_angle"];
+[nvars, ~] = size(stochastic_vars);
+% set error to zero for no uncertainties
+errors = zeros(1,nvars);
+scaling = zeros(1,nvars);
+uncertainties = sampling.create_sample_struct(stochastic_vars, errors, scaling);
+
+[time, state] = trajectory(vehicle, uncertainties);
 plot(time, state(:,3));
+%plot(state(:,1), state(:,2));

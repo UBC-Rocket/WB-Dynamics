@@ -1,4 +1,4 @@
-function f_aero = f_a(v_apparent, time, vehicle, env)
+function f_aero = f_a(v_apparent, time, vehicle, env, uncertainties)
 %F_AERO Computes the drag force on the vehicle
 %   PARAMS:
 %       v_apparent:  Velocity of vehicle relative to atmosphere.
@@ -12,7 +12,7 @@ function f_aero = f_a(v_apparent, time, vehicle, env)
     if mach_num <= 0
         f_aero = [0; 0; 0];
     else
-        CD = aerodynamics.C_d(mach_num, time, vehicle, env);
+        CD = aerodynamics.C_d(mach_num, time, vehicle, env, uncertainties);
         f_aero = -0.5*env.density*norm(v_apparent)*S*CD*v_apparent;
     end
 end

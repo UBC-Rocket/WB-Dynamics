@@ -68,7 +68,24 @@ function test_40km_target(testCase)
         launch_angle, ...
         launch_alt);
 
-    [time, state] = trajectory(vehicle);
+    stochastic_vars = [
+        "load_mass";
+        "thrust";
+        "CG";
+        "CP";
+        "CD_vehicle";
+        "CD_ballute";
+        "CD_chute";
+        "ballute_alt";
+        "chute_alt";
+        "launch_angle"];
+    [nvars, ~] = size(stochastic_vars);
+    % set error to zero for no uncertainties
+    errors = zeros(1,nvars);
+    scaling = zeros(1,nvars);
+    uncertainties = sampling.create_sample_struct(stochastic_vars, errors, scaling);
+
+    [time, state] = trajectory(vehicle, uncertainties);
     [apogee, ~] = find_apogee(time, state(:,3));
     verifyEqual(testCase, apogee, TARGET_ALT, 'AbsTol', ACCEPTABLE_ERR);
 end
@@ -132,7 +149,24 @@ function test_100km_target(testCase)
         launch_angle, ...
         launch_alt);
 
-    [time, state] = trajectory(vehicle);
+    stochastic_vars = [
+        "load_mass";
+        "thrust";
+        "CG";
+        "CP";
+        "CD_vehicle";
+        "CD_ballute";
+        "CD_chute";
+        "ballute_alt";
+        "chute_alt";
+        "launch_angle"];
+    [nvars, ~] = size(stochastic_vars);
+    % set error to zero for no uncertainties
+    errors = zeros(1,nvars);
+    scaling = zeros(1,nvars);
+    uncertainties = sampling.create_sample_struct(stochastic_vars, errors, scaling);
+
+    [time, state] = trajectory(vehicle, uncertainties);
     [apogee, ~] = find_apogee(time, state(:,3));
     verifyEqual(testCase, apogee, TARGET_ALT, 'AbsTol', ACCEPTABLE_ERR);
 end

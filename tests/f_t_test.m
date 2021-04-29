@@ -30,26 +30,34 @@ function setup(testCase)
     vehicle.exp_area_ratio = 2;
     vehicle.prop_flow_rate = 10;
     
+    var = "thrust";
+    errors = 0;
+    scaling = 0;
+    uncertainties = sampling.create_sample_struct(var, errors, scaling);
+    
     testCase.TestData.env = env;
     testCase.TestData.vehicle = vehicle;
+    testCase.TestData.uncertainties = uncertainties;
 end
 
 function check_values(testCase, t, vehicle, env, expected_thrust)
+    uncertainties = testCase.TestData.uncertainties;
+    
     dir1 = [1;0;0];
-    f_thrust = f_t(dir1, t, vehicle, env);
+    f_thrust = f_t(dir1, t, vehicle, env, uncertainties);
     verifyEqual(testCase, f_thrust(1), expected_thrust, 'RelTol', 1e-5);
     verifyEqual(testCase, f_thrust(2), 0);
     verifyEqual(testCase, f_thrust(3), 0);
     
     dir2 = [0;1;0];
-    f_thrust = f_t(dir2, t, vehicle, env);
+    f_thrust = f_t(dir2, t, vehicle, env, uncertainties);
     verifyEqual(testCase, f_thrust(1), 0);
     verifyEqual(testCase, f_thrust(2), expected_thrust, 'RelTol', 1e-5);
     verifyEqual(testCase, f_thrust(3), 0);
     
     angle = pi/2;
     dir3 = [cos(angle);sin(angle);0];
-    f_thrust = f_t(dir3, t, vehicle, env);
+    f_thrust = f_t(dir3, t, vehicle, env, uncertainties);
     verifyEqual(...
         testCase,...
         f_thrust(1),...

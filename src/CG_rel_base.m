@@ -1,4 +1,4 @@
-function [RocketCGRelBasePosVec,RocketCGRelBaseVelVec,RocketCGRelBaseAccVec] = CG_rel_base(Rocket,Time) 
+function [RocketCGRelBasePosVec,RocketCGRelBaseVelVec,RocketCGRelBaseAccVec] = CG_rel_base(Rocket, Time, uncertainties) 
 %% General Summary:
 
 % This centre of mass calculation is the most braindead way I can calculate
@@ -69,7 +69,8 @@ CGRocket = ((CGKeroLOX)*((massWetLOX - massLOXBurned)+(massWetKero - massKeroBur
     (massWetKero - massKeroBurned) + (massTopThird + massEngine)); 
 
 %% Making the vectors
-RocketCGRelBasePosVec = [CGRocket, 0, 0]';
+CG_final = sampling.apply_uncertainty(CGRocket, 'CG', uncertainties);
+RocketCGRelBasePosVec = [CG_final, 0, 0]';
 
 if Time <= Rocket.burn_time
 

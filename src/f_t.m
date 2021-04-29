@@ -1,4 +1,4 @@
-function f_thrust = f_t(dir, time, vehicle, env)
+function f_thrust = f_t(dir, time, vehicle, env, uncertainties)
 %F_T Computes thrust force produced by engine at a given time and
 %atmosphere condition.
 %   `dir` must be a unit vector that points in the direction of the thrust
@@ -12,7 +12,14 @@ function f_thrust = f_t(dir, time, vehicle, env)
             ^((env.sp_heat_ratio - 1)/env.sp_heat_ratio)))) + vehicle.c_star...
             *vehicle.exp_area_ratio/(env.grav_accel_SL*vehicle.chamber_pressure)...
             *(vehicle.exit_pressure - env.pressure));
-        f_thrust = sp_impulse*vehicle.prop_flow_rate*env.grav_accel_SL*dir;
+        % Magnitudes
+        f_thrust_nominal = sp_impulse*vehicle.prop_flow_rate*env.grav_accel_SL;
+        f_thrust_final = sampling.apply_uncertainty(...
+            f_thrust_nominal,...
+            'thrust',...
+            uncertainties);
+        % Final vector value
+        f_thrust = f_thrust_final*dir;
     else
         f_thrust = [0;0;0];
     end
