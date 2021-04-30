@@ -1,0 +1,29 @@
+Variable,Value,Units
+load mass,replace with value here,kg
+fuselage diameter,replace with value here,m
+fuselage length,replace with value here,m
+nose cone length,replace with value here,m
+number of fins,replace with value here,discrete
+fin span,replace with value here,m
+fin thickness,replace with value here,m
+fin leading edge sweep angle,replace with value here,degrees
+fin leading edge thickness angle,replace with value here,degrees
+burn time,replace with value here,s
+propellant flow rate,replace with value here,kg/s
+nozzle efficiency,replace with value here,no units
+c star,replace with value here,m/s
+exit pressure,replace with value here,Pa
+chamber pressure,replace with value here,Pa
+expansion area ratio,replace with value here,no units
+nozzle exit area,replace with value here,m^2
+ballute opening altitude,replace with value here,m
+main chute opening altitude,replace with value here,m
+ballute drag coefficient,replace with value here,no units
+main chute opening coefficient,replace with value here,no units
+ballute diameter,replace with value here,m
+main chute diameter,replace with value here,m
+number of ballutes,replace with value here,discrete
+number of chutes,replace with value here,discrete
+chute attachment position relative to base,replace with value here,m
+launch angle,replace with value here,degrees
+launch altitude above sea level,replace with value here,m

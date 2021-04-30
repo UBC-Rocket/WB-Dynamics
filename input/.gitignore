@@ -1,0 +1,4 @@
+# Everything except the template and gitignore
+/*
+!.gitignore
+!template.csv

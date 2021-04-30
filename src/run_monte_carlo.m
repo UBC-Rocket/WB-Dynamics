@@ -8,43 +8,48 @@ rng default; % For reproducibility
 
 OUTPUT_PATH = "../output";
 OUTPUT_FILE = fullfile(OUTPUT_PATH, "output.csv");
+INPUT_PATH = "../input";
+INPUT_FILE = fullfile(INPUT_PATH, "input.csv");
 NUM_OF_SAMPLES = 100;
+parameters = parse_input(INPUT_FILE);
 
 %% Physical properties
-load_mass = 657.6964825; % kg
-fuselage_dia = 0.4064; % meters
-fuselage_length = 7.006609822; % meters
-nose_length = 0.7112; % meters
+load_mass = parameters.load_mass;
+fuselage_dia = parameters.fuselage_dia;
+fuselage_length = parameters.fuselage_length;
+nose_length = parameters.nose_length;
 
 %% Fin properties
-num_of_fins = 4;
-fin_span = 0.4064;
-fin_thickness = 0.01;
-fin_leading_edge_sweep_angle = 30;
-fin_leading_edge_thickness_angle = 15;
+num_of_fins = parameters.num_of_fins;
+fin_span = parameters.fin_span;
+fin_thickness = parameters.fin_thickness;
+fin_leading_edge_sweep_angle = parameters.fin_leading_edge_sweep_angle;
+fin_leading_edge_thickness_angle = parameters.fin_leading_edge_thickness_angle;
 
 %% Engine properties
-burn_time = 36; % s
-prop_flow_rate = 12; % kg/s
-nozzle_eff = 0.98;
-c_star = 1584.619354; % m/s
-exit_pressure = 62227.7237; % Pa
-chamber_pressure = 900000; % Pa
-exp_area_ratio = 2.8;
-nozzle_exit_area = 0.06244574; %m^2
+burn_time = parameters.burn_time;
+prop_flow_rate = parameters.prop_flow_rate;
+nozzle_eff = parameters.nozzle_eff;
+c_star = parameters.c_star;
+exit_pressure = parameters.exit_pressure;
+chamber_pressure = parameters.chamber_pressure;
+exp_area_ratio = parameters.exp_area_ratio;
+nozzle_exit_area = parameters.nozzle_exit_area;
 
 %% Recovery properties
-ballute_alt = 75000; % meters above sea level
-main_chute_alt = 3000; % meters above sea level
-ballute_drag_coeff = 0.75;
-main_chute_drag_coeff = 0.53;
-ballute_dia = 1; % m
-main_chute_dia = 4.13; % m
-chute_attachment_pos = 5.66; % m
+ballute_alt = parameters.ballute_alt;
+main_chute_alt = parameters.main_chute_alt;
+ballute_drag_coeff = parameters.ballute_drag_coeff;
+main_chute_drag_coeff = parameters.main_chute_drag_coeff;
+ballute_dia = parameters.ballute_dia;
+main_chute_dia = parameters.main_chute_dia;
+chute_attachment_pos = parameters.chute_attachment_pos;
+number_of_ballutes = parameters.number_of_ballutes;
+number_of_chutes = parameters.number_of_chutes;
 
 %% Launch properties
-launch_angle = 87; % degrees
-launch_alt = 1401; % meters above sea level
+launch_angle = parameters.launch_angle;
+launch_alt = parameters.launch_alt;
 
 %% Take samples
 % Variables that will be sampled:
@@ -140,6 +145,8 @@ for sam_num = 1:NUM_OF_SAMPLES
         main_chute_drag_coeff_sam, ...
         ballute_dia, ...
         main_chute_dia, ...
+        number_of_ballutes, ...
+        number_of_chutes, ...
         chute_attachment_pos, ...
         launch_angle_sam, ...
         launch_alt, ...
