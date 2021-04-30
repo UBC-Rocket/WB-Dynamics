@@ -21,6 +21,7 @@ function parameters = parse_input(path_to_file)
         {'chamber pressure'}
         {'expansion area ratio'}
         {'nozzle exit area'}
+        {'thrust misalignment angle'}
         {'ballute opening altitude'}
         {'main chute opening altitude'}
         {'ballute drag coefficient'}
@@ -50,6 +51,7 @@ function parameters = parse_input(path_to_file)
         "chamber_pressure"
         "exp_area_ratio"
         "nozzle_exit_area"
+        "thrust_misalign_angle"
         "ballute_alt"
         "main_chute_alt"
         "ballute_drag_coeff"

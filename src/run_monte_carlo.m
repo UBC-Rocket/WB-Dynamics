@@ -35,6 +35,7 @@ exit_pressure = parameters.exit_pressure;
 chamber_pressure = parameters.chamber_pressure;
 exp_area_ratio = parameters.exp_area_ratio;
 nozzle_exit_area = parameters.nozzle_exit_area;
+thrust_misalign_angle = parameters.thrust_misalign_angle;
 
 %% Recovery properties
 ballute_alt = parameters.ballute_alt;
@@ -58,6 +59,7 @@ launch_alt = parameters.launch_alt;
 %	CG
 %	CP
 %	CD_vehicle
+%   thrust_misalign_angle
 %	CD_ballute
 %	CD_chute
 %	ballute_alt
@@ -65,16 +67,17 @@ launch_alt = parameters.launch_alt;
 %	launch_angle
 % All from a normal distribution.
 
-load_mass_sd = 0.01;
-thrust_err = 0.05;
-CG_err = 0.05;
-CP_err = 0.05;
-CD_vehicle_err = 0.05;
-CD_chute_sd = 0.05;
-CD_ballute_sd = 0.05;
-chute_alt_sd = 0.01;
-ballute_alt_sd = 0.01;
-launch_angle_sd = 0.0005;
+load_mass_sd = 0.01*load_mass;              % Absolute errror
+thrust_err = 0.05;                          % Percent error
+CG_err = 0.05;                              % Percent error
+CP_err = 0.05;                              % Percent error
+CD_vehicle_err = 0.05;                      % Percent error
+thrust_misalign_angle_sd = 0.2;             % Absolute errror
+CD_chute_sd = 0.05*main_chute_drag_coeff;   % Absolute errror
+CD_ballute_sd = 0.05*ballute_drag_coeff;    % Absolute errror
+chute_alt_sd = 1;                           % Absolute errror
+ballute_alt_sd = 1;                         % Absolute errror
+launch_angle_sd = 0.05;                     % Absolute errror
 
 means = [
     load_mass;
@@ -82,6 +85,7 @@ means = [
     0;
     0;
     0;
+    thrust_misalign_angle;
     main_chute_drag_coeff;
     ballute_drag_coeff;
     main_chute_alt;
@@ -94,6 +98,7 @@ sds = [
     1/3;
     1/3;
     1/3;
+    thrust_misalign_angle_sd;
     CD_chute_sd;
     CD_ballute_sd;
     chute_alt_sd;
@@ -115,11 +120,12 @@ for sam_num = 1:NUM_OF_SAMPLES
     CG_uncertainty = sampling.create_uncertainty(CG_err,uncertainties(sam_num, 3));
     CP_uncertainty = sampling.create_uncertainty(CP_err,uncertainties(sam_num, 4));
     CD_uncertainty = sampling.create_uncertainty(CD_vehicle_err,uncertainties(sam_num, 5));
-    main_chute_drag_coeff_sam = uncertainties(sam_num,6);
-    ballute_drag_coeff_sam = uncertainties(sam_num,7);
-    main_chute_alt_sam = uncertainties(sam_num,8);
-    ballute_alt_sam = uncertainties(sam_num,9);
-    launch_angle_sam = uncertainties(sam_num,10);
+    thrust_misalign_angle_sam = uncertainties(sam_num,6);
+    main_chute_drag_coeff_sam = uncertainties(sam_num,7);
+    ballute_drag_coeff_sam = uncertainties(sam_num,8);
+    main_chute_alt_sam = uncertainties(sam_num,9);
+    ballute_alt_sam = uncertainties(sam_num,10);
+    launch_angle_sam = uncertainties(sam_num,11);
     
     vehicle = create_rocket(...
         load_mass_sam, ...
@@ -139,6 +145,7 @@ for sam_num = 1:NUM_OF_SAMPLES
         chamber_pressure, ...
         exp_area_ratio, ...
         nozzle_exit_area, ...
+        thrust_misalign_angle_sam, ...
         ballute_alt_sam, ...
         main_chute_alt_sam, ...
         ballute_drag_coeff_sam, ...

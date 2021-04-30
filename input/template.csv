@@ -16,6 +16,7 @@ exit pressure,replace with value here,Pa
 chamber pressure,replace with value here,Pa
 expansion area ratio,replace with value here,no units
 nozzle exit area,replace with value here,m^2
+thrust misalignment angle,replace with value here,degrees
 ballute opening altitude,replace with value here,m
 main chute opening altitude,replace with value here,m
 ballute drag coefficient,replace with value here,no units
