@@ -1,39 +1,6 @@
-function vehicle = create_rocket(...
-    load_mass, ...
-    fuselage_dia, ...
-    fuselage_length, ...
-    nose_length, ...
-    num_of_fins, ...
-    fin_span, ...
-    fin_thickness, ...
-    fin_leading_edge_sweep_angle, ...
-    fin_leading_edge_thickness_angle, ...
-    burn_time, ...
-    prop_flow_rate, ...
-    nozzle_eff, ...
-    c_star, ...
-    exit_pressure, ...
-    chamber_pressure, ...
-    exp_area_ratio, ...
-    nozzle_exit_area, ...
-    thrust_misalign_angle, ...
-    ballute_alt, ...
-    main_chute_alt, ...
-    ballute_drag_coeff, ...
-    main_chute_drag_coeff, ...
-    ballute_dia, ...
-    main_chute_dia, ...
-    number_of_ballutes, ...
-    number_of_chutes, ...
-    chute_attachment_pos, ...
-    launch_angle, ...
-    launch_alt, ...
-    thrust_uncertainty, ...
-    CG_uncertainty, ...
-    CP_uncertainty, ...
-    CD_uncertainty)
+function vehicle = rocket_nominal(input_file)
 % Generates a MATLAB struct that contains all the static
-% properties of a rocket. 
+% properties of a rocket from a file. 
 %   There isn't any fine control on
 %   what happens to each field which suggests that perhaps
 %   an object oriented approach would perhaps be better in
@@ -113,57 +80,27 @@ function vehicle = create_rocket(...
 %               where `var` is the percentage error of the total vehicle CD
 %               and `rand` is a random number sampled from a distribution
 %               with a lower bound of -1 and an upper bound of 1.
+%       Since this is using nominal values, the uncertainties are set to
+%       zero.
 
-    %% Physical properties
-    vehicle.load_mass = load_mass;
-    vehicle.fuselage_diameter = fuselage_dia;
-    vehicle.fuselage_length = fuselage_length;
-    vehicle.nose_length = nose_length;
+    % The majority of the properties are already stored in this struct. The
+    % next few lines aims to add a couple extra that are not explictly
+    % specified by the input file.
+    vehicle = parse_input(input_file);
     
-    %% Fin properties
-    vehicle.num_of_fins = num_of_fins;
-    vehicle.fin_span = fin_span;
-    vehicle.fin_thickness = fin_thickness;
-    vehicle.fin_leading_edge_sweep_angle = fin_leading_edge_sweep_angle;
-    vehicle.fin_leading_edge_thickness_angle = fin_leading_edge_thickness_angle;
     vehicle.roll_axis_body = [1;0;0];
-    
-    %% Engine properties
-    vehicle.burn_time = burn_time;
-    vehicle.prop_flow_rate = prop_flow_rate;
-    vehicle.nozzle_eff = nozzle_eff;
-    vehicle.c_star = c_star;
-    vehicle.exit_pressure = exit_pressure;
-    vehicle.chamber_pressure = chamber_pressure;
-    vehicle.exp_area_ratio = exp_area_ratio;
-    vehicle.nozzle_exit_area = nozzle_exit_area;
     vehicle.thrust_dir_body = [
-        cosd(thrust_misalign_angle);
+        cosd(vehicle.thrust_misalign_angle);
         0;
-        sind(thrust_misalign_angle)];
-
-    %% Recovery properties
-    vehicle.ballute_alt = ballute_alt;
-    vehicle.main_chute_alt = main_chute_alt;
-    vehicle.ballute_drag_coeff = ballute_drag_coeff;
-    vehicle.main_chute_drag_coeff = main_chute_drag_coeff;
-    vehicle.ballute_dia = ballute_dia;
-    vehicle.main_chute_dia = main_chute_dia;
-    vehicle.num_of_ballutes = number_of_ballutes;
-    vehicle.num_of_chutes = number_of_chutes;
-    vehicle.chute_attachment_rel_base = [chute_attachment_pos;0;0];
-
+        sind(vehicle.thrust_misalign_angle)];
+    
+    %% Recovery property
+    vehicle.chute_attachment_rel_base = [vehicle.chute_attachment_pos;0;0];
+    
     %% Launch properties
-    vehicle.launch_angle = launch_angle;
-    vehicle.launch_alt = launch_alt;
+    % set static for now until better model is developed
     vehicle.rail_length = 15;
     vehicle.rail_fric_coeff = 0;
-    
-    %% Complex variable uncertainties
-    vehicle.thrust_uncertainty = thrust_uncertainty;
-    vehicle.CG_uncertainty = CG_uncertainty; 
-    vehicle.CP_uncertainty = CP_uncertainty;
-    vehicle.CD_uncertainty = CD_uncertainty; 
     
     %% Memonize repetitive calculations for CD
     vehicle.S_r = pi*(vehicle.fuselage_diameter/2)^2; % Reference diameter
@@ -172,4 +109,12 @@ function vehicle = create_rocket(...
     vehicle.AR_N = vehicle.nose_length/vehicle.fuselage_diameter; % Aspect ratio nose
     vehicle.A_le = deg2rad(vehicle.fin_leading_edge_sweep_angle); % Fin leading edge sweep angle
     vehicle.S_le = deg2rad(vehicle.fin_leading_edge_thickness_angle); % Fin leading edge thickness angle
+    
+    %% Complex uncertainties.
+    % Set to zero because this is non-stochastic
+    vehicle.thrust_uncertainty = sampling.create_uncertainty(0,0);
+    vehicle.CG_uncertainty = sampling.create_uncertainty(0,0);
+    vehicle.CP_uncertainty = sampling.create_uncertainty(0,0);
+    vehicle.CD_uncertainty = sampling.create_uncertainty(0,0);
 end
+

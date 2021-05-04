@@ -2,7 +2,6 @@ Variable,Value,Units
 load mass,replace with value here,kg
 fuselage diameter,replace with value here,m
 fuselage length,replace with value here,m
-nose cone length,replace with value here,m
 number of fins,replace with value here,discrete
 fin span,replace with value here,m
 fin thickness,replace with value here,m
@@ -20,7 +19,7 @@ thrust misalignment angle,replace with value here,degrees
 ballute opening altitude,replace with value here,m
 main chute opening altitude,replace with value here,m
 ballute drag coefficient,replace with value here,no units
-main chute opening coefficient,replace with value here,no units
+main chute drag coefficient,replace with value here,no units
 ballute diameter,replace with value here,m
 main chute diameter,replace with value here,m
 number of ballutes,replace with value here,discrete
@@ -28,3 +27,35 @@ number of chutes,replace with value here,discrete
 chute attachment position relative to base,replace with value here,m
 launch angle,replace with value here,degrees
 launch altitude above sea level,replace with value here,m
+nose cone mass,replace with value here,kg
+payload adapter mass,replace with value here,kg
+payload mass,replace with value here,kg
+nose cone int hull mass,replace with value here,kg
+avionics rec section hull mass,replace with value here,kg
+avionics mass,replace with value here,kg
+recovery system mass,replace with value here,kg
+recovery chute mass,replace with value here,kg
+pressurant tank mass,replace with value here,kg
+pressurant gas mass,replace with value here,kg
+pressurant mount mass,replace with value here,kg
+pressurant LOX interface hull mass,replace with value here,kg
+pressurant RCS mass,replace with value here,kg
+LOX tank mass,replace with value here,kg
+LOX mass,replace with value here,kg
+LOX kero interface hull mass,replace with value here,kg
+kero tank mass,replace with value here,kg
+kero mass,replace with value here,kg
+kero engine interface hull mass,replace with value here,kg
+mass engine,replace with value here,kg
+nose cone length,replace with value here,m
+payload length,replace with value here,m
+recovery system length,replace with value here,m
+pressurant tank length,replace with value here,m
+pressurant LOX int hull length,replace with value here,m
+LOX tank length,replace with value here,m
+LOX kero int hull length,replace with value here,m
+kero tank length,replace with value here,m
+kero eng int hull length,replace with value here,m
+engine length,replace with value here,m
+mass flow LOX,replace with value here,kg/s
+mass flow kero,replace with value here,kg/s

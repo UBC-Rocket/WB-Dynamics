@@ -7,7 +7,6 @@ function parameters = parse_input(path_to_file)
         {'load mass'}
         {'fuselage diameter'}
         {'fuselage length'}
-        {'nose cone length'}
         {'number of fins'}
         {'fin span'}
         {'fin thickness'}
@@ -25,19 +24,54 @@ function parameters = parse_input(path_to_file)
         {'ballute opening altitude'}
         {'main chute opening altitude'}
         {'ballute drag coefficient'}
-        {'main chute opening coefficient'}
+        {'main chute drag coefficient'}
         {'ballute diameter'}
         {'main chute diameter'}
         {'number of ballutes'}
         {'number of chutes'}
         {'chute attachment position relative to base'}
         {'launch angle'}
-        {'launch altitude above sea level'}];
+        {'launch altitude above sea level'}
+        % top 1/3 of rocket mass values
+        {'nose cone mass'}
+        {'payload adapter mass'}
+        {'payload mass'}
+        {'nose cone int hull mass'}
+        {'avionics rec section hull mass'}
+        {'avionics mass'}
+        {'recovery system mass'}
+        {'recovery chute mass'}
+        {'pressurant tank mass'}
+        {'pressurant gas mass'}
+        {'pressurant mount mass'}
+        {'pressurant LOX interface hull mass'}
+        {'pressurant RCS mass'}
+        % LOX & Kero Tank values
+        {'LOX tank mass'}
+        {'LOX mass'}
+        {'LOX kero interface hull mass'}
+        {'kero tank mass'}
+        {'kero mass'}
+        {'kero engine interface hull mass'}
+        {'mass engine'}
+        % top third of rocket lengths
+        {'nose cone length'}
+        {'payload length'}
+        {'recovery system length'}
+        % Tank Info
+        {'pressurant tank length'}
+        {'pressurant LOX int hull length'}
+        {'LOX tank length'}
+        {'LOX kero int hull length'}
+        {'kero tank length'}
+        {'kero eng int hull length'} 
+        {'engine length'}
+        {'mass flow LOX'}
+        {'mass flow kero'}];
     parsed_variable_names = [
         "load_mass"
-        "fuselage_dia"
+        "fuselage_diameter"
         "fuselage_length"
-        "nose_length"
         "num_of_fins"
         "fin_span"
         "fin_thickness"
@@ -58,139 +92,161 @@ function parameters = parse_input(path_to_file)
         "main_chute_drag_coeff"
         "ballute_dia"
         "main_chute_dia"
-        "number_of_ballutes"
-        "number_of_chutes"
+        "num_of_ballutes"
+        "num_of_chutes"
         "chute_attachment_pos"
         "launch_angle"
         "launch_alt"
-    ];
+        "nose_cone_mass"
+        "payload_adapter_mass"
+        "payload_mass"
+        "nose_cone_int_hull_mass"
+        "avi_rec_section_hull_mass"
+        "avi_mass"
+        "rec_sys_mass"
+        "rec_chute_mass"
+        "pressurant_tank_mass"
+        "pressurant_gas_mass"
+        "pressurant_mount_mass"
+        "pressureant_LOX_int_hull_mass"
+        "pressurant_RCS_mass"
+        "LOX_tank_mass"
+        "LOX_mass"
+        "LOX_kero_int_hull_mass"
+        "kero_tank_mass"
+        "kero_mass"
+        "kero_engine_int_hull_mass"
+        "mass_engine"
+        "nose_length"
+        "payload_length"
+        "rec_sys_length"
+        "pressurant_tank_length"
+        "pressurant_LOX_int_hull_length"
+        "LOX_tank_length"
+        "LOX_kero_int_hull_length"
+        "kero_tank_length"
+        "kero_eng_int_hull_length"
+        "engine_length"
+        "mass_flow_LOX"
+        "mass_flow_kero"];
 
     % Validate and parse values
     for i = 1:length(expected_variable_names)
         rows = strcmp(result.Variable, expected_variable_names(i));
         if any(rows)
+            % A generic check to see if all values are greater than zero.
+            % Field specific checks are below and are somewhat of a hard
+            % code for now.
+            parsed_value = result.Value(rows);
+            if parsed_value < 0
+                ME = MException(...
+                    'input:bad_input',...
+                    'Error, %s should not be less than zero, given: &s',...
+                    string(expected_variable_names(i)),...
+                    parsed_value);
+                throw(ME);
+            end
             parameters.(parsed_variable_names(i)) = result.Value(rows);
         else
-            error(...
-                'Error, \n%s does not contain the row %s',...
+            ME = MException(...
+                'input:bad_input',...
+                'Error, %s does not contain the row %s',...
                 path_to_file,...
                 string(expected_variable_names(i))); 
+            throw(ME);
         end
     end
+    % At this point we already know all values are at least zero or greater.
     % Check if input values makes "sense"
     % Somewhat of a hard code for now....
-    if parameters.load_mass <= 0
-        error(...
-        'Error, \n load mass must be greater than zero, value given: %s',...
-        parameters.load_mass);
+    if parameters.load_mass == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, load mass must be greater than zero, value given: %s',...
+            parameters.load_mass);
+        throw(ME);
     end
-    if parameters.fuselage_dia <= 0
-        error(...
-        'Error, \n fuselage diameter must be greater than zero, value given: %s',...
-        parameters.fuselage_dia);
+    if parameters.fuselage_diameter == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, fuselage diameter must be greater than zero, value given: %s',...
+            parameters.fuselage_dia);
+        throw(ME);
     end
-    if parameters.fuselage_length <= 0
-        error(...
-        'Error, \n fuselage length must be greater than zero, value given: %s',...
-        parameters.fuselage_length);
+    if parameters.fuselage_length == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, fuselage length must be greater than zero, value given: %s',...
+            parameters.fuselage_length);
+        throw(ME);
     end
-    if parameters.nose_length <= 0
-        error(...
-        'Error, \n nose cone length must be greater than zero, value given: %s',...
-        parameters.nose_length);
+    if parameters.nose_length == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, nose cone length must be greater than zero, value given: %s',...
+            parameters.nose_length);
+        throw(ME);
     end
     if parameters.nose_length > parameters.fuselage_length
-        error('Error, \n nose cone length cannot be longer than entire vehicle');
-    end
-    if parameters.num_of_fins < 0
-        error(...
-            'Error, \n number of fins must be 0 or greater, given: %s',...
-            parameters.num_of_fins);
+        ME = MException(...
+            'input:bad_input',...
+            'Error, nose cone length cannot be longer than entire vehicle');
+        throw(ME);
     end
     if floor(parameters.num_of_fins) ~= ceil(parameters.num_of_fins)
-        error(...
-            'Error, \n number of fins must be a whole number, given: %s',...
+        ME = MException(...
+            'input:bad_input',...
+            'Error, number of fins must be a whole number, given: %s',...
             parameters.num_of_fins);
+        throw(ME);
     end
-    if parameters.fin_span <= 0
-        error(...
-            'Error, \n fin span must be greater than zero, given: %s',...
-            parameters.fin_span);
-    end
-    if parameters.fin_thickness <= 0
-        error(...
-            'Error, \n fin thickness must be greater than zero, given: %s',...
-            parameters.fin_thickness);
-    end
-    if parameters.burn_time <= 0
-        error(...
-            'Error, \n burn time must be greater than zero, given: %s',...
+    if parameters.burn_time == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, burn time must be greater than zero, given: %s',...
             parameters.burn_time);
+        throw(ME);
     end
-    if parameters.prop_flow_rate <= 0
-        error(...
-            'Error, \n propellant flow rate must be greater than zero, given: %s',...
+    if parameters.prop_flow_rate == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, propellant flow rate must be greater than zero, given: %s',...
             parameters.prop_flow_rate);
+        throw(ME);
     end
-    if (parameters.nozzle_eff <= 0) || (parameters.nozzle_eff > 1)
-        error(...
-            'Error, \n nozzle efficiency must be between 0 and 1, given: %s',...
+    if (parameters.nozzle_eff == 0) || (parameters.nozzle_eff > 1)
+        ME = MException(...
+            'input:bad_input',...
+            'Error, nozzle efficiency must be between 0 and 1, given: %s',...
             parameters.nozzle_eff);
+        throw(ME);
     end
-    if parameters.exp_area_ratio <= 0
-        error(...
-            'Error, \n expansion area ratio must be greater than zero, given: %s',...
+    if parameters.exp_area_ratio == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, expansion area ratio must be greater than zero, given: %s',...
             parameters.exp_area_ratio);
+        throw(ME);
     end
-    if parameters.nozzle_exit_area <= 0
-        error(...
-            'Error, \n nozzle exit area must be greater than zero, given: %s',...
+    if parameters.nozzle_exit_area == 0
+        ME = MException(...
+            'input:bad_input',...
+            'Error, nozzle exit area must be greater than zero, given: %s',...
             parameters.nozzle_exit_area);
+        throw(ME);
     end
-    if parameters.ballute_drag_coeff < 0
-        error(...
-            'Error, \n ballute drag coefficient must be greater than or equal to zero, given: %s',...
-            parameters.ballute_drag_coeff);
+    if floor(parameters.num_of_ballutes) ~= ceil(parameters.num_of_ballutes)
+        ME = MException(...
+            'input:bad_input',...
+            'Error, number of ballutes must be a whole number, given: %s',...
+            parameters.num_of_ballutes);
+        throw(ME);
     end
-    if parameters.main_chute_drag_coeff < 0
-        error(...
-            'Error, \n main chute drag coefficient must be greater than or equal to zero, givenL %s',...
-            parameters.main_chute_drag_coeff);
-    end
-    if parameters.ballute_dia < 0
-        error(...
-            'Error, \n ballute diameter must be greater than or equal to zero, givenL %s',...
-            parameters.ballute_dia);
-    end
-    if parameters.main_chute_dia < 0
-        error(...
-            'Error, \n main chute diameter must be greater than or equal to zero, givenL %s',...
-            parameters.main_chute_dia);
-    end
-    if parameters.number_of_ballutes < 0
-        error(...
-            'Error, \n number of ballutes must be greater than or equal to zero, givenL %s',...
-            parameters.number_of_ballutes);
-    end
-    if floor(parameters.number_of_ballutes) ~= ceil(parameters.number_of_ballutes)
-        error(...
-            'Error, \n number of ballutes must be a whole number, given: %s',...
-            parameters.number_of_ballutes);
-    end
-    if parameters.number_of_chutes < 0
-        error(...
-            'Error, \n number of main chutes must be greater than or equal to zero, given: %s',...
-            parameters.number_of_chutes);
-    end
-    if floor(parameters.number_of_chutes) ~= ceil(parameters.number_of_chutes)
-        error(...
-            'Error, \n number of chutes must be a whole number, given: %s',...
-            parameters.number_of_chutes);
-    end
-    if parameters.chute_attachment_pos < 0
-        error(...
-            'Error, \n chute attachment position relative to base must be zero or greater, given: %s',...
-            parameters.chute_attachment_pos);
+    if floor(parameters.num_of_chutes) ~= ceil(parameters.num_of_chutes)
+        ME = MException(...
+            'input:bad_input',...
+            'Error, number of chutes must be a whole number, given: %s',...
+            parameters.num_of_chutes);
+        throw(ME);
     end
 end
-
