@@ -69,12 +69,12 @@ end
 function test_parse_bad_structure(testCase)
     testCase.verifyError(...
         @()parse_input('./bad_structure.csv'),...
-        'input:bad_input');
+        'fields_input:bad_input');
 end
 
 function test_parse_bad_values(testCase)
     testCase.verifyError(...
         @()parse_input('./bad_values.csv'),...
-        'input:bad_input');
+        'fields_input:bad_input');
 end
 

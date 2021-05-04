@@ -1,4 +1,5 @@
 # Everything except the template and gitignore
 /*
 !.gitignore
-!template.csv
+!template_errors_input.csv
+!template_fields_input.csv

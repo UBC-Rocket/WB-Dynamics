@@ -1,0 +1,12 @@
+Variable,Value,Units,Uncertainty
+load mass standard deviation,1,kg,Absolute
+thrust scaling factor,0.05,no units,Relative
+CG scaling factor,0.05,no units,Relative
+CP scaling factor,0.05,no units,Relative
+CD vehicle scaling factor,-0.1,no units,Relative
+thrust misalignment standard deviation,0,degrees,Absolute
+ballute CD standard deviation,0.03,no units,Absolute
+main chute CD standard deviation,0.02,no units,Absolute
+ballute opening altitude standard deviation,1,m,Absolute
+main chute opening altitude standard deviation,2,m,Absolute
+launch angle standard deviation,0.05,degrees,Absolute 
