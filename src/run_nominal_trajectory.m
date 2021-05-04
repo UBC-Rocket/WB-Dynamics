@@ -6,7 +6,7 @@ clear;
 format short g;
 
 INPUT_PATH = "../input";
-INPUT_FILE = fullfile(INPUT_PATH, "input.csv");
+INPUT_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 vehicle = rocket_nominal(INPUT_FILE);
 
 %% Run simulation
