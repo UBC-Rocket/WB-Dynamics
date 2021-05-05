@@ -1,6 +1,37 @@
 function errors = parse_error(path_to_file)
 %UNTITLED Validates then parses values regarding uncertainties from file
-%into a struct.
+%   Will throw MException if failed to parse values or failed validation.
+%
+%   Input:
+%       path_to_file: path of file containing uncertanties to use
+%   Ouput:
+%       errors: struct containing the fields:
+%           - load_mass_sd : standard deviation of the load mass as an
+%                            absolute uncertainty
+%           - thrust_variation : percentage variation of the thrust force.
+%                                See `sampling.apply_uncertainty` to see
+%                                how this value is used
+%           - CG_variation : percentage variation of the CG position
+%                            relative to the base of the vehicle. See
+%                           `sampling.apply_uncertainty` to see how this 
+%                            value would be used
+%           - CD_vehicle_variation : percentage varition of the vehicle CD.
+%                                    See `sampling.apply_uncertainty` to 
+%                                    see how this value would be used
+%           - thrust_msialgin_angle_sd : standard deviation of the thrust
+%                                        misalignment angle as an absolute 
+%                                        uncertainty
+%           - CD_ballute_sd: standard deviation of the ballute CD value as
+%                            an absolute uncertainty
+%           - CD_chute_sd: standard deviation of the main chute CD value as
+%                          an absolute uncertainty
+%           - ballute_alt_sd: standard deviation of the ballute opening
+%                             altitude as an absolute uncertainty
+%           - chute_alt_sd: standard deviation of the main chute opening
+%                           altitude as an absolute uncertainty
+%           - launch_angle_sd: standard deviation of the launch angle as an
+%                              absolute uncertainty
+%
     result = readtable(path_to_file);
 
     expected_variable_names = [

@@ -4,6 +4,21 @@
 % is not at the axis of rotation but it is a decent approximation.
 % Fix this to account for non-centered CG along cylinder.
 function moment_of_inertia = MOI(mass, vehicle)
+%MOMENT_OF_INERTIA Computes moment of inertia matrix of vehicle
+%   Assumes rocket is a solid cylinder with axis of rotation
+%   along midway points. Note that the actual center of mass
+%   is not at the axis of rotation but it is a decent approximation.
+%   Fix this to account for non-centered CG along cylinder.
+%
+%   Input:
+%       mass: mass of vehicle in kg
+%       vehicle: struct holding vehicle properties. See `rocket_nominal`
+%           function to see all fields that this struct contains
+%   Output:
+%       moment_of_inertia: 3x3 moment of inertia matrix where diagonal
+%       entries represents the MOI with respect to the rotation axes of x, 
+%       y, z respectively
+%
     % First row of MOI matrix
     m11 = (1/2)*mass*(vehicle.fuselage_diameter/2)^2;
     m12 = 0;

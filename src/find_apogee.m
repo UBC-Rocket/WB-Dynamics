@@ -4,6 +4,14 @@ function [apogee_altitude, apogee_time] = find_apogee(time, altitude)
 %   This algorithm should always work as the altitude argument should be of
 %   points where the function has only one local maximum and the local
 %   maximum is also the global maximum.
+%
+%   Input:
+%       time: Vector of time points
+%       altitude: Vector of altitudes corresponding to a time
+%   Ouput:
+%       apogee_altitude: Altitude of apgoee in meters
+%       apogee_time: time taken since ignition to reach apogee in seconds
+%
     pp = spline(time, altitude); % Cubic piecewise polynomial from interpolation
     
     %% Compute derivative of `pp`

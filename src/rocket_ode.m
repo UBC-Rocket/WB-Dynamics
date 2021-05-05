@@ -1,6 +1,47 @@
 function state_dot = rocket_ode(time, state, vehicle, env)
-%ROCKET_ODE Computes velocity, quaternion derivative, accleration, angular
-%acceleration
+%ROCKET_ODE Computes state derivative given a state
+%   This simulations a flight with 5 stages: on launch rail, burn out, 
+%   coast, ballutes open, main chute open.
+%
+%   Input:
+%       time: current time in seconds
+%       state: a vector of length 13 representing the current state
+%           indicies:
+%                   - 1   : x component of position in meters
+%                   - 2   : y component of position in meters
+%                   - 3   : z component of position in meters (altitude 
+%                           above sea level)
+%                   - 4-7 : quaternion in the form of [x,y,z,w]
+%                           representing the orientation of the rocket 
+%                           relative to the inertial frame
+%                   - 8   : x component of linear velocity in m/s
+%                   - 9   : y component of linear velocity in m/s
+%                   - 10  : z component of linear velocity in m/s
+%                   - 11  : x component of angular velocity in radians/s
+%                   - 12  : y component of angular velocity in radians/s
+%                   - 13  : z component of angular velocity in radians/s
+%       vehicle: struct that holds all properties of the vehicle. See
+%           `rocket_nominal` function to see all fields that this struct 
+%           should have.
+%       env: struct that holds all properties of the environment. See
+%           `environment.create_environment` function to see all fields that
+%           this structure should have.
+%   Output:
+%       state_dot: a vector of length 13 representing the state derivative
+%           of `state`
+%           indicies:
+%               - 1   : x component of linear velocity in m/s
+%               - 2   : y component of linear velocity in m/s
+%               - 3   : z component of linear velocity in m/s
+%               - 4-7 : quaternion derivative respect to time.
+%               - 8   : x component of linear acceleration in m/s^2
+%               - 9   : y component of linear acceleration in m/s^2
+%               - 10  : z component of linear acceleration in m/s^2
+%               - 11  : x component of angular acceleration in radians/s^2
+%               - 12  : y component of angular acceleration in radians/s^2
+%               - 13  : z component of angular acceleration in radians/s^2
+%
+
     pos = state(1:3);
     q = state(4:7);
     v = state(8:10); % ground speed

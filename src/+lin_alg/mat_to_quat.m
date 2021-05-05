@@ -4,9 +4,16 @@ function q = mat_to_quat(C)
 %   as the real component. This essentially uses the component with the
 %   biggest value as it will minimize the error.
 %
+%   Input:
+%       C : 3x3 rotation matrix
+%   Output:
+%       q : quaternion in the form of [x,y,z,w] representing the rotation
+%           matrix
+%
 %   Source:
 %   Atmospheric and Space Flight Dynamics Modeling and Simulation with MATLAB 
 %   by Ashish Tewari
+%
     T = trace(C);
     qsq = [1+2*C(1,1)-T; 1+2*C(2,2)-T; 1+2*C(3,3)-T; 1+T]/4;
     [x,i] = max(qsq);

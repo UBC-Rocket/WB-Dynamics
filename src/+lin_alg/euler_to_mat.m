@@ -10,6 +10,16 @@ function C = euler_to_mat(phi, theta, psi)
 %   around the x axis, theta is a rotation around the y axis and psi is a 
 %   rotation around the z axis. The
 %   input angles are all in degrees.
+%
+%   Input:
+%       phi   : rotation in radians around original x axis
+%       theta : rotation in radians around new y axis after rotation around
+%               x axis
+%       psi   : rotation in radians around new z axis after rotation around
+%               x axis then rotation around new y axis
+%   Ouput:
+%       C     : 3x3 rotation matrix representing the same rotation
+%
 
     %% Rotate around x axis
     C1 = [

@@ -1,11 +1,19 @@
 function q = euler_to_quat(r)
 %EULER_TO_QUAT Converts Euler angles given as XYZ to quaternion.
 %   All angles are given in degrees.
-%   Link to details:
+%
+%   Input:
+%       r : vector of length three representing a rotation in the order of 
+%           x,y,z in radians
+%   Ouput:
+%       q : quaternion in the form of [x,y,z,w] representing the same
+%           rotation
+%
+%   Link to reference:
 %
 %   https://math.stackexchange.com/questions/2975109/how-to-convert-euler-
 %   angles-to-quaternions-and-get-the-same-euler-angles-back-fr
-
+%
     yaw = r(1);
     pitch = r(2);
     roll = r(3);

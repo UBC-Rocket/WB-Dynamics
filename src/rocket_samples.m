@@ -2,8 +2,18 @@ function samples = rocket_samples(...
     fields_file,...
     error_file,...
     num_of_samples)
-%ROCKET_SAMPLES Creates an array of rocket structs based on latin hypercube
-%sampling of variables
+%ROCKET_SAMPLES Creates an array of vehicle structs
+%   The struct fields are created via Latin Hypercube sampling
+%
+%   Input:
+%       fields_file: path to file containing the nominal values
+%       errors_file: path to file containing the variable errors to sample
+%       num_of_samples: number to samples to take.
+%   Ouput:
+%       samples: Array of vehicle structs of length num_of_samples each 
+%           representing a single sample out of the total `num_of_samples`. 
+%           See `rocket_nominal` function to see all fields that vehicle 
+%           struct contains.
 %   
     nominal_vehicle = rocket_nominal(fields_file);
     errors = parse_error(error_file);

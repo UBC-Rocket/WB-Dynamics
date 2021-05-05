@@ -5,6 +5,16 @@ function [pos_x, pos_y, landing_time] = find_landing_pos(time, state, launch_alt
 %   Link: http://www.math.niu.edu/~dattab/MATH435.2013/ROOT_FINDING.pdf
 %   pages 17-18 are the most relevant.
 %
+%   Input:
+%       time: vector of time stamps
+%       state: matrix of states at each time stamp. Should match the state
+%           return value of the `trajectory` function
+%       launch_alt: Launch altitude above sea level in meters
+%   Ouput:
+%       pos_x: x position of landing point in meters
+%       pos_y: y position of landing point in meters
+%       landing_time: time in seconds since ignition to land
+%
     altitude = state(:,3);
     pp = spline(time, altitude); % Cubic piecewise polynomial
     % Since we want to find the time values where the altitude data points

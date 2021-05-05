@@ -1,8 +1,19 @@
 function f_thrust = f_t(dir, time, vehicle, env)
-%F_T Computes thrust force produced by engine at a given time and
-%atmosphere condition.
-%   `dir` must be a unit vector that points in the direction of the thrust
-%   force.
+%F_T Computes thrust force produced by engine
+%   The thrust force is computed based on time since ignition and
+%   atmosphere pressure
+%
+%   Input:
+%       dir: unit vector pointing in direction of thrust force
+%       time: time in seconds since ignition
+%       vehicle: struct holding vehicle properties. See `rocket_nominal`
+%           function to see all fields that this struct contains
+%       env: struct that holds all properties of the environment. See
+%           `environment.create_environment` function to see all fields that
+%           this structure should have.
+%   Output:
+%       f_thrust: Thrust force vector in Newtons
+%
     if time <= vehicle.burn_time
         sp_impulse =...
             vehicle.nozzle_eff*(vehicle.c_star*env.sp_heat_ratio/env.grav_accel_SL...

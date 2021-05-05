@@ -3,8 +3,16 @@ function v_prime = to_body_frame(q, v)
 %   Given a quaternion `q` in the form of [x,y,z,w] that represents the
 %   orientation of the body frame relative to the inertial frame, the
 %   vector `v` in the inertial frame is transformed to the body frame.
-%   link:
+%   reference link:
 %   https://www.mathworks.com/help/fusion/ref/quaternion.rotmat.html#d123e13248
+%   
+%   Input:
+%       q       : quaternion in the form of [x,y,z,w] that represents the
+%                 orientation of the body frame relative to the inertial 
+%                 frame
+%       v       : vector in R^3 in the inertial frame coordinates
+%   Ouput:
+%       v_prime : vector v in body frame coordinates
     x = q(1);
     y = q(2);
     z = q(3);

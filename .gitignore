@@ -1,7 +1,3 @@
 # Binary files
 *slprj*/*
 *.asv
-
-# Resources
-resources/spaceshot_cd_data.csv
-resources/rocket_specs.csv
