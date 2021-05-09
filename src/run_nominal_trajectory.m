@@ -9,8 +9,11 @@ INPUT_PATH = "../input";
 INPUT_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 vehicle = rocket_nominal(INPUT_FILE);
 
+SIM_END_TIME = 600;
+STEP_SIZE = 0.1;
+
 %% Run simulation
-[time, state] = trajectory(vehicle);
+[time, state] = trajectory(vehicle, SIM_END_TIME, STEP_SIZE);
 
 %% Plot animation
 plotter.scaling_factor = 3000;

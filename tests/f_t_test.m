@@ -29,6 +29,7 @@ function setup(testCase)
     vehicle.chamber_pressure = 150000;
     vehicle.exp_area_ratio = 2;
     vehicle.prop_flow_rate = 10;
+    vehicle.thrust_misalign_angle = 0;
     thrust_uncertainty = sampling.create_uncertainty(0,0);
     vehicle.thrust_uncertainty = thrust_uncertainty;
     

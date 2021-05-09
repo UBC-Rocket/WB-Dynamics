@@ -27,8 +27,14 @@ function f_thrust = f_t(dir, time, vehicle, env)
         f_thrust_final = sampling.apply_uncertainty(...
             thrust_nominal,...
             vehicle.thrust_uncertainty);
+        % Apply thrust misalignment. Since I do not know how to simulate an
+        % induced roll, I am just going to assume that the horizontal
+        % component of the thrust misalignment is just going to cancel out
+        % and that the effective thrust would just be the vertical
+        % component.
+        f_thrust_eff = f_thrust_final * cosd(vehicle.thrust_misalign_angle);
         % Final vector value
-        f_thrust = f_thrust_final*dir;
+        f_thrust = f_thrust_eff*dir;
     else
         f_thrust = [0;0;0];
     end

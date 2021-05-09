@@ -47,7 +47,7 @@ function state_dot = rocket_ode(time, state, vehicle, env)
     v = state(8:10); % ground speed
     omega = state(11:13);
     roll_axis = coordinate.to_inertial_frame(q, vehicle.roll_axis_body);
-    thrust_dir = coordinate.to_inertial_frame(q, vehicle.thrust_dir_body);
+    %thrust_dir = coordinate.to_inertial_frame(q, vehicle.thrust_dir_body);
     
     % Update inertial properties.
     m = mass(time, vehicle);
@@ -72,7 +72,7 @@ function state_dot = rocket_ode(time, state, vehicle, env)
     % Compute forces.
     f_gravity = environment.f_g(m, pos(3));
     f_aero = aerodynamics.f_a(v_apparent_rocket, time, vehicle, env);
-    f_thrust = f_t(thrust_dir, time, vehicle, env);
+    f_thrust = f_t(roll_axis, time, vehicle, env);
     f_ballute = recovery.f_ballute(...
         pos(3),...
         v,...
@@ -106,7 +106,6 @@ function state_dot = rocket_ode(time, state, vehicle, env)
 
         % Compute torque.
         t_aero = cross(CP - CG, coordinate.to_body_frame(q, f_aero));
-        t_thrust = cross(-CG, norm(f_thrust)*vehicle.thrust_dir_body);
         t_ballute = cross(...
             vehicle.chute_attachment_rel_base - CG,...
             coordinate.to_body_frame(q, f_ballute));
@@ -114,7 +113,7 @@ function state_dot = rocket_ode(time, state, vehicle, env)
             vehicle.chute_attachment_rel_base - CG,...
             coordinate.to_body_frame(q, f_chute));
         t_damp = t_thrust_damp(time, CG, omega, vehicle);
-        t_net = t_aero + t_thrust + t_ballute + t_chute + t_damp;
+        t_net = t_aero + t_ballute + t_chute + t_damp;
         % Angular quantities
         omega_dot = moi\(t_net - cross(omega,moi*omega));
         q_dot = lin_alg.quat_dot(omega, q);

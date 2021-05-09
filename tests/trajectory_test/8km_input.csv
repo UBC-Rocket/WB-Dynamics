@@ -4,7 +4,7 @@ fuselage diameter,0.2,m
 fuselage length,5,m
 number of fins,4,discrete
 fin span,0.3,m
-fin thickness,0.01,m
+fin thickness,0.05,m
 fin leading edge sweep angle,20,degrees
 fin leading edge thickness angle,15,degrees
 burn time,30,s
@@ -16,16 +16,16 @@ chamber pressure,600000,Pa
 expansion area ratio,2,no units
 thrust misalignment angle,0,degrees
 nozzle exit area,0.01,m^2
-ballute opening altitude,8000,m
-main chute opening altitude,2000,m
-ballute drag coefficient,0.75,no units
-main chute drag coefficient,0.53,no units
+ballute opening altitude,0,m
+main chute opening altitude,0,m
+ballute drag coefficient,0.5,no units
+main chute drag coefficient,0.5,no units
 ballute diameter,1,m
-main chute diameter,4.13,m
+main chute diameter,4,m
 number of ballutes,3,discrete
 number of chutes,3,discrete
 chute attachment position relative to base,4.5,m
-launch angle,87,degrees
+launch angle,86,degrees
 launch altitude above sea level,1401,m
 nose cone mass,3,kg
 payload adapter mass,2,kg

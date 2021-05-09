@@ -11,7 +11,13 @@ OUTPUT_FILE = fullfile(OUTPUT_PATH, "output.csv");
 INPUT_PATH = "../input";
 INPUT_FIELDS_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 INPUT_ERRORS_FILE = fullfile(INPUT_PATH, "errors_input.csv");
+
+%% Simulation settings
 NUM_OF_SAMPLES = 100;
+SIM_END_TIME = 600;
+STEP_SIZE = 0.1;
+
+% Take samples
 samples = rocket_samples(INPUT_FIELDS_FILE, INPUT_ERRORS_FILE, NUM_OF_SAMPLES);
 
 
@@ -21,7 +27,7 @@ points = zeros(NUM_OF_SAMPLES, 6);
 parfor sam_num = 1:NUM_OF_SAMPLES
     vehicle = samples(sam_num);
 
-    [time, state] = trajectory(vehicle);
+    [time, state] = trajectory(vehicle, SIM_END_TIME, STEP_SIZE);
     [apogee, apogee_time] = find_apogee(time, state(:,3));
     [x, y, landing_time] = find_landing_pos(time, state, vehicle.launch_alt);
     
