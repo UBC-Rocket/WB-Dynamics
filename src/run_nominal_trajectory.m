@@ -30,7 +30,7 @@ fin(3).vec_init = plotter.scaling_factor*[0; vehicle.fuselage_length/3; 0];
 fin(4).vec_init = plotter.scaling_factor*[0; 0; -vehicle.fuselage_length/3];
 
 % Apogee
-[apogee, apogee_time] = find_apogee(time, state(:,3));
+[apogee, apogee_time] = util.find_apogee(time, state(:,3));
 
 for time_step_num = 1:plotter.num_time_steps
     curr_orientation = state(time_step_num, 4:7);

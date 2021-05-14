@@ -86,7 +86,7 @@ function vehicle = rocket_nominal(input_file)
     % The majority of the properties are already stored in this struct. The
     % next few lines aims to add a couple extra that are not explictly
     % specified by the input file.
-    vehicle = parse_input(input_file);
+    vehicle = util.parse_input(input_file);
     
     vehicle.roll_axis_body = [1;0;0];
     vehicle.thrust_dir_body = [

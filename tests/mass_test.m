@@ -22,38 +22,38 @@ end
 % For before burn_time the mass should decrease linearly
 function test_timestamp_power_on_start(testCase)
     time = 0;
-    m = mass(time, testCase.TestData.vehicle);
+    m = inertial_props.mass(time, testCase.TestData.vehicle);
     verifyEqual(testCase, m, 400);
 end
 
 function test_timestamp_power_on_mid(testCase)
     time = 10;
-    m = mass(time, testCase.TestData.vehicle);
+    m = inertial_props.mass(time, testCase.TestData.vehicle);
     verifyEqual(testCase, m, 300);
 end
 
 function test_timestamp_power_on_end(testCase)
     time = 20;
-    m = mass(time, testCase.TestData.vehicle);
+    m = inertial_props.mass(time, testCase.TestData.vehicle);
     verifyEqual(testCase, m, 200);
 end
 
 % For past burn_time, the mass should be constant
 function test_timestamp_power_off_one(testCase)
     time = 30;
-    m = mass(time, testCase.TestData.vehicle);
+    m = inertial_props.mass(time, testCase.TestData.vehicle);
     verifyEqual(testCase, m, 200);
 end
 
 function test_timestamp_power_off_two(testCase)
     time = 60;
-    m = mass(time, testCase.TestData.vehicle);
+    m = inertial_props.mass(time, testCase.TestData.vehicle);
     verifyEqual(testCase, m, 200);
 end
 
 function test_timestamp_power_off_three(testCase)
     time = 90;
-    m = mass(time, testCase.TestData.vehicle);
+    m = inertial_props.mass(time, testCase.TestData.vehicle);
     verifyEqual(testCase, m, 200);
 end
 

@@ -28,8 +28,8 @@ parfor sam_num = 1:NUM_OF_SAMPLES
     vehicle = samples(sam_num);
 
     [time, state] = trajectory(vehicle, SIM_END_TIME, STEP_SIZE);
-    [apogee, apogee_time] = find_apogee(time, state(:,3));
-    [x, y, landing_time] = find_landing_pos(time, state, vehicle.launch_alt);
+    [apogee, apogee_time] = util.find_apogee(time, state(:,3));
+    [x, y, landing_time] = util.find_landing_pos(time, state, vehicle.launch_alt);
     
     % touch down velocity magnitude
     v_touchdown_x = spline(time, state(:,8), landing_time);

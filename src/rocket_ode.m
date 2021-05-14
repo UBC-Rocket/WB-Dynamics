@@ -47,20 +47,22 @@ function state_dot = rocket_ode(time, state, vehicle, env)
     v = state(8:10); % ground speed
     omega = state(11:13);
     roll_axis = coordinate.to_inertial_frame(q, vehicle.roll_axis_body);
+    % We somewhat simplified thrust misalignment. Assumed horizontal
+    % component canceled out as vehicle rotates.
     %thrust_dir = coordinate.to_inertial_frame(q, vehicle.thrust_dir_body);
     
     % Update inertial properties.
-    m = mass(time, vehicle);
-    moi = MOI(m, vehicle);
+    m = inertial_props.mass(time, vehicle);
+    moi = inertial_props.MOI(m, vehicle);
     
-    CP = CP_rel_base(vehicle);
-    CG = CG_rel_base(vehicle, time);
+    CP = aerodynamics.CP_rel_base(vehicle);
+    CG = inertial_props.CG_rel_base(vehicle, time);
     
     % Update environment.
     [env.density, env.sound_speed, env.temperature, env.pressure] =...
         environment.atmos(pos(3));
     
-    v_apparent_rocket = vel_apparent_rocket(...
+    v_apparent_rocket = environment.vel_apparent_rocket(...
         CP,...
         CG,...
         roll_axis,...

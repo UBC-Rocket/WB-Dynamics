@@ -3,7 +3,7 @@ function tests = parse_error_test
 end
 
 function test_parse_good_input(testCase)
-    result = parse_error('./good_input.csv');
+    result = util.parse_error('./good_input.csv');
     testCase.verifyEqual(result.load_mass_sd, 1);
     testCase.verifyEqual(result.thrust_variation, 0.05);
     testCase.verifyEqual(result.CG_variation, 0.01);
@@ -19,13 +19,13 @@ end
 
 function test_parse_bad_structure(testCase)
     testCase.verifyError(...
-        @()parse_error('./bad_values.csv'),...
+        @()util.parse_error('./bad_values.csv'),...
         'errors_input:bad_input');
 end
 
 function test_parse_bad_values(testCase)
     testCase.verifyError(...
-        @()parse_error('./bad_values.csv'),...
+        @()util.parse_error('./bad_values.csv'),...
         'errors_input:bad_input');
 end
 

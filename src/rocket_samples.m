@@ -16,7 +16,7 @@ function samples = rocket_samples(...
 %           struct contains.
 %   
     nominal_vehicle = rocket_nominal(fields_file);
-    errors = parse_error(error_file);
+    errors = util.parse_error(error_file);
     
     %% Take samples
     % Variables that will be sampled:
