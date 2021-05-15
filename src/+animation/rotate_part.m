@@ -1,4 +1,4 @@
-function [x, y, z] = rotate_part(part, quat)
+function new_mat = rotate_part(part, quat)
 %ROTATE_PART Summary of this function goes here
 %   Detailed explanation goes here
     [h, w, d] = size(part);
@@ -14,8 +14,5 @@ function [x, y, z] = rotate_part(part, quat)
             new_mat(i,j,:) = coordinate.to_inertial_frame(quat, point)';
         end
     end
-    x = new_mat(:,:,1);
-    y = new_mat(:,:,2);
-    z = new_mat(:,:,3);
 end
 

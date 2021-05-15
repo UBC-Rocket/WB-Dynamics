@@ -1,46 +1,31 @@
 function [nose, body, fin1, fin2, fin3, fin4] = gen_rocket(vehicle)
+    rot_quat = lin_alg.euler_to_quat([0 90 0]);
     body_length = vehicle.fuselage_length - vehicle.nose_length;
-    [x_b,y_b,z_b] = animation.gen_body(...
+    body = animation.gen_body(...
         vehicle.fuselage_diameter/2,...
         body_length,...
         0,...
         0,...
         0);
-    body(:,:,1) = x_b;
-    body(:,:,2) = y_b;
-    body(:,:,3) = z_b;
+    body = animation.rotate_part(body, rot_quat);
     
-    [x_n, y_n, z_n] = animation.gen_haack_series(...
+    nose = animation.gen_haack_series(...
         vehicle.fuselage_diameter/2,...
-        body_length,...
+        vehicle.nose_length,...
         0,...
         0,...
         0,...
         vehicle.body_length);
     
-    nose(:,:,1) = x_n;
-    nose(:,:,2) = y_n;
-    nose(:,:,3) = z_n;
+    nose = animation.rotate_part(nose, rot_quat);
     
-    [x_f1, y_f1, z_f1] = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 0);
-    [x_f2, y_f2, z_f2] = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 90);
-    [x_f3, y_f3, z_f3] = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 180);
-    [x_f4, y_f4, z_f4] = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 270);
+    fin1 = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 0);
+    fin2 = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 90);
+    fin3 = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 180);
+    fin4 = animation.gen_fin(vehicle, vehicle.fuselage_diameter/2, 270);
     
-    fin1 = [
-        x_f1;
-        y_f1;
-        z_f1];
-    fin2 = [
-        x_f2;
-        y_f2;
-        z_f2];
-    fin3 = [
-        x_f3;
-        y_f3;
-        z_f3];
-    fin4 = [
-        x_f4;
-        y_f4;
-        z_f4];
+    fin1 = animation.rotate_fin(fin1, rot_quat);
+    fin2 = animation.rotate_fin(fin2, rot_quat);
+    fin3 = animation.rotate_fin(fin3, rot_quat);
+    fin4 = animation.rotate_fin(fin4, rot_quat);
 end

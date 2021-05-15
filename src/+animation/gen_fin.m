@@ -1,4 +1,4 @@
-function [x,y,z] = gen_fin(vehicle, body_radius, orientation)
+function new_mat = gen_fin(vehicle, body_radius, orientation)
 %GEN_FIN Summary of this function goes here
 %   Detailed explanation goes here
     fin_generation_mat = [
@@ -22,7 +22,4 @@ function [x,y,z] = gen_fin(vehicle, body_radius, orientation)
         rot_point = fin_generation_mat * point;
         new_mat(:,i) = rot_point;
     end
-    x = new_mat(1,:);
-    y = new_mat(2,:);
-    z = new_mat(3,:);
 end
