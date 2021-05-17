@@ -14,20 +14,21 @@ INPUT_ERRORS_FILE = fullfile(INPUT_PATH, "errors_input.csv");
 
 %% Simulation settings
 NUM_OF_SAMPLES = 100;
-SIM_END_TIME = 600;
+SIM_END_TIME = 1000;
 STEP_SIZE = 0.1;
 
 % Take samples
-samples = rocket_samples(INPUT_FIELDS_FILE, INPUT_ERRORS_FILE, NUM_OF_SAMPLES);
+[vehicle_samples, env_samples] = simulation_samples(INPUT_FIELDS_FILE, INPUT_ERRORS_FILE, NUM_OF_SAMPLES);
 
 
 %% Perform simulation
 points = zeros(NUM_OF_SAMPLES, 6);
 
 parfor sam_num = 1:NUM_OF_SAMPLES
-    vehicle = samples(sam_num);
+    vehicle = vehicle_samples(sam_num);
+    env = env_samples(sam_num);
 
-    [time, state] = trajectory(vehicle, SIM_END_TIME, STEP_SIZE);
+    [time, state] = trajectory(vehicle, env, SIM_END_TIME, STEP_SIZE);
     [apogee, apogee_time] = util.find_apogee(time, state(:,3));
     [x, y, landing_time] = util.find_landing_pos(time, state, vehicle.launch_alt);
     

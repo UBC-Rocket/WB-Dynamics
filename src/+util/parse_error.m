@@ -15,7 +15,7 @@ function errors = parse_error(path_to_file)
 %                            relative to the base of the vehicle. See
 %                           `sampling.apply_uncertainty` to see how this 
 %                            value would be used
-%           - CD_vehicle_variation : percentage varition of the vehicle CD.
+%           - CD_vehicle_variation : percentage variation of the vehicle CD.
 %                                    See `sampling.apply_uncertainty` to 
 %                                    see how this value would be used
 %           - thrust_msialgin_angle_sd : standard deviation of the thrust
@@ -31,6 +31,9 @@ function errors = parse_error(path_to_file)
 %                           altitude as an absolute uncertainty
 %           - launch_angle_sd: standard deviation of the launch angle as an
 %                              absolute uncertainty
+%           - wind_speed_variation: percentage variation of the wind velocity magnitude.
+%                                   See `sampling.apply_uncertainty` to see how this
+%                                   value would be used.
 %
     result = readtable(path_to_file);
 
@@ -45,7 +48,9 @@ function errors = parse_error(path_to_file)
         {'main chute CD standard deviation'}
         {'ballute opening altitude standard deviation'}
         {'main chute opening altitude standard deviation'}
-        {'launch angle standard deviation'}];
+        {'launch angle standard deviation'}
+        {'wind velocity mangitude scaling factor'}
+    ];
     
     parsed_variable_names = [
         "load_mass_sd"
@@ -58,7 +63,9 @@ function errors = parse_error(path_to_file)
         "CD_chute_sd"
         "ballute_alt_sd"
         "chute_alt_sd"
-        "launch_angle_sd"];
+        "launch_angle_sd"
+        "wind_speed_variation"
+    ];
     
     for i = 1:length(expected_variable_names)
         rows = strcmp(result.Variable, expected_variable_names(i));

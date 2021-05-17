@@ -7,7 +7,7 @@ end
 function test_take_sample(testCase)
     rng default; % For reproducibility
     num_of_samples = 10000;
-    samples = rocket_samples(...
+    [vehicle_samples, env_samples] = simulation_samples(...
         './fields_input.csv',...
         './errors_input.csv',...
         num_of_samples);
@@ -23,9 +23,10 @@ function test_take_sample(testCase)
     ballute_alt_samples = zeros(num_of_samples,1);
     chute_alt_samples = zeros(num_of_samples,1);
     launch_angle_samples = zeros(num_of_samples,1);
+    wind_variation_samples = zeros(num_of_samples,1);
     
     for i = 1:num_of_samples
-        curr_vehicle = samples(i);
+        curr_vehicle = vehicle_samples(i);
         load_mass_samples(i) = curr_vehicle.load_mass;
         thrust_variation_samples(i) = curr_vehicle.thrust_uncertainty.rand;
         CG_variation_samples(i) = curr_vehicle.CG_uncertainty.rand;
@@ -37,6 +38,9 @@ function test_take_sample(testCase)
         ballute_alt_samples(i) = curr_vehicle.ballute_alt;
         chute_alt_samples(i) = curr_vehicle.main_chute_alt;
         launch_angle_samples(i) = curr_vehicle.launch_angle;
+        
+        curr_env = env_samples(i);
+        wind_variation_samples(i) = curr_env.wind_speed_uncertainty.rand;
     end
     
     testCase.verifyEqual(mean(load_mass_samples), 100, 'AbsTol', 1e-3);
@@ -61,5 +65,7 @@ function test_take_sample(testCase)
     testCase.verifyEqual(std(chute_alt_samples), 2, 'AbsTol', 1e-3);
     testCase.verifyEqual(mean(launch_angle_samples), 89, 'AbsTol', 1e-3);
     testCase.verifyEqual(std(launch_angle_samples), 0.05, 'AbsTol', 1e-3);
+    testCase.verifyEqual(mean(wind_variation_samples), 0, 'AbsTol', 1e-3);
+    testCase.verifyEqual(std(wind_variation_samples), 1/3, 'AbsTol', 1e-3);
 end
 

@@ -89,10 +89,10 @@ function vehicle = rocket_nominal(input_file)
     vehicle = util.parse_input(input_file);
     
     vehicle.roll_axis_body = [1;0;0];
-    vehicle.thrust_dir_body = [
-        cosd(vehicle.thrust_misalign_angle);
-        0;
-        sind(vehicle.thrust_misalign_angle)];
+    % vehicle.thrust_dir_body = [
+    %     cosd(vehicle.thrust_misalign_angle);
+    %     0;
+    %     sind(vehicle.thrust_misalign_angle)];
     
     %% Recovery property
     vehicle.chute_attachment_rel_base = [vehicle.chute_attachment_pos;0;0];

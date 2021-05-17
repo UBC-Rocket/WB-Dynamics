@@ -10,3 +10,4 @@ main chute CD standard deviation,0.02,no units,Absolute
 ballute opening altitude standard deviation,1,m,Absolute
 main chute opening altitude standard deviation,2,m,Absolute
 launch angle standard deviation,0.05,degrees,Absolute 
+wind velocity mangitude scaling factor,0.1,no units,Relative

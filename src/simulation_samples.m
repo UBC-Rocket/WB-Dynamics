@@ -1,8 +1,8 @@
-function samples = rocket_samples(...
+function [rocket_samples, environment_samples] = simulation_samples(...
     fields_file,...
     error_file,...
     num_of_samples)
-%ROCKET_SAMPLES Creates an array of vehicle structs
+%SIMULATION_SAMPLES Creates an array of vehicle structs
 %   The struct fields are created via Latin Hypercube sampling
 %
 %   Input:
@@ -16,6 +16,9 @@ function samples = rocket_samples(...
 %           struct contains.
 %   
     nominal_vehicle = rocket_nominal(fields_file);
+    % Does not matter what we give as wind directions because a couple
+    % lines down we just override the directions.
+    nominal_env = environment.environment_nominal(zeros(8,1));
     errors = util.parse_error(error_file);
     
     %% Take samples
@@ -31,6 +34,7 @@ function samples = rocket_samples(...
     %	ballute_alt
     %	chute_alt
     %	launch_angle
+    %   wind velocity magnitude
     % All from a normal distribution.
     
     means = [
@@ -44,7 +48,9 @@ function samples = rocket_samples(...
         nominal_vehicle.ballute_drag_coeff;
         nominal_vehicle.main_chute_alt;
         nominal_vehicle.ballute_alt;
-        nominal_vehicle.launch_angle]';
+        nominal_vehicle.launch_angle;
+        0;
+    ]';
     
     deviations = [
         errors.load_mass_sd;
@@ -57,7 +63,9 @@ function samples = rocket_samples(...
         errors.CD_ballute_sd;
         errors.chute_alt_sd;
         errors.ballute_alt_sd;
-        errors.launch_angle_sd]';
+        errors.launch_angle_sd;
+        1/3;
+    ]';
     
     [~, nvar] = size(means);
     
@@ -88,6 +96,9 @@ function samples = rocket_samples(...
         main_chute_alt_sam = uncertainties(sam_num,9);
         ballute_alt_sam = uncertainties(sam_num,10);
         launch_angle_sam = uncertainties(sam_num,11);
+        wind_speed_uncertainty = sampling.create_uncertainty(...
+            errors.wind_speed_variation,...
+            uncertainties(sam_num, 12));
         
         new_vehicle = cell2struct(...
             struct2cell(nominal_vehicle),...
@@ -104,7 +115,15 @@ function samples = rocket_samples(...
         new_vehicle.CG_uncertainty = CG_uncertainty;
         new_vehicle.CP_uncertainty = CP_uncertainty;
         new_vehicle.CD_uncertainty = CD_uncertainty;
-        samples(sam_num) = new_vehicle;
+        rocket_samples(sam_num) = new_vehicle;
+
+        new_env = cell2struct(...
+            struct2cell(nominal_env),...
+            fieldnames(nominal_env));
+        new_env.wind_speed_uncertainty = wind_speed_uncertainty;
+        % Wind direction is purely random at each interval
+        new_env.wind_dir = 360.*rand(8,1);
+        environment_samples(sam_num) = new_env;
     end
 end
 

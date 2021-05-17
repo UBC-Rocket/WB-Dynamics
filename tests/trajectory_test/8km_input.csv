@@ -1,5 +1,5 @@
 Variable,Value,Units
-load mass,300,kg
+load mass,305,kg
 fuselage diameter,0.2,m
 fuselage length,5,m
 number of fins,4,discrete
