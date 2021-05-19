@@ -27,6 +27,7 @@ number of chutes,replace with value here,discrete
 chute attachment position relative to base,replace with value here,m
 launch angle,replace with value here,degrees
 launch altitude above sea level,replace with value here,m
+launch direction in degrees from east,replace with value here,degrees
 nose cone mass,replace with value here,kg
 payload adapter mass,replace with value here,kg
 payload mass,replace with value here,kg

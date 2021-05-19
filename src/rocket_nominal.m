@@ -55,6 +55,8 @@ function vehicle = rocket_nominal(input_file)
 %               in degrees.
 %           launch_alt: Altitude that vehicle is launched in meters above
 %               sea level.
+%           launch_direction: Angle in degrees that the vehicle is pointed
+%                             towards relative to the EAST direction.
 %           rail_length: Length of launch rail in meters.
 %           rail_fric_coeff: Coefficient of friction of launch rail.
 %       Uncertainties:

@@ -23,6 +23,7 @@ function test_take_sample(testCase)
     ballute_alt_samples = zeros(num_of_samples,1);
     chute_alt_samples = zeros(num_of_samples,1);
     launch_angle_samples = zeros(num_of_samples,1);
+    launch_direction_samples = zeros(num_of_samples,1);
     wind_variation_samples = zeros(num_of_samples,1);
     
     for i = 1:num_of_samples
@@ -38,6 +39,7 @@ function test_take_sample(testCase)
         ballute_alt_samples(i) = curr_vehicle.ballute_alt;
         chute_alt_samples(i) = curr_vehicle.main_chute_alt;
         launch_angle_samples(i) = curr_vehicle.launch_angle;
+        launch_direction_samples(i) = curr_vehicle.launch_direction;
         
         curr_env = env_samples(i);
         wind_variation_samples(i) = curr_env.wind_speed_uncertainty.rand;
@@ -65,6 +67,8 @@ function test_take_sample(testCase)
     testCase.verifyEqual(std(chute_alt_samples), 2, 'AbsTol', 1e-3);
     testCase.verifyEqual(mean(launch_angle_samples), 89, 'AbsTol', 1e-3);
     testCase.verifyEqual(std(launch_angle_samples), 0.05, 'AbsTol', 1e-3);
+    testCase.verifyEqual(mean(launch_direction_samples), 0.1, 'AbsTol', 1e-3);
+    testCase.verifyEqual(std(launch_direction_samples), 0.05, 'AbsTol', 1e-3);
     testCase.verifyEqual(mean(wind_variation_samples), 0, 'AbsTol', 1e-3);
     testCase.verifyEqual(std(wind_variation_samples), 1/3, 'AbsTol', 1e-3);
 end

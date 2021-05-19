@@ -34,6 +34,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
     %	ballute_alt
     %	chute_alt
     %	launch_angle
+    %   launch_direction
     %   wind velocity magnitude
     % All from a normal distribution.
     
@@ -49,6 +50,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         nominal_vehicle.main_chute_alt;
         nominal_vehicle.ballute_alt;
         nominal_vehicle.launch_angle;
+        nominal_vehicle.launch_direction;
         0;
     ]';
     
@@ -64,6 +66,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         errors.chute_alt_sd;
         errors.ballute_alt_sd;
         errors.launch_angle_sd;
+        errors.launch_direction_sd
         1/3;
     ]';
     
@@ -96,9 +99,10 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         main_chute_alt_sam = uncertainties(sam_num,9);
         ballute_alt_sam = uncertainties(sam_num,10);
         launch_angle_sam = uncertainties(sam_num,11);
+        launch_direction_sam = uncertainties(sam_num,12);
         wind_speed_uncertainty = sampling.create_uncertainty(...
             errors.wind_speed_variation,...
-            uncertainties(sam_num, 12));
+            uncertainties(sam_num, 13));
         
         new_vehicle = cell2struct(...
             struct2cell(nominal_vehicle),...
@@ -111,6 +115,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         new_vehicle.main_chute_alt = main_chute_alt_sam;
         new_vehicle.ballute_alt = ballute_alt_sam;
         new_vehicle.launch_angle = launch_angle_sam;
+        new_vehicle.launch_direction = launch_direction_sam;
         new_vehicle.thrust_uncertainty = thrust_uncertainty;
         new_vehicle.CG_uncertainty = CG_uncertainty;
         new_vehicle.CP_uncertainty = CP_uncertainty;

@@ -10,4 +10,5 @@ main chute CD standard deviation,replace with value here,no units,Absolute
 ballute opening altitude standard deviation,replace with value here,m,Absolute
 main chute opening altitude standard deviation,replace with value here,m,Absolute
 launch angle standard deviation,replace with value here,degrees,Absolute 
+launch direction from east standard deviation,replace with value here,degrees,Absolute
 wind velocity mangitude scaling factor,replace with value here,no units,Relative

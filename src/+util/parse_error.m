@@ -31,6 +31,8 @@ function errors = parse_error(path_to_file)
 %                           altitude as an absolute uncertainty
 %           - launch_angle_sd: standard deviation of the launch angle as an
 %                              absolute uncertainty
+%           - launch_direction_sd: standard deviation of the launch direction
+%                                  from EAST in degrees as an aboslute uncertainty.
 %           - wind_speed_variation: percentage variation of the wind velocity magnitude.
 %                                   See `sampling.apply_uncertainty` to see how this
 %                                   value would be used.
@@ -49,6 +51,7 @@ function errors = parse_error(path_to_file)
         {'ballute opening altitude standard deviation'}
         {'main chute opening altitude standard deviation'}
         {'launch angle standard deviation'}
+        {'launch direction from east standard deviation'}
         {'wind velocity mangitude scaling factor'}
     ];
     
@@ -64,6 +67,7 @@ function errors = parse_error(path_to_file)
         "ballute_alt_sd"
         "chute_alt_sd"
         "launch_angle_sd"
+        "launch_direction_sd"
         "wind_speed_variation"
     ];
     

@@ -32,6 +32,7 @@ function test_parse_good_input(testCase)
     testCase.verifyEqual(result.chute_attachment_pos, 3);
     testCase.verifyEqual(result.launch_angle, 89);
     testCase.verifyEqual(result.launch_alt, 0);
+    testCase.verifyEqual(result.launch_direction, 45);
     testCase.verifyEqual(result.nose_cone_mass, 3);
     testCase.verifyEqual(result.payload_adapter_mass, 2);
     testCase.verifyEqual(result.payload_mass, 10);

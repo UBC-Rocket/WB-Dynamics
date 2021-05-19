@@ -32,6 +32,7 @@ function parameters = parse_input(path_to_file)
         {'chute attachment position relative to base'}
         {'launch angle'}
         {'launch altitude above sea level'}
+        {'launch direction in degrees from east'}
         % top 1/3 of rocket mass values
         {'nose cone mass'}
         {'payload adapter mass'}
@@ -97,6 +98,7 @@ function parameters = parse_input(path_to_file)
         "chute_attachment_pos"
         "launch_angle"
         "launch_alt"
+        "launch_direction"
         "nose_cone_mass"
         "payload_adapter_mass"
         "payload_mass"

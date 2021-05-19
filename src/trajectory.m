@@ -5,7 +5,6 @@ function [time, state] = trajectory(vehicle, env, step_size)
 %       vehicle : struct containing all properties of the vehicle. See the
 %                 function `rocket_nominal` to see what fields this struct
 %                 should have.
-%       end_time : end time of simulation in seconds
 %       step_size : integration step size in seconds. I use integration step
 %                   size as a loose term here as it only really affects the
 %                   number of entries that are returned. ODE45 does not
@@ -31,18 +30,26 @@ function [time, state] = trajectory(vehicle, env, step_size)
 %                   - 10  : z component of linear velocity in m/s
 %                   - 11  : x component of angular velocity in radians/s
 %                   - 12  : y component of angular velocity in radians/s
-%                   - 12  : z component of angular velocity in radians/s
+%                   - 13  : z component of angular velocity in radians/s
 %
     function [value, isterminal, direction] = detect_landing(t,y)
-        value = real(y(3))-vehicle.launch_alt;
+        value = real(y(3)) - vehicle.launch_alt;
         isterminal = 1;
-        direction = -1;
+        % Detect that function is decreasing to make sure it doesn't get
+        % mixed up with launch because both launch position and landing
+        % position have the same altitude.
+        direction = -1; 
     end
+
     START_TIME = 0;
-    END_TIME = 2000;
+    % Just a super high number to make sure that in the time span the
+    % vehicle does land.
+    END_TIME = 2000; 
 
     init_pos = [0;0;vehicle.launch_alt];
-    init_quat = lin_alg.euler_to_quat([0;-vehicle.launch_angle;0], 'XYZ');
+    init_quat = lin_alg.euler_to_quat(...
+        [vehicle.launch_direction; -vehicle.launch_angle; 0],...
+        'ZYX');
     init_lin_vel = zeros(3,1);
     init_ang_vel = zeros(3,1);
 

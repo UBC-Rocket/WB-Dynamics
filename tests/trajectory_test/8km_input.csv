@@ -27,6 +27,7 @@ number of chutes,3,discrete
 chute attachment position relative to base,4.5,m
 launch angle,86,degrees
 launch altitude above sea level,1401,m
+launch direction in degrees from east,0,degrees
 nose cone mass,3,kg
 payload adapter mass,2,kg
 payload mass,10,kg
