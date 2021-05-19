@@ -53,7 +53,7 @@ function [time, state] = trajectory(vehicle, env, step_size)
         init_ang_vel;
     ]; 
     %options = odeset('RelTol',1e-8,'AbsTol',1e-10, 'InitialStep', 1e-8);
-    options = odeset('Events',@detect_landing);
+    options = odeset('RelTol', 1e-6, 'Events',@detect_landing);
     func = @(time, state) rocket_ode(time, state, vehicle, env);
     [time, state] = ode45(func, (START_TIME:step_size:END_TIME), state_init, options);
 end
