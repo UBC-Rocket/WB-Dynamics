@@ -1,4 +1,4 @@
-function [time, state] = trajectory(vehicle, env, end_time, step_size)
+function [time, state] = trajectory(vehicle, env, step_size)
 %TRAJECTORY Computes the trajectory of the vehicle
 %
 %   Input:
@@ -39,6 +39,7 @@ function [time, state] = trajectory(vehicle, env, end_time, step_size)
         direction = -1;
     end
     START_TIME = 0;
+    END_TIME = 2000;
 
     init_pos = [0;0;vehicle.launch_alt];
     init_quat = lin_alg.euler_to_quat([0;-vehicle.launch_angle;0]);
@@ -54,6 +55,6 @@ function [time, state] = trajectory(vehicle, env, end_time, step_size)
     %options = odeset('RelTol',1e-8,'AbsTol',1e-10, 'InitialStep', 1e-8);
     options = odeset('Events',@detect_landing);
     func = @(time, state) rocket_ode(time, state, vehicle, env);
-    [time, state] = ode45(func, (START_TIME:step_size:end_time), state_init, options);
+    [time, state] = ode45(func, (START_TIME:step_size:END_TIME), state_init, options);
 end
 

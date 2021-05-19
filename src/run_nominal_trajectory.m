@@ -11,11 +11,10 @@ wind_dir = 0;
 vehicle = rocket_nominal(INPUT_FILE);
 env = environment.environment_nominal(wind_dir*ones(8,1));
 
-SIM_END_TIME = 1000;
 STEP_SIZE = 0.1;
 
 %% Run simulation
-[time, state] = trajectory(vehicle, env, SIM_END_TIME, STEP_SIZE);
+[time, state] = trajectory(vehicle, env, STEP_SIZE);
 
 %% Plot animation
 plotter.scaling_factor = 3000;

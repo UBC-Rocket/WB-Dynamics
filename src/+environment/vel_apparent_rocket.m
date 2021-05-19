@@ -23,12 +23,9 @@ function v_apparent = vel_apparent_rocket(CP, CG, roll_axis, v, omega, env)
 %
     v_cm = v - env.wind_vel;
     v_omega = norm(CP-CG)...
-        *sin(lin_alg.vec_ang(roll_axis,omega))...
+        *sind(lin_alg.vec_ang(roll_axis,omega))...
         *cross(roll_axis, omega);
     
     v_apparent = v_cm + v_omega;
-    if any(~isreal(v_apparent))
-        keyboard
-    end
 end
 
