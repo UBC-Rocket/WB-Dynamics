@@ -39,8 +39,8 @@ function wind_vec = wind(h, wind_dir, wind_speed_uncertainty)
     end
     wind_speed_final = sampling.apply_uncertainty(wind_speed_nominal, wind_speed_uncertainty);
     wind_dir_vec = [
-        cosd(wind_dir(low));
-        sind(wind_dir(low));
+        cos(wind_dir(low));
+        sin(wind_dir(low));
         0
     ];
     wind_vec = wind_speed_final * wind_dir_vec;

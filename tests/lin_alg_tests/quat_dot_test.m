@@ -13,19 +13,19 @@ function test_derivative_zero(testCase)
     omega = zeros(3,1);
     expected = zeros(4,1);
 
-    q1 = lin_alg.euler_to_quat([30, 20, 40], 'XYZ');
+    q1 = lin_alg.euler_to_quat(pi/6, deg2rad(20), deg2rad(40), 'XYZ');
     
     result = lin_alg.quat_dot(omega, q1);
     verify_within_tolerance(testCase, expected, result);
 
-    q2 = lin_alg.euler_to_quat([-20, 67, 21], 'ZYX');
+    q2 = lin_alg.euler_to_quat(deg2rad(-20), deg2rad(67), deg2rad(21), 'ZYX');
     result = lin_alg.quat_dot(omega, q2);
     verify_within_tolerance(testCase, expected, result);
 end
 
 % Test the gradient in all three directions
 function test_derivative_positive_x(testCase)
-    q = lin_alg.euler_to_quat([10, -10, 50], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(10), deg2rad(-10), deg2rad(50), 'XYZ');
     
     omega_1 = [2; 0; 4];
     expected_1 = [
@@ -56,7 +56,7 @@ function test_derivative_positive_x(testCase)
 end
 
 function test_derivative_positive_y(testCase)
-    q = lin_alg.euler_to_quat([30, 45, 60], 'ZYX');
+    q = lin_alg.euler_to_quat(pi/6, pi/4, pi/3, 'ZYX');
     
     omega_1 = [0.5*pi; 2*pi; 0];
     expected_1 = [
@@ -87,7 +87,7 @@ function test_derivative_positive_y(testCase)
 end
 
 function test_derivative_positive_z(testCase)
-    q = lin_alg.euler_to_quat([5, 90, 10], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(5), pi/2, deg2rad(10), 'ZYX');
     
     omega_1 = [2*pi; 0.01*pi; 0.05];
     expected_1 = [
@@ -118,7 +118,7 @@ function test_derivative_positive_z(testCase)
 end
 
 function test_derivative_negative_x(testCase)
-    q = lin_alg.euler_to_quat([-1, 45, -35], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-1), pi/4, deg2rad(-35), 'XYZ');
     
     omega_1 = [-pi; pi; 0.1];
     expected_1 = [
@@ -149,7 +149,7 @@ function test_derivative_negative_x(testCase)
 end
 
 function test_derivative_negative_y(testCase)
-    q = lin_alg.euler_to_quat([90, 20, 30], 'XYZ');
+    q = lin_alg.euler_to_quat(pi/2, deg2rad(20), pi/6, 'XYZ');
     
     omega_1 = [10*pi; -5*pi; 8*pi];
     expected_1 = [
@@ -180,7 +180,7 @@ function test_derivative_negative_y(testCase)
 end
 
 function test_derivative_negative_z(testCase)
-    q = lin_alg.euler_to_quat([45, -10, -45], 'XYZ');
+    q = lin_alg.euler_to_quat(pi/4, deg2rad(-10), -pi/4, 'XYZ');
     
     omega_1 = [pi/4000; -3*pi; -pi/1000];
     expected_1 = [

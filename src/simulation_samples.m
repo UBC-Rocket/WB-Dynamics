@@ -127,7 +127,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
             fieldnames(nominal_env));
         new_env.wind_speed_uncertainty = wind_speed_uncertainty;
         % Wind direction is purely random at each interval
-        new_env.wind_dir = 360.*rand(8,1);
+        new_env.wind_dir = 2*pi.*rand(8,1);
         environment_samples(sam_num) = new_env;
     end
 end

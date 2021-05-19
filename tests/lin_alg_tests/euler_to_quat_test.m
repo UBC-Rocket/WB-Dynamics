@@ -5,12 +5,12 @@ end
 % Check if two the two quaternions `expected` and `actual` are equal to the
 % specified tolerance level;
 function verify(testCase, expected, actual)
-    tolerance = 1e-5;
-    verifyEqual(testCase, actual, expected, 'RelTol', tolerance);
+    tolerance = 1e-6;
+    verifyEqual(testCase, actual, expected, 'AbsTol', tolerance);
 end
 
 function test_rotate_x_y_z(testCase)
-    q = lin_alg.euler_to_quat([90, 60, 30], 'XYZ');
+    q = lin_alg.euler_to_quat(pi/2, pi/3, pi/6, 'XYZ');
     expected = [
         0.683012701892219;
         0.183012701892219;
@@ -20,7 +20,7 @@ function test_rotate_x_y_z(testCase)
 end
 
 function test_rotate_x_y_neg_z(testCase)
-    q = lin_alg.euler_to_quat([30, 30, -45], 'XYZ');
+    q = lin_alg.euler_to_quat(pi/6, pi/6, -pi/4, 'XYZ');
     expected = [
         0.135299025036549;
         0.326640741219094;
@@ -30,7 +30,7 @@ function test_rotate_x_y_neg_z(testCase)
 end
 
 function test_rotate_x_neg_y_z(testCase)
-    q = lin_alg.euler_to_quat([20, -60, 70], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(20), -pi/3, deg2rad(70), 'XYZ');
     expected = [
         -0.159244118269248;
         -0.489610207818600;
@@ -40,7 +40,7 @@ function test_rotate_x_neg_y_z(testCase)
 end
 
 function test_rotate_x_neg_y_neg_z(testCase)
-    q = lin_alg.euler_to_quat([50, -60, -30], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(50), -pi/3, -pi/6, 'XYZ');
     expected = [
         0.470811924208330;
         -0.342985757141044;
@@ -50,7 +50,7 @@ function test_rotate_x_neg_y_neg_z(testCase)
 end
 
 function test_rotate_neg_x_y_z(testCase)
-    q = lin_alg.euler_to_quat([-40, 80, 10], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-40), deg2rad(80), deg2rad(10), 'XYZ');
     expected = [
         -0.208361577654914;
         0.624559318381697;
@@ -60,7 +60,7 @@ function test_rotate_neg_x_y_z(testCase)
 end
 
 function test_rotate_neg_x_y_neg_z(testCase)
-    q = lin_alg.euler_to_quat([-70, 25, -90], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-70), deg2rad(25), -pi/2, 'XYZ');
     expected = [
         -0.521333804473597;
         -0.270598050073098;
@@ -70,7 +70,7 @@ function test_rotate_neg_x_y_neg_z(testCase)
 end
 
 function test_rotate_neg_x_neg_y_z(testCase)
-    q = lin_alg.euler_to_quat([-17, -89, 36], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-17), deg2rad(-89), deg2rad(36), 'XYZ');
     expected = [
         -0.314479044258746;
         -0.626704093717776;
@@ -80,7 +80,7 @@ function test_rotate_neg_x_neg_y_z(testCase)
 end
 
 function test_rotate_neg_x_neg_y_neg_z(testCase)
-    q = lin_alg.euler_to_quat([-5, -64, -21], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-5), deg2rad(-64), deg2rad(-21), 'XYZ');
     expected = [
         0.060106287204435;
         -0.527290933095440;
@@ -90,7 +90,7 @@ function test_rotate_neg_x_neg_y_neg_z(testCase)
 end
 
 function test_rotate_z_y_x(testCase)
-    q = lin_alg.euler_to_quat([90, 60, 30], 'ZYX');
+    q = lin_alg.euler_to_quat(pi/2, pi/3, pi/6, 'ZYX');
     expected = [
         -0.1830127;
         0.5;
@@ -100,7 +100,7 @@ function test_rotate_z_y_x(testCase)
 end
 
 function test_rotate_z_y_neg_x(testCase)
-    q = lin_alg.euler_to_quat([30, 30, -45], 'ZYX');
+    q = lin_alg.euler_to_quat(pi/6, pi/6, -pi/4, 'ZYX');
     expected = [
         -0.4189367;
         0.135299; 
@@ -110,7 +110,7 @@ function test_rotate_z_y_neg_x(testCase)
 end
 
 function test_rotate_z_neg_y_x(testCase)
-    q = lin_alg.euler_to_quat([20, -60, 70], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(20), -pi/3, deg2rad(70), 'ZYX');
     expected = [
         0.5603074;
         -0.3170971;
@@ -120,7 +120,7 @@ function test_rotate_z_neg_y_x(testCase)
 end
 
 function test_rotate_z_neg_y_neg_x(testCase)
-    q = lin_alg.euler_to_quat([50, -60, -30], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(50), -pi/3, -pi/6, 'ZYX');
     expected = [
         0.000965613815375382;
         -0.532440340924549;
@@ -130,7 +130,7 @@ function test_rotate_z_neg_y_neg_x(testCase)
 end
 
 function test_rotate_neg_z_y_x(testCase)
-    q = lin_alg.euler_to_quat([-40, 80, 10], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(-40), deg2rad(80), deg2rad(10), 'ZYX');
     expected = [
         0.2817485;
         0.5788893;
@@ -140,7 +140,7 @@ function test_rotate_neg_z_y_x(testCase)
 end
 
 function test_rotate_neg_z_y_neg_x(testCase)
-    q = lin_alg.euler_to_quat([-70, 25, -90], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(-70), deg2rad(25), -pi/2, 'ZYX');
     expected = [
         -0.4777144;
         0.5213338;
@@ -150,7 +150,7 @@ function test_rotate_neg_z_y_neg_x(testCase)
 end
 
 function test_rotate_neg_z_neg_y_x(testCase)
-    q = lin_alg.euler_to_quat([-17, -89, 36], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(-17), deg2rad(-89), deg2rad(36), 'ZYX');
     expected = [ 
         0.1194551;
         -0.6918604;
@@ -160,7 +160,7 @@ function test_rotate_neg_z_neg_y_x(testCase)
 end
 
 function test_rotate_neg_z_neg_y_neg_x(testCase)
-    q = lin_alg.euler_to_quat([-5, -64, -21], 'ZYX');
+    q = lin_alg.euler_to_quat(deg2rad(-5), deg2rad(-64), deg2rad(-21), 'ZYX');
     expected = [
         -0.1771251;
         -0.5138087;
@@ -171,14 +171,15 @@ end
 
 function test_bad_sequence(testCase)
     testCase.verifyError(...
-        @()lin_alg.euler_to_quat([10, 20, 30], 'ZYZ'),...
+        @()lin_alg.euler_to_quat(deg2rad(25), deg2rad(20), pi/6, 'ZYZ'),...
         'euler_to_quat:bad_sequence');
     
     testCase.verifyError(...
-        @()lin_alg.euler_to_quat([10, 20, -30], 'ABC'),...
+        @()lin_alg.euler_to_quat(deg2rad(10), deg2rad(20), -pi/6, 'ABC'),...
         'euler_to_quat:bad_sequence');
     
+    % Jay Z is a rotation sequence????? NANI????
     testCase.verifyError(...
-        @()lin_alg.euler_to_quat([-360, 32, 30], 'JAYZ'),...
+        @()lin_alg.euler_to_quat(-2*pi, deg2rad(32), pi/6, 'JAYZ'),...
         'euler_to_quat:bad_sequence');
 end

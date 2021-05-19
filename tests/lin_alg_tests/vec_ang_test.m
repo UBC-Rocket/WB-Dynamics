@@ -29,7 +29,7 @@ function test_parallel_vectors_same_direction(testCase)
 end
 
 function test_parallel_vectors_different_direction(testCase)
-    expected_angle = 180;
+    expected_angle = pi;
 
     v1 = -[0; 1; 0];
     v2 = [0; 1; 0];
@@ -48,7 +48,7 @@ function test_parallel_vectors_different_direction(testCase)
 end
 
 function test_orthogonal_vectors(testCase)
-    expected_angle = 90;
+    expected_angle = pi/2;
 
     v1 = [1; 0; 0];
     v2 = [0; 1; 0];
@@ -67,19 +67,19 @@ function test_orthogonal_vectors(testCase)
 end
 
 function test_assorted_angles(testCase)
-    expected_angle_1 = 45;
+    expected_angle_1 = pi/4;
     v1 = [100; 0; 0];
     v2 = 200*[cosd(30); cosd(45); sind(30)];
     result = lin_alg.vec_ang(v1, v2);
     verify_within_tolerance(testCase, expected_angle_1, result);
 
-    expected_angle_2 = 30;
+    expected_angle_2 = pi/6;
     v3 = [0; 100; 0];
     v4 = 50*[sind(30)*cosd(10); cosd(30); sind(30)*sind(10)];
     result = lin_alg.vec_ang(v3, v4);
     verify_within_tolerance(testCase, expected_angle_2, result);
 
-    expected_angle_3 = 150;
+    expected_angle_3 = 5/6*pi;
     v5 = [0; 0; -20];
     v6 = 0.01*[cosd(60)*sind(45); cosd(60)*cosd(45); sind(60)];
     result = lin_alg.vec_ang(v5, v6);

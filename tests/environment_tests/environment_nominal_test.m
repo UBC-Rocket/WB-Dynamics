@@ -7,10 +7,10 @@ function tests = environment_nominal_test
 end
 
 function test_initialize_values(testCase)
-    wind_dir = [10;20;10;-40;60;90;130;240];
+    wind_dir = deg2rad([10;20;10;-40;60;90;130;240]);
     expected_wind_vel = 5*[
-        cosd(wind_dir(1));
-        sind(wind_dir(1));
+        cos(wind_dir(1));
+        sin(wind_dir(1));
         0
     ];
     expected_uncertainty = sampling.create_uncertainty(0,0);
@@ -26,14 +26,14 @@ function test_initialize_values(testCase)
 end
 
 function test_bad_input_wind_dir_too_short(testCase)
-    wind_dir = [10,50,300];
+    wind_dir = deg2rad([10,50,300]);
     testCase.verifyError(...
         @()environment.environment_nominal(wind_dir),...
         'environment:bad_wind_dir');
 end
 
 function test_bad_input_wind_dir_wrong_shape(testCase)
-    wind_dir = [300,230,300,100,30,60,30,10];
+    wind_dir = deg2rad([300,230,300,100,30,60,30,10]);
     testCase.verifyError(...
         @()environment.environment_nominal(wind_dir),...
         'environment:bad_wind_dir');

@@ -20,7 +20,7 @@ end
 function test_rotate_x_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([90, 0, 0], 'XYZ');
+    q = lin_alg.euler_to_quat(pi/2, 0, 0, 'XYZ');
     
     v = [1;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -41,7 +41,7 @@ end
 function test_rotate_y_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([0, 90, 0], 'XYZ');
+    q = lin_alg.euler_to_quat(0, pi/2, 0, 'XYZ');
     
     v = [1;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -62,7 +62,7 @@ end
 function test_rotate_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([0, 0, 90], 'XYZ');
+    q = lin_alg.euler_to_quat(0, 0, pi/2, 'XYZ');
     
     v = [1;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -83,7 +83,7 @@ end
 function test_rotate_x_y_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([30, 45, 60], 'XYZ');
+    q = lin_alg.euler_to_quat(pi/6, pi/4, pi/3, 'XYZ');
     
     v = [1;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -113,7 +113,7 @@ end
 function test_rotate_x_y_neg_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([21, 36, -20], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(21), deg2rad(36), deg2rad(-20), 'XYZ');
     
     v = [1;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -144,7 +144,7 @@ end
 function test_rotate_x_neg_y_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([1, -15, -89], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(1), deg2rad(-15), deg2rad(-89), 'XYZ');
     
     v = [10;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -174,7 +174,7 @@ end
 function test_rotate_x_neg_y_neg_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([-31, -78, -23], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-31), deg2rad(-78), deg2rad(-23), 'XYZ');
     
     v = [30000;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -204,7 +204,7 @@ end
 function test_rotate_neg_x_y_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([-41, 10, 45], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-41), deg2rad(10), deg2rad(45), 'XYZ');
     
     v = [200;0;0];
     v_prime = coordinate.to_body_frame(q,v);
@@ -234,7 +234,7 @@ end
 function test_rotate_neg_x_neg_y_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([-30, -50, 60], 'XYZ');
+    q = lin_alg.euler_to_quat(-pi/6, deg2rad(-50), pi/3, 'XYZ');
     
     v = [200;0;230];
     v_prime = coordinate.to_body_frame(q,v);
@@ -264,7 +264,7 @@ end
 function test_rotate_neg_x_y_neg_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([-20, 70, -40], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-20), deg2rad(70), deg2rad(-40), 'XYZ');
     
     v = [200;10;230];
     v_prime = coordinate.to_body_frame(q,v);
@@ -294,7 +294,7 @@ end
 function test_rotate_neg_x_neg_y_neg_z_quat(testCase)
     tolerance = testCase.TestData.tolerance;
     tolerance_type = testCase.TestData.tolerance_type;
-    q = lin_alg.euler_to_quat([-20, -90, -90], 'XYZ');
+    q = lin_alg.euler_to_quat(deg2rad(-20), -pi/2, -pi/2, 'XYZ');
     
     v = [200;100;-230];
     v_prime = coordinate.to_body_frame(q,v);
