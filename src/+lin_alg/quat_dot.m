@@ -12,7 +12,8 @@ function q_dot = quat_dot(omega, q)
 %   Source:
 %   Atmospheric and Space Flight Dynamics Modeling and Simulation with MATLAB 
 %   by Ashish Tewari
-%   To keep it an unit quaternion, an extra factor is added.
+%   To keep it an unit quaternion, an extra factor is added although it is
+%   recommended to re-normalize the quaternion after each integration cycle.
 %   Source: https://www.mathworks.com/help/aeroblks/6dofquaternion.html
 %
     K = 0.01;
