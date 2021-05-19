@@ -42,7 +42,7 @@ function [time, state] = trajectory(vehicle, env, step_size)
     END_TIME = 2000;
 
     init_pos = [0;0;vehicle.launch_alt];
-    init_quat = lin_alg.euler_to_quat([0;-vehicle.launch_angle;0]);
+    init_quat = lin_alg.euler_to_quat([0;-vehicle.launch_angle;0], 'XYZ');
     init_lin_vel = zeros(3,1);
     init_ang_vel = zeros(3,1);
 
