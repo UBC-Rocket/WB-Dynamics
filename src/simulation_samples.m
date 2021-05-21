@@ -16,9 +16,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
 %           struct contains.
 %   
     nominal_vehicle = rocket_nominal(fields_file);
-    % Does not matter what we give as wind directions because a couple
-    % lines down we just override the directions.
-    nominal_env = environment.environment_nominal(zeros(8,1));
+    nominal_env = environment.environment_nominal();
     errors = util.parse_error(error_file);
     
     %% Take samples
@@ -52,6 +50,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         nominal_vehicle.launch_angle;
         nominal_vehicle.launch_direction;
         0;
+        0;
     ]';
     
     deviations = [
@@ -67,6 +66,7 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         errors.ballute_alt_sd;
         errors.launch_angle_sd;
         errors.launch_direction_sd
+        1/3
         1/3;
     ]';
     
@@ -100,9 +100,12 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         ballute_alt_sam = uncertainties(sam_num,10);
         launch_angle_sam = uncertainties(sam_num,11);
         launch_direction_sam = uncertainties(sam_num,12);
-        wind_speed_uncertainty = sampling.create_uncertainty(...
-            errors.wind_speed_variation,...
+        wind_meridional_uncertainty = sampling.create_uncertainty(...
+            errors.wind_meridional_velocity_variation,...
             uncertainties(sam_num, 13));
+        wind_zonal_uncertainty = sampling.create_uncertainty(...
+            errors.wind_zonal_velocity_variation,...
+            uncertainties(sam_num, 14));
         
         new_vehicle = cell2struct(...
             struct2cell(nominal_vehicle),...
@@ -125,9 +128,8 @@ function [rocket_samples, environment_samples] = simulation_samples(...
         new_env = cell2struct(...
             struct2cell(nominal_env),...
             fieldnames(nominal_env));
-        new_env.wind_speed_uncertainty = wind_speed_uncertainty;
-        % Wind direction is purely random at each interval
-        new_env.wind_dir = 2*pi.*rand(8,1);
+        new_env.wind_meridional_uncertainty = wind_meridional_uncertainty;
+        new_env.wind_zonal_uncertainty = wind_zonal_uncertainty;
         environment_samples(sam_num) = new_env;
     end
 end

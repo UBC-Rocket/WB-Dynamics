@@ -21,7 +21,7 @@ function test_8km_target(testCase)
     time_step = 1;
     
     vehicle = rocket_nominal('./8km_input.csv');
-    env = environment.environment_nominal(zeros(8,1));
+    env = environment.environment_nominal();
 
     [time, state] = trajectory(vehicle, env, time_step);
     [apogee, ~] = util.find_apogee(time, state(:,3));
@@ -35,7 +35,7 @@ function test_20km_target(testCase)
     time_step = 1;
     
     vehicle = rocket_nominal('./20km_input.csv');
-    env = environment.environment_nominal(zeros(8,1));
+    env = environment.environment_nominal();
 
     [time, state] = trajectory(vehicle, env, time_step);
     [apogee, ~] = util.find_apogee(time, state(:,3));

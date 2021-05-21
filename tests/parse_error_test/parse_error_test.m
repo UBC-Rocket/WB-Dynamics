@@ -16,7 +16,8 @@ function test_parse_good_input(testCase)
     testCase.verifyEqual(result.chute_alt_sd, 2);
     testCase.verifyEqual(result.launch_angle_sd, 0.05);
     testCase.verifyEqual(result.launch_direction_sd, 0.05);
-    testCase.verifyEqual(result.wind_speed_variation, 0.1);
+    testCase.verifyEqual(result.wind_meridional_velocity_variation, 0.03);
+    testCase.verifyEqual(result.wind_zonal_velocity_variation, 0.05);
 end
 
 function test_parse_bad_structure(testCase)

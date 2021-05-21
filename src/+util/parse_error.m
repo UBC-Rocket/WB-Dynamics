@@ -18,24 +18,30 @@ function errors = parse_error(path_to_file)
 %           - CD_vehicle_variation : percentage variation of the vehicle CD.
 %                                    See `sampling.apply_uncertainty` to 
 %                                    see how this value would be used
-%           - thrust_msialgin_angle_sd : standard deviation of the thrust
+%           - thrust_misalign_angle_sd : standard deviation of the thrust
 %                                        misalignment angle as an absolute 
 %                                        uncertainty
-%           - CD_ballute_sd: standard deviation of the ballute CD value as
-%                            an absolute uncertainty
-%           - CD_chute_sd: standard deviation of the main chute CD value as
-%                          an absolute uncertainty
-%           - ballute_alt_sd: standard deviation of the ballute opening
-%                             altitude as an absolute uncertainty
-%           - chute_alt_sd: standard deviation of the main chute opening
-%                           altitude as an absolute uncertainty
-%           - launch_angle_sd: standard deviation of the launch angle as an
-%                              absolute uncertainty
-%           - launch_direction_sd: standard deviation of the launch direction
-%                                  from EAST in degrees as an aboslute uncertainty.
-%           - wind_speed_variation: percentage variation of the wind velocity magnitude.
-%                                   See `sampling.apply_uncertainty` to see how this
-%                                   value would be used.
+%           - CD_ballute_sd : standard deviation of the ballute CD value as
+%                             an absolute uncertainty
+%           - CD_chute_sd : standard deviation of the main chute CD value as
+%                           an absolute uncertainty
+%           - ballute_alt_sd : standard deviation of the ballute opening
+%                              altitude as an absolute uncertainty
+%           - chute_alt_sd : standard deviation of the main chute opening
+%                            altitude as an absolute uncertainty
+%           - launch_angle_sd : standard deviation of the launch angle as an
+%                               absolute uncertainty
+%           - launch_direction_sd : standard deviation of the launch direction
+%                                   from EAST in degrees as an aboslute uncertainty.
+%           - wind_meridional_velocity_variation : percentage variation of the 
+%                                                  meridional (west to east blowing)
+%                                                  component of the wind.
+%                                                  See `sampling.apply_uncertainty`
+%                                                  to see how this value would be used
+%           - wind_zonal_velocity_variation : percentage variation of the zonal
+%                                             (south to north blowing) component
+%                                             of the wind. See `sampling.apply_uncertainty`
+%                                             to see how this value would be used.
 %
     result = readtable(path_to_file);
 
@@ -52,7 +58,8 @@ function errors = parse_error(path_to_file)
         {'main chute opening altitude standard deviation'}
         {'launch angle standard deviation'}
         {'launch direction from east standard deviation'}
-        {'wind velocity mangitude scaling factor'}
+        {'wind meridional velocity scaling factor'}
+        {'wind zonal velocity scaling factor'}
     ];
     
     parsed_variable_names = [
@@ -68,7 +75,8 @@ function errors = parse_error(path_to_file)
         "chute_alt_sd"
         "launch_angle_sd"
         "launch_direction_sd"
-        "wind_speed_variation"
+        "wind_meridional_velocity_variation"
+        "wind_zonal_velocity_variation"
     ];
     
     for i = 1:length(expected_variable_names)

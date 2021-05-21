@@ -13,7 +13,7 @@ INPUT_FIELDS_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 INPUT_ERRORS_FILE = fullfile(INPUT_PATH, "errors_input.csv");
 
 %% Simulation settings
-NUM_OF_SAMPLES = 1000;
+NUM_OF_SAMPLES = 10;
 STEP_SIZE = 0.1;
 
 % Take samples

@@ -9,7 +9,7 @@ INPUT_PATH = "../input";
 INPUT_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 wind_dir = 0;
 vehicle = rocket_nominal(INPUT_FILE);
-env = environment.environment_nominal(wind_dir*ones(8,1));
+env = environment.environment_nominal();
 
 STEP_SIZE = 0.1;
 

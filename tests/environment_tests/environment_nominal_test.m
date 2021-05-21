@@ -7,14 +7,13 @@ function tests = environment_nominal_test
 end
 
 function test_initialize_values(testCase)
-    wind_dir = deg2rad([10;20;10;-40;60;90;130;240]);
-    expected_wind_vel = 5*[
-        cos(wind_dir(1));
-        sin(wind_dir(1));
+    expected_wind_vel = [
+        -2.07360362062626;
+        0.101051193825983;
         0
     ];
     expected_uncertainty = sampling.create_uncertainty(0,0);
-    env = environment.environment_nominal(wind_dir);
+    env = environment.environment_nominal();
     verifyEqual(testCase, round(env.density, 5, 'significant'), 1.2250);
     verifyEqual(testCase, round(env.sound_speed, 6, 'significant'), 340.294);
     verifyEqual(testCase, round(env.temperature, 6, 'significant'), 288.150);
@@ -22,19 +21,6 @@ function test_initialize_values(testCase)
     verifyEqual(testCase, env.sp_heat_ratio, 1.4);
     verifyEqual(testCase, round(env.grav_accel_SL, 5, 'significant'), 9.8175);
     verifyEqual(testCase, env.wind_vel, expected_wind_vel, 'AbsTol', 1e-6);
-    verifyEqual(testCase, env.wind_speed_uncertainty, expected_uncertainty);
-end
-
-function test_bad_input_wind_dir_too_short(testCase)
-    wind_dir = deg2rad([10,50,300]);
-    testCase.verifyError(...
-        @()environment.environment_nominal(wind_dir),...
-        'environment:bad_wind_dir');
-end
-
-function test_bad_input_wind_dir_wrong_shape(testCase)
-    wind_dir = deg2rad([300,230,300,100,30,60,30,10]);
-    testCase.verifyError(...
-        @()environment.environment_nominal(wind_dir),...
-        'environment:bad_wind_dir');
+    verifyEqual(testCase, env.wind_meridional_uncertainty, expected_uncertainty);
+    verifyEqual(testCase, env.wind_zonal_uncertainty, expected_uncertainty);
 end
