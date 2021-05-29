@@ -13,7 +13,7 @@ INPUT_FIELDS_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 INPUT_ERRORS_FILE = fullfile(INPUT_PATH, "errors_input.csv");
 
 %% Simulation settings
-NUM_OF_SAMPLES = 10;
+NUM_OF_SAMPLES = 1000;
 STEP_SIZE = 0.1;
 
 % Take samples
@@ -42,4 +42,14 @@ parfor sam_num = 1:NUM_OF_SAMPLES
     points(sam_num,:) = [apogee_time, apogee, landing_time, x, y, v_touchdown];
 end
 writematrix(points, OUTPUT_FILE);
+tiledlayout(2,2);
+
+nexttile
 scatter(points(:,4), points(:,5));
+title('Landing Positions');
+xlabel('Displacement EAST (m)');
+ylabel('Displacement NORTH (m)');
+
+nexttile
+histogram(points(:,2), 10);
+xlabel('Apogee (m)');

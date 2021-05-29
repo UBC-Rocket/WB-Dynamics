@@ -7,7 +7,6 @@ format short g;
 
 INPUT_PATH = "../input";
 INPUT_FILE = fullfile(INPUT_PATH, "fields_input.csv");
-wind_dir = 0;
 vehicle = rocket_nominal(INPUT_FILE);
 env = environment.environment_nominal();
 
@@ -56,7 +55,11 @@ for time_step_num = 1:plotter.num_time_steps
             'LineWidth',...
             1.5);
     end
+    
     axis([-75000 75000 -75000 75000 0 150000]);
+    xlabel('displacement EAST (m)');
+    ylabel('displacement NORTH (m)');
+    zlabel('Atitude (m)');
     daspect([1 1 1]);
     grid on;
     hold off;
