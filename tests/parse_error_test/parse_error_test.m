@@ -2,8 +2,16 @@ function tests = parse_error_test
     tests = functiontests(localfunctions);
 end
 
+function setup(testCase)
+    proj = matlab.project.rootProject;
+    testCase.TestData.curr_dir = ...
+        fullfile(proj.RootFolder, "tests", "parse_error_test");
+end
+
 function test_parse_good_input(testCase)
-    result = util.parse_error('./good_input.csv');
+    file_path = fullfile(testCase.TestData.curr_dir, 'good_input.csv');
+    result = util.parse_error(file_path);
+    
     testCase.verifyEqual(result.load_mass_sd, 1);
     testCase.verifyEqual(result.thrust_variation, 0.05);
     testCase.verifyEqual(result.CG_variation, 0.01);
@@ -21,14 +29,16 @@ function test_parse_good_input(testCase)
 end
 
 function test_parse_bad_structure(testCase)
+    file_path = fullfile(testCase.TestData.curr_dir, 'bad_structure.csv');
     testCase.verifyError(...
-        @()util.parse_error('./bad_values.csv'),...
+        @()util.parse_error(file_path),...
         'errors_input:bad_input');
 end
 
 function test_parse_bad_values(testCase)
+    file_path = fullfile(testCase.TestData.curr_dir, 'bad_values.csv');
     testCase.verifyError(...
-        @()util.parse_error('./bad_values.csv'),...
+        @()util.parse_error(file_path),...
         'errors_input:bad_input');
 end
 

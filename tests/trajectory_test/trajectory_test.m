@@ -14,13 +14,21 @@ function tests = trajectory_test
     tests = functiontests(localfunctions);
 end
 
+function setup(testCase)
+    proj = matlab.project.rootProject;
+    testCase.TestData.curr_dir = ...
+        fullfile(proj.RootFolder, "tests", "trajectory_test");
+end
+
 function test_8km_target(testCase)
     TARGET_ALT = 8000;
     ACCEPTABLE_ERR = 0.05;
     
     time_step = 1;
     
-    vehicle = rocket_nominal('./8km_input.csv');
+    file_path = fullfile(testCase.TestData.curr_dir, '8km_input.csv');
+    
+    vehicle = rocket_nominal(file_path);
     env = environment.environment_nominal();
 
     [time, state] = trajectory(vehicle, env, time_step);
@@ -34,7 +42,9 @@ function test_20km_target(testCase)
 
     time_step = 1;
     
-    vehicle = rocket_nominal('./20km_input.csv');
+    file_path = fullfile(testCase.TestData.curr_dir, '20km_input.csv');
+    
+    vehicle = rocket_nominal(file_path);
     env = environment.environment_nominal();
 
     [time, state] = trajectory(vehicle, env, time_step);

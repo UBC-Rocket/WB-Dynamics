@@ -8,8 +8,8 @@ end
 
 function test_initialize_values(testCase)
     expected_wind_vel = [
-        -2.07360362062626;
         0.101051193825983;
+        -2.07360362062626;
         0
     ];
     expected_uncertainty = sampling.create_uncertainty(0,0);

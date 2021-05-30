@@ -1,4 +1,4 @@
-function tests = rocket_samples_test
+function tests = simulation_samples_test
     tests = functiontests(localfunctions);
 end
 
@@ -7,9 +7,17 @@ end
 function test_take_sample(testCase)
     rng default; % For reproducibility
     num_of_samples = 10000;
+    
+    proj = matlab.project.rootProject;
+    curr_dir = ...
+        fullfile(proj.RootFolder, "tests", "simulation_samples_test");
+    
+    fields_path = fullfile(curr_dir, 'fields_input.csv');
+    errors_path = fullfile(curr_dir, 'errors_input.csv');
+    
     [vehicle_samples, env_samples] = simulation_samples(...
-        './fields_input.csv',...
-        './errors_input.csv',...
+        fields_path,...
+        errors_path,...
         num_of_samples);
     
     load_mass_samples = zeros(num_of_samples,1);
