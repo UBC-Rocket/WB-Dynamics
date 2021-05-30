@@ -1,14 +1,19 @@
-% Runs the trajectory simulation many times in a stochastic manner using
-% Monte Carlo. To sample, latin hypercube is used as it is a more
-% computationally feasible method. Every variable is normally distributed.
-% Now this claim can be argued against.
+% Trajectory simulation many times in a stochastic manner using Monte Carlo
+% To sample, latin hypercube is used as it is a more computationally 
+% feasible method. Every variable that is sampled is assumed to be normally
+% distributed. Now this claim can be argued against.
 clc;
 clear;
+close all;
 rng default; % For reproducibility
 
-OUTPUT_PATH = "../output";
+PROJ = matlab.project.rootProject;
+PROJ_PATH = PROJ.RootFolder;
+
+OUTPUT_PATH = fullfile(PROJ_PATH, "output");
 OUTPUT_FILE = fullfile(OUTPUT_PATH, "output.csv");
-INPUT_PATH = "../input";
+
+INPUT_PATH = fullfile(PROJ_PATH, "input");
 INPUT_FIELDS_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 INPUT_ERRORS_FILE = fullfile(INPUT_PATH, "errors_input.csv");
 
