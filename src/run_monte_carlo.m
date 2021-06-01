@@ -18,15 +18,17 @@ INPUT_FIELDS_FILE = fullfile(INPUT_PATH, "fields_input.csv");
 INPUT_ERRORS_FILE = fullfile(INPUT_PATH, "errors_input.csv");
 
 %% Simulation settings
+NUM_OF_WORKERS = 6
 NUM_OF_SAMPLES = 1000;
 STEP_SIZE = 0.1;
 
 % Take samples
 [vehicle_samples, env_samples] = simulation_samples(INPUT_FIELDS_FILE, INPUT_ERRORS_FILE, NUM_OF_SAMPLES);
 
-
 %% Perform simulation
 points = zeros(NUM_OF_SAMPLES, 6);
+
+poolobj = parpool('local', NUM_OF_WORKERS);
 
 parfor sam_num = 1:NUM_OF_SAMPLES
     vehicle = vehicle_samples(sam_num);
@@ -46,6 +48,9 @@ parfor sam_num = 1:NUM_OF_SAMPLES
     
     points(sam_num,:) = [apogee_time, apogee, landing_time, x, y, v_touchdown];
 end
+
+delete(poolobj);
+
 writematrix(points, OUTPUT_FILE);
 tiledlayout(2,2);
 
