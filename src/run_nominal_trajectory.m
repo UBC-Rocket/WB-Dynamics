@@ -14,8 +14,9 @@ env = environment.environment_nominal();
 
 STEP_SIZE = 0.1;
 
+
 %% Run simulation
 [time, state] = trajectory(vehicle, env, STEP_SIZE);
 
-%% Plot animation
-visualization.animate(time, state, vehicle);
+%% Plot
+plot(time, state(:,3))
