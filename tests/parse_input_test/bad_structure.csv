@@ -1,0 +1,42 @@
+Variable,Value,Units
+load mass,100,kg
+fuselage diameter,0.2,m
+fuselage length,4,m
+number of fins,4,discrete
+burn time,10,s
+propellant flow rate,3,kg/s
+nozzle efficiency,0.98,no units
+c star,500,m/s
+exit pressure,10000,Pa
+chamber pressure,20000,Pa
+expansion area ratio,1,no units
+thrust misalignment angle,0,degrees
+nozzle exit area,0.01,m^2
+ballute opening altitude,5000,m
+main chute opening altitude,3000,m
+ballute drag coefficient,0.70,no units
+main chute opening coefficient,0.50,no units
+pressurant tank mass,10,kg
+pressurant gas mass,2,kg
+pressurant mount mass,0.5,kg
+pressurant LOX interface hull mass,0.5,kg
+pressurant RCS mass,0.15,kg
+LOX tank mass,3,kg
+LOX mass,5,kg
+LOX kero interface hull mass,0.1,kg
+kero tank mass,3,kg
+kero mass,1,kg
+kero engine interface hull mass,0.1,kg
+mass engine,10,kg
+nose cone length,0.3,m
+payload length,0.1,m
+recovery system length,0.25,m
+pressurant tank length,1,m
+pressurant LOX int hull length,0.1,m
+LOX tank length,1,m
+LOX kero int hull length,0.05,m
+kero tank length,1,m
+kero eng int hull length,0.1,m
+engine length,0.6,m
+mass flow LOX,3,kg/s
+mass flow kero,1,kg/s

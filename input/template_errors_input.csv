@@ -1,0 +1,15 @@
+Variable,Value,Units,Uncertainty Type
+load mass standard deviation,replace with value here,kg,Absolute
+thrust scaling factor,replace with value here,no units,Relative
+CG scaling factor,replace with value here,no units,Relative
+CP scaling factor,replace with value here,no units,Relative
+CD vehicle scaling factor,replace with value here,no units,Relative
+thrust misalignment standard deviation,replace with value here,degrees,Absolute
+ballute CD standard deviation,replace with value here,no units,Absolute
+main chute CD standard deviation,replace with value here,no units,Absolute
+ballute opening altitude standard deviation,replace with value here,m,Absolute
+main chute opening altitude standard deviation,replace with value here,m,Absolute
+launch angle standard deviation,replace with value here,degrees,Absolute 
+launch direction from east standard deviation,replace with value here,degrees,Absolute
+wind meridional velocity scaling factor,replace with value here,no units,Relative
+wind zonal velocity scaling factor,replace with value here,no units,Relativee

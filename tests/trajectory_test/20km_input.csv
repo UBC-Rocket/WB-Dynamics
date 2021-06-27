@@ -1,0 +1,62 @@
+Variable,Value,Units
+load mass,325,kg
+fuselage diameter,0.3,m
+fuselage length,6,m
+number of fins,4,discrete
+fin span,0.1,m
+fin thickness,0.01,m
+fin leading edge sweep angle,3,degrees
+fin leading edge thickness angle,15,degrees
+burn time,30,s
+propellant flow rate,5.5,kg/s
+nozzle efficiency,0.9,no units
+c star,1500,m/s
+exit pressure,20000,Pa
+chamber pressure,1000000,Pa
+expansion area ratio,2.5,no units
+thrust misalignment angle,0,degrees
+nozzle exit area,0.02,m^2
+ballute opening altitude,75000,m
+main chute opening altitude,3000,m
+ballute drag coefficient,0.7,no units
+main chute drag coefficient,0.5,no units
+ballute diameter,1,m
+main chute diameter,4.13,m
+number of ballutes,3,discrete
+number of chutes,3,discrete
+chute attachment position relative to base,3.6,m
+launch angle,87,degrees
+launch altitude above sea level,1400,m
+launch direction in degrees from east,0,degrees
+nose cone mass,3,kg
+payload adapter mass,2,kg
+payload mass,10,kg
+nose cone int hull mass,1,kg
+avionics rec section hull mass,1,kg
+avionics mass,3,kg
+recovery system mass,10,kg
+recovery chute mass,10,kg
+pressurant tank mass,10,kg
+pressurant gas mass,2,kg
+pressurant mount mass,0.5,kg
+pressurant LOX interface hull mass,0.5,kg
+pressurant RCS mass,0.15,kg
+LOX tank mass,3,kg
+LOX mass,90,kg
+LOX kero interface hull mass,0.1,kg
+kero tank mass,3,kg
+kero mass,30,kg
+kero engine interface hull mass,0.1,kg
+mass engine,10,kg
+nose cone length,0.3,m
+payload length,0.1,m
+recovery system length,0.25,m
+pressurant tank length,1,m
+pressurant LOX int hull length,0.1,m
+LOX tank length,1,m
+LOX kero int hull length,0.05,m
+kero tank length,1,m
+kero eng int hull length,0.1,m
+engine length,0.6,m
+mass flow LOX,3,kg/s
+mass flow kero,1,kg/s
